@@ -1,1 +1,2 @@
 # sis257_FASHION
+FASHION STORE es una tienda moderna online de moda que ofrece ropa tanto como para hombres y mujeres con estilo. Nuestra plataforma combina un diseño atractivo y fácil de usar con tecnología avanzada, permitiendo a los clientes descubrir las últimas tendencias, filtrar productos por categorías y tallas, y realizar compras seguras con solo unos clics. Detrás de escena, contamos con un sistema robusto que gestiona inventarios, procesa pedidos y protege los datos de los usuarios mediante autenticación segura. 
