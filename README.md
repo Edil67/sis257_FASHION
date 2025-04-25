@@ -32,6 +32,11 @@ Detrás de escena, contamos con un sistema robusto que gestiona inventarios, pro
 - `total`: monto total
 - `fecha`: fecha de la venta
 
+### 4. Categoria
+- `id`: identificador de la ccategoria
+- `categoria_id`: identificador del producto
+
+
 ## Configuración del proyecto
 
 ```bash
