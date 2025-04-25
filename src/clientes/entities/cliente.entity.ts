@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-=======
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
->>>>>>> fa99282141b4c6a12d72a9c3727eeb10c0942cbc
 
 @Entity()
 export class Cliente {
@@ -19,16 +15,8 @@ export class Cliente {
   email: string;
 
   @Column()
-<<<<<<< HEAD
-  telefono: string;
-
-  @Column({ default: true })
-  activo: boolean;
-}
-=======
   celular: string;
 
   @Column()
   direccion: string;
-} 
->>>>>>> fa99282141b4c6a12d72a9c3727eeb10c0942cbc
+}
