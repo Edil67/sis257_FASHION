@@ -1,42 +1,41 @@
-import { Categoria } from 'src/categorias/entities/categoria.entity';
-import { Venta } from 'src/ventas/entities/venta.entity';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Categoria } from '../../categorias/entities/categoria.entity';
 
 @Entity('productos')
 export class Producto {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('identity')
   id: number;
 
-  @Column('varchar',{length: 30})
+  @Column()
   nombre: string;
 
-  @Column('varchar', {length: 40})
+  @Column()
   descripcion: string;
 
-  @Column('decimal', { precision: 10, scale: 2})
+  @Column('decimal', { precision: 10, scale: 2 })
   precio: number;
 
-  @Column('integer')
+  @Column()
   stock: number;
+
+  @Column('simple-array')
+  tallasDisponibles: string[];
+
+  @Column('simple-array')
+  coloresDisponibles: string[];
+
+  @Column('simple-array')
+  imagenes: string[];
+
+  @ManyToOne(() => Categoria, categoria => categoria.productos)
+  categoria: Categoria;
+
+  @Column()
+  categoriaId: number;
+
+  @Column()
+  tipo: string;
 
   @Column({ default: true })
   activo: boolean;
-
-  @ManyToOne(() => Categoria, (categoria) => categoria.productos)
-  @JoinColumn({ name: 'id_categoria', referencedColumnName: 'id'})
-  categoria: Categoria;
-
-  @OneToMany(() => Venta, (venta) => venta.producto)
-  ventas: Venta[];
 }

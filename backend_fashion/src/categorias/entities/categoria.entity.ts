@@ -1,25 +1,17 @@
-import { Producto } from 'src/productos/entities/producto.entity';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Producto } from '../../productos/entities/producto.entity';
 
 @Entity('categorias')
 export class Categoria {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', {length: 40})
+  @Column({ type: 'enum', enum: ['Mujer', 'Hombre'] })
   nombre: string;
 
-  @OneToMany(() => Producto, (producto) => producto.categoria)
+  @Column()
+  descripcion: string;
+
+  @OneToMany(() => Producto, producto => producto.categoria)
   productos: Producto[];
 }
