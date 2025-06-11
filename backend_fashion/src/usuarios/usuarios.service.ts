@@ -18,7 +18,7 @@ export class UsuariosService {
 
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
     const existe = await this.usuariosRepository.findOneBy({
-      nombreUsuario: createUsuarioDto.usuario.trim(),
+      nombreUsuario: createUsuarioDto.nombreUsuario.trim(),
     });
     if (existe) throw new ConflictException('El usuario ya existe');
 
@@ -34,7 +34,9 @@ export class UsuariosService {
 
   async findOne(id: number): Promise<Usuario> {
     const usuario = await this.usuariosRepository.findOneBy({ id });
-    if (!usuario) throw new NotFoundException('El usuario no existe');
+    if (!usuario) {
+      throw new NotFoundException(`El usuario ${id} no existe`);
+    }
     return usuario;
   }
 
@@ -49,7 +51,7 @@ export class UsuariosService {
 
   async remove(id: number) {
     const usuario = await this.findOne(id);
-    return this.usuariosRepository.softRemove(usuario);
+    return this.usuariosRepository.delete(usuario.id);
   }
 
   async validate(nombreUsuario: string, clave: string): Promise<Usuario> {
@@ -64,11 +66,7 @@ export class UsuariosService {
       throw new UnauthorizedException('Clave incorrecta');
     }
 
-    if (!(await usuarioOk?.validatePassword(clave))) {
-      throw new UnauthorizedException('Clave incorrecta');
-    }
-
-    usuarioOk.clave = ''; // <-- Cambia delete por undefined
+    usuarioOk.clave = '';
     return usuarioOk;
   }
 }

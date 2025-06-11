@@ -15,14 +15,14 @@ async function bootstrap() {
     .setTitle('API Rest tienda FASHION')
     .setDescription('API Rest de la tienda FASHION')
     .setVersion('1.0')
-    .addTag('usuarios')
-    .addTag('productos')
-    .addTag('categorias')
-    .addTag('clientes')
-    .addTag('ventas')
-    .addTag('empleados')
-    .addTag('venta-detalles')
 
+    .addTag('clientes')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      in: 'header',
+    })
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('apidoc', app, documentFactory);

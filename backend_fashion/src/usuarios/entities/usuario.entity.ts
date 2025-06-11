@@ -1,15 +1,16 @@
 import { Empleado } from 'src/empleados/entities/empleado.entity';
-import * as bcrypt from 'bcrypt';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity('usuarios')
 export class Usuario {
@@ -30,8 +31,8 @@ export class Usuario {
 
   //un usuario puede pertenecer a un solo empleado
   @OneToOne(() => Empleado, (empleado) => empleado.usuario)
+  @JoinColumn({ name: 'idEmpleado', referencedColumnName: 'id' })
   empleado: Empleado;
-
 
   @BeforeInsert()
   @BeforeUpdate()

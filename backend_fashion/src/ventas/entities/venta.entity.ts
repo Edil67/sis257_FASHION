@@ -29,7 +29,7 @@ export class Venta {
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 
-  // Muchas ventas puede realizar un cliente
+  // Muchas ventas puede realizar a un cliente
   @ManyToOne(() => Cliente, (cliente) => cliente.ventas)
   @JoinColumn({ name: 'idCliente', referencedColumnName: 'id' })
   cliente: Cliente;
