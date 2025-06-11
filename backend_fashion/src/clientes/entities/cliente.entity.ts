@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Venta } from 'src/ventas/entities/venta.entity';
 import {
   Column,
