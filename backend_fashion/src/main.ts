@@ -18,7 +18,10 @@ async function bootstrap() {
     .addTag('usuarios')
     .addTag('productos')
     .addTag('categorias')
-    .addTag('contactos')
+    .addTag('clientes')
+    .addTag('ventas')
+    .addTag('empleados')
+    .addTag('venta-detalles')
 
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
