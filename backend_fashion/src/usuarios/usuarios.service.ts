@@ -53,18 +53,18 @@ export class UsuariosService {
   }
 
   async validate(nombreUsuario: string, clave: string): Promise<Usuario> {
-     const usuarioOk = await this.usuariosRepository.findOne({
-    where: { nombreUsuario },
-       select: ['id', 'nombreUsuario', 'clave'],
-     });
+    const usuarioOk = await this.usuariosRepository.findOne({
+      where: { nombreUsuario },
+      select: ['id', 'nombreUsuario', 'clave'],
+    });
 
-     if (!usuarioOk) throw new NotFoundException('Usuario inexistente');
+    if (!usuarioOk) throw new NotFoundException('Usuario inexistente');
 
-     if (!(await usuarioOk?.validatePassword(clave))) {
-       throw new UnauthorizedException('Clave incorrecta');
-     }
+    if (!(await usuarioOk?.validatePassword(clave))) {
+      throw new UnauthorizedException('Clave incorrecta');
+    }
 
-     delete usuarioOk.clave;
-     return usuarioOk;
-   }
+    delete usuarioOk.clave;
+    return usuarioOk;
+  }
 }

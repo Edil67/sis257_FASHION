@@ -1,4 +1,5 @@
 import { Producto } from 'src/productos/entities/producto.entity';
+import { Venta } from 'src/ventas/entities/venta.entity';
 import {
   Column,
   CreateDateColumn,
@@ -26,4 +27,6 @@ export class VentaDetalle {
   @ManyToOne(() => Producto, (producto) => producto.ventadetalles)
   @JoinColumn({ name: 'id_producto', referencedColumnName: 'id' })
   producto: Producto;
+
+  
 }

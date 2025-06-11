@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Venta } from 'src/ventas/entities/venta.entity';
+import { Venta } from 'src/ventas/entities/venta.entity'; // <-- Agrega esta línea
 import {
   Column,
   CreateDateColumn,
@@ -20,13 +19,13 @@ export class Cliente {
   @Column('varchar', { length: 50, nullable: false })
   apellidos: string;
 
-  @Column('varchar', { length: 50, nullable: false })
+  @Column('varchar', { length: 150, nullable: false }) // Mejor longitud para dirección
   direccion: string;
 
-  @Column('varchar', { length: 50, nullable: false })
+  @Column('varchar', { length: 20, nullable: false }) // Mejor longitud para teléfono
   telefono: string;
 
-  @Column({ length: 50, nullable: false })
+  @Column('varchar', { length: 50, nullable: false }) // Tipo explícito
   email: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
@@ -35,7 +34,6 @@ export class Cliente {
   @UpdateDateColumn({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
 
-  // un cliente puede realizar muchas ventas
   @OneToMany(() => Venta, (venta) => venta.cliente)
   ventas: Venta[];
 }
