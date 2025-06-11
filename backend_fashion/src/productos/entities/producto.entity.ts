@@ -42,11 +42,21 @@ export class Producto {
 
   @UpdateDateColumn({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
+
+  @Column()
+  categoriaId: number;
+
   @ManyToOne(() => Categoria, (categoria) => categoria.productos)
   @JoinColumn({ name: 'idCategoria', referencedColumnName: 'id' })
   categoria: Categoria;
 
+  @Column({ length: 50 })
+  tipo: string;
+
+  @Column({ default: true })
+  activo: boolean;
+
   @OneToMany(() => VentaDetalle, (ventadetalle) => ventadetalle.producto)
   ventadetalles: VentaDetalle[];
-  ventas: any;
+  // Elimina: ventas: any;
 }

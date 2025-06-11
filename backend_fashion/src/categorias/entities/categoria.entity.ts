@@ -6,7 +6,7 @@ export class Categoria {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'enum', enum: ['Mujer', 'Hombre'] })
+  @Column({ type: 'varchar', length: 50 })
   nombre: string;
 
   @Column()

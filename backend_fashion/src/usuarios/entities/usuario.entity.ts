@@ -1,4 +1,5 @@
 import { Empleado } from 'src/empleados/entities/empleado.entity';
+import * as bcrypt from 'bcrypt';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -29,7 +30,8 @@ export class Usuario {
 
   //un usuario puede pertenecer a un solo empleado
   @OneToOne(() => Empleado, (empleado) => empleado.usuario)
-  empleados: Empleado;
+  empleado: Empleado;
+
 
   @BeforeInsert()
   @BeforeUpdate()

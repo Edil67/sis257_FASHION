@@ -64,7 +64,11 @@ export class UsuariosService {
       throw new UnauthorizedException('Clave incorrecta');
     }
 
-    delete usuarioOk.clave;
+    if (!(await usuarioOk?.validatePassword(clave))) {
+      throw new UnauthorizedException('Clave incorrecta');
+    }
+
+    usuarioOk.clave = ''; // <-- Cambia delete por undefined
     return usuarioOk;
   }
 }

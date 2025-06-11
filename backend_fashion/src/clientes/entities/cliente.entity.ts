@@ -35,5 +35,5 @@ export class Cliente {
   fechaModificacion: Date;
 
   @OneToMany(() => Venta, (venta) => venta.cliente)
-  ventas: Venta[];
+  venta: Venta[];
 }

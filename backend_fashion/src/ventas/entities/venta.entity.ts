@@ -30,16 +30,16 @@ export class Venta {
   fechaCreacion: Date;
 
   // Muchas ventas puede realizar un cliente
-  @ManyToOne(() => Cliente, (cliente) => cliente.ventas)
+  @ManyToOne(() => Cliente, (cliente) => cliente.venta)
   @JoinColumn({ name: 'idCliente', referencedColumnName: 'id' })
   cliente: Cliente;
 
-  @ManyToOne(() => Producto, (producto) => producto.ventas)
-  @JoinColumn({ name: 'id_producto', referencedColumnName: 'id' })
+  @ManyToOne(() => Producto)
+  @JoinColumn({ name: 'idProducto', referencedColumnName: 'id' })
   producto: Producto;
 
   @ManyToOne(() => Empleado, (empleado) => empleado.ventas)
-  @JoinColumn({ name: 'id_empleado', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'idEmpleado', referencedColumnName: 'id' })
   empleado: Empleado;
 
   // Una venta puede tener varios detalles de venta
