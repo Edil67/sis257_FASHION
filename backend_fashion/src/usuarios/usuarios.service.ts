@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -17,16 +18,13 @@ export class UsuariosService {
 
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
     const existe = await this.usuariosRepository.findOneBy({
-      usuario: createUsuarioDto.usuario.trim(),
+      nombreUsuario: createUsuarioDto.usuario.trim(),
     });
     if (existe) throw new ConflictException('El usuario ya existe');
-    const usuario = new Usuario();
-    usuario.usuario = createUsuarioDto.usuario?.trim();
-    usuario.nombre = createUsuarioDto.nombre?.trim();
-    usuario.email = createUsuarioDto.email?.trim();
-    usuario.rol = createUsuarioDto.rol?.trim();
-    usuario.premium = createUsuarioDto.premium;
 
+    const usuario = new Usuario();
+    usuario.nombreUsuario = createUsuarioDto.nombreUsuario.trim();
+    usuario.clave = process.env.DEFAULT_PASSWORD ?? '';
     return this.usuariosRepository.save(usuario);
   }
 
@@ -39,6 +37,7 @@ export class UsuariosService {
     if (!usuario) throw new NotFoundException('El usuario no existe');
     return usuario;
   }
+
   async update(
     id: number,
     updateUsuarioDto: UpdateUsuarioDto,
@@ -52,4 +51,20 @@ export class UsuariosService {
     const usuario = await this.findOne(id);
     return this.usuariosRepository.softRemove(usuario);
   }
+
+  async validate(nombreUsuario: string, clave: string): Promise<Usuario> {
+     const usuarioOk = await this.usuariosRepository.findOne({
+    where: { nombreUsuario },
+       select: ['id', 'nombreUsuario', 'clave'],
+     });
+
+     if (!usuarioOk) throw new NotFoundException('Usuario inexistente');
+
+     if (!(await usuarioOk?.validatePassword(clave))) {
+       throw new UnauthorizedException('Clave incorrecta');
+     }
+
+     delete usuarioOk.clave;
+     return usuarioOk;
+   }
 }

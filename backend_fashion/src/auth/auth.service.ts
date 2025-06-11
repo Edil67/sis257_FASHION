@@ -1,9 +1,9 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { UsuariosService } from "src/usuarios/usuarios.service";
-import { AuthLoginDto } from "./dto/auth-login.dto";
-import { JwtPayload } from "./interfaces/jwt-payload.interface";
-import { Usuario } from "src/usuarios/entities/usuario.entity";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsuariosService } from 'src/usuarios/usuarios.service';
+import { AuthLoginDto } from './dto/auth-login.dto';
+import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Injectable()
 export class AuthService {
@@ -42,4 +42,3 @@ export class AuthService {
     return usuario;
   }
 }
-

@@ -4,7 +4,6 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { Public } from './decorators/auth-public.decorator';
 
-
 @ApiTags('auth')
 @ApiBearerAuth()
 @Controller('auth')

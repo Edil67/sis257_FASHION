@@ -5,7 +5,11 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,8 +19,8 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class ClientesService {
   constructor(
-    @InjectRepository(Cliente) private clientesRepository: Repository<Cliente>,) { }
-
+    @InjectRepository(Cliente) private clientesRepository: Repository<Cliente>,
+  ) {}
 
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
     const cliente = this.clientesRepository.create({
@@ -24,7 +28,7 @@ export class ClientesService {
       apellidos: createClienteDto.apellidos.trim(),
       direccion: createClienteDto.direccion.trim(),
       telefono: createClienteDto.telefono.trim(),
-      email: createClienteDto.email.trim()
+      email: createClienteDto.email.trim(),
     });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.clientesRepository.save(cliente);
@@ -35,21 +39,24 @@ export class ClientesService {
   }
 
   async findOne(id: number): Promise<Cliente> {
-    const existe = await this.clientesRepository.findOneBy({ id })
+    const existe = await this.clientesRepository.findOneBy({ id });
     if (!existe) {
-      throw new NotFoundException(`el cliente con el id ${id} no existe`)
+      throw new NotFoundException(`el cliente con el id ${id} no existe`);
     }
     return existe;
   }
 
-  async update(id: number, updateClienteDto: UpdateClienteDto): Promise<Cliente> {
+  async update(
+    id: number,
+    updateClienteDto: UpdateClienteDto,
+  ): Promise<Cliente> {
     const cliente = await this.findOne(id);
     const actualizaCliente = Object.assign(cliente, updateClienteDto);
     return this, this.clientesRepository.save(actualizaCliente);
   }
 
   async remove(id: number) {
-    const cliente = await this.findOne(id)
+    const cliente = await this.findOne(id);
     return this.clientesRepository.delete(cliente.id);
   }
 }

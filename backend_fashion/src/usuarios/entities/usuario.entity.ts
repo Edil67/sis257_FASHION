@@ -1,32 +1,44 @@
+import { Empleado } from 'src/empleados/entities/empleado.entity';
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('usuarios')
 export class Usuario {
-  @PrimaryGeneratedColumn('identity')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', { length: 30 })
-  nombre: string;
+  @Column('varchar', { length: 50, nullable: false, name: 'nombre_usuario' })
+  nombreUsuario: string;
 
-  @Column('varchar', { length: 70 })
-  email: string;
-
-  @Column({ type: 'varchar', length: 30 })
-  usuario: string;
-
-  @Column({ type: 'varchar' })
+  @Column('varchar', { length: 5000, nullable: true })
   clave: string;
 
-  @Column({ type: 'boolean', default: false })
-  premium: boolean;
+  @CreateDateColumn({ name: 'fecha_creacion' })
+  fechaCreacion: Date;
 
-  @Column({ type: 'enum', enum: ['admin', 'usuario'] })
-  rol: string;
+  @UpdateDateColumn({ name: 'fecha_modificacion' })
+  fechaModificacion: Date;
+
+  //un usuario puede pertenecer a un solo empleado
+  @OneToOne(() => Empleado, (empleado) => empleado.usuario)
+  empleados: Empleado;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    const salt = await bcrypt.genSalt();
+    this.clave = await bcrypt.hash(this.clave, salt);
+  }
+
+  async validatePassword(plainPassword: string): Promise<boolean> {
+    return bcrypt.compare(plainPassword, this.clave);
+  }
 }
