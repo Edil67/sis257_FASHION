@@ -19,7 +19,7 @@ async function bootstrap() {
     .addTag('productos')
     .addTag('categorias')
     .addTag('contactos')
-    
+
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('apidoc', app, documentFactory);

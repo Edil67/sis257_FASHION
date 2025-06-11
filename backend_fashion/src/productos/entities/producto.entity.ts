@@ -27,7 +27,7 @@ export class Producto {
   @Column('simple-array')
   imagenes: string[];
 
-  @ManyToOne(() => Categoria, categoria => categoria.productos)
+  @ManyToOne(() => Categoria, (categoria) => categoria.productos)
   categoria: Categoria;
 
   @Column()

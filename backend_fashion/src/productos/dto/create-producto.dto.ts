@@ -1,17 +1,29 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MaxLength, IsNumber, IsArray, IsBoolean, Min } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  IsNumber,
+  IsArray,
+  IsBoolean,
+  Min,
+} from 'class-validator';
 
 export class CreateProductoDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo nombre es obligatorio' })
   @IsString({ message: 'El campo nombre debe ser de tipo cadena' })
-  @MaxLength(100, { message: 'El campo nombre no debe ser mayor a 100 caracteres' })
+  @MaxLength(100, {
+    message: 'El campo nombre no debe ser mayor a 100 caracteres',
+  })
   readonly nombre: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo descripcion es obligatorio' })
   @IsString({ message: 'El campo descripcion debe ser de tipo cadena' })
-  @MaxLength(500, { message: 'El campo descripcion no debe ser mayor a 500 caracteres' })
+  @MaxLength(500, {
+    message: 'El campo descripcion no debe ser mayor a 500 caracteres',
+  })
   readonly descripcion: string;
 
   @ApiProperty()
