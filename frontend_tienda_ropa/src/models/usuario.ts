@@ -3,7 +3,5 @@ export interface Usuario {
 
   nombreUsuario: string
 
-  clave: string
-
   fechaCreacion: Date
 }

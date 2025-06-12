@@ -1,92 +1,64 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-
 import HelloWorld from './components/HelloWorld.vue'
+import { useAuthStore } from '@/stores/index'
+const authStore = useAuthStore()
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/cliente">Clientes</RouterLink>
-        <RouterLink to="/producto">Productos</RouterLink>
-        <RouterLink to="/venta">Ventas</RouterLink>
-        <RouterLink to="/ventaDetalle">Detalle de Ventas</RouterLink>
-        <RouterLink to="/categoria">Categoria</RouterLink>
-        <RouterLink to="/empleado">Empleado</RouterLink>
-        <RouterLink to="/usuario">Usuario</RouterLink>
-      </nav>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img alt="Vue logo" src="@/assets/logo.svg" width="40" height="40" class="me-2" />
+        Fashion Store
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><RouterLink class="nav-link" to="/">Home</RouterLink></li>
+          <li class="nav-item"><RouterLink class="nav-link" to="/cliente">Clientes</RouterLink></li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/producto">Productos</RouterLink>
+          </li>
+          <li class="nav-item"><RouterLink class="nav-link" to="/venta">Ventas</RouterLink></li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/ventaDetalle">Detalle de Ventas</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/categoria">Categoria</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/empleado">Empleado</RouterLink>
+          </li>
+          <li class="nav-item"><RouterLink class="nav-link" to="/usuario">Usuario</RouterLink></li>
+          <li class="nav-item" v-if="authStore.token">
+            <a class="nav-link" href="#" @click.prevent="authStore.logout()">Cerrar Sesión</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </header>
-
-  <RouterView />
+  </nav>
+  <main class="container my-4">
+    <HelloWorld msg="¡Bienvenido a Fashion Store!" />
+    <RouterView />
+  </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+/* Resalta el enlace activo */
+.nav-link.router-link-exact-active {
+  background: #fff !important;
+  color: #0d6efd !important;
+  border-radius: 0.25rem;
 }
 </style>

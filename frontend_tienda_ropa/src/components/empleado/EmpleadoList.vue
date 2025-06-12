@@ -46,7 +46,7 @@ function formatDate(dateString: string): string {
 
 <template>
   <div>
-    <table>
+    <table >
       <thead>
         <tr>
           <th>Nro.</th>
@@ -54,7 +54,6 @@ function formatDate(dateString: string): string {
           <th>Nombres</th>
           <th>Apellidos</th>
           <th>Cargo</th>
-          <th>Fecha de Contrato</th>
           <th>Fecha de Registro</th>
           <th>Acciones</th>
         </tr>

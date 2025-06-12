@@ -62,7 +62,6 @@ function formatDate(dateString: string): string {
         <tr>
           <th>Nro.</th>
           <th>Nombre de Usuario</th>
-          <th>Clave</th>
           <th>Fecha de Registro</th>
           <th>Acciones</th>
         </tr>
@@ -71,7 +70,6 @@ function formatDate(dateString: string): string {
         <tr v-for="(usuario, index) in usuarios" :key="usuario.id">
           <td>{{ index + 1 }}</td>
           <td>{{ usuario.nombreUsuario }}</td>
-          <td>{{ usuario.clave }}</td>
           <td>{{ formatDate(usuario.fechaCreacion) }}</td>
           <td>
             <!-- <Button
