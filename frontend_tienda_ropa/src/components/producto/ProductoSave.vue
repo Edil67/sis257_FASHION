@@ -63,8 +63,11 @@ async function handleSave() {
       idCategoria: producto.value.categoria?.id,
       nombre: producto.value.nombre,
       descripcion: producto.value.descripcion,
-      precioUnitario: producto.value.precioUnitario,
+      precio: producto.value.precio,
       stock: producto.value.stock,
+      talla: producto.value.talla,
+      color: producto.value.color,
+      imagenes: producto.value.imagenes,
     }
 
     if (props.modoEdicion) {
@@ -135,6 +138,19 @@ watch(
         />
       </div>
 
+      <!-- Campo de precio del producto -->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="precio" class="font-semibold w-4">Precio</label>
+        <InputNumber
+          id="precio"
+          v-model="producto.precio"
+          class="flex-auto"
+          mode="currency"
+          currency="USD"
+          locale="en-US"
+          :min="0"
+        />
+      </div>
       <!-- Campo de descripción del producto -->
 
       <div class="flex items-center gap-4 mb-4">
@@ -152,16 +168,27 @@ watch(
         />
       </div>
 
-      <!-- Campo para el precio del producto -->
-      <div class="flex items-center gap-4 mb-4">
-        <label for="precio" class="font-semibold w-4">Precio Bs.</label>
-        <InputNumber id="precio" v-model="producto.precioUnitario" class="flex-auto" :min="0" />
-      </div>
-
       <!-- Campo para el stock del producto -->
       <div class="flex items-center gap-4 mb-4">
         <label for="stock" class="font-semibold w-4">Stock</label>
         <InputNumber id="stock" v-model="producto.stock" class="flex-auto" :min="0" />
+      </div>
+
+      <!-- campo para talla-->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="talla" class="font-semibold w-4">Talla</label>
+        <InputText id="talla" v-model="producto.talla" class="flex-auto" autocomplete="off" />
+      </div>
+
+      <!-- campo para color-->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="color" class="font-semibold w-4">Color</label>
+        <InputText id="color" v-model="producto.color" class="flex-auto" autocomplete="off" />
+      </div>
+      <!-- campo para imagen-->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="imagen" class="font-semibold w-4">Imagen</label>
+        <InputText id="imagen" v-model="producto.imagenes" class="flex-auto" autocomplete="off" />
       </div>
 
       <!-- Botones de acción -->

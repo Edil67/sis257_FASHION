@@ -46,7 +46,7 @@ function formatDate(dateString: string): string {
 
 <template>
   <div>
-    <table >
+    <table>
       <thead>
         <tr>
           <th>Nro.</th>

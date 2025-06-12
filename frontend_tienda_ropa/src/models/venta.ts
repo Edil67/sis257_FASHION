@@ -11,8 +11,6 @@ export interface Venta {
 
   totalVenta: number
 
-  fechaCreacion: Date
-
   cliente: Cliente
 
   producto: Producto

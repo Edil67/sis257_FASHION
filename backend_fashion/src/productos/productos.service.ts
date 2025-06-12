@@ -27,12 +27,10 @@ export class ProductosService {
     producto.descripcion = createProductoDto.descripcion.trim();
     producto.precio = createProductoDto.precio;
     producto.stock = createProductoDto.stock;
-    producto.tallasDisponibles = createProductoDto.tallasDisponibles;
-    producto.coloresDisponibles = createProductoDto.coloresDisponibles;
+    producto.talla = createProductoDto.talla;
+    producto.color = createProductoDto.color;
     producto.imagenes = createProductoDto.imagenes;
     producto.idCategoria = createProductoDto.idCategoria;
-    producto.tipo = createProductoDto.tipo.trim();
-    producto.activo = createProductoDto.activo;
     return this.productosRepository.save(producto);
   }
 

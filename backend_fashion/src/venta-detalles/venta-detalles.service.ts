@@ -18,8 +18,8 @@ export class VentaDetallesService {
     createVentadetalleDto: CreateVentaDetalleDto,
   ): Promise<VentaDetalle> {
     const ventadetalle = this.VentaDetalleRepository.create({
-      cantidad: createVentadetalleDto.cantidad.trim(),
-      subtotal: createVentadetalleDto.subtotal.trim(),
+      cantidad: createVentadetalleDto.cantidad,
+      subtotal: createVentadetalleDto.subtotal,
       venta: { id: createVentadetalleDto.idVenta },
       producto: { id: createVentadetalleDto.idProducto },
     });

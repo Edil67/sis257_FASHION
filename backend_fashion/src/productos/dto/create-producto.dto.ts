@@ -4,8 +4,6 @@ import {
   IsString,
   MaxLength,
   IsNumber,
-  IsArray,
-  IsBoolean,
   Min,
 } from 'class-validator';
 
@@ -39,32 +37,22 @@ export class CreateProductoDto {
   readonly stock: number;
 
   @ApiProperty()
-  @IsArray({ message: 'El campo tallasDisponibles debe ser un array' })
-  @IsString({ each: true, message: 'Cada talla debe ser de tipo cadena' })
-  readonly tallasDisponibles: string[];
+  @IsNotEmpty({ message: 'El campo talla es obligatorio' })
+  @IsString({ message: 'La talla debe ser de tipo cadena' })
+  readonly talla: string;
 
   @ApiProperty()
-  @IsArray({ message: 'El campo coloresDisponibles debe ser un array' })
-  @IsString({ each: true, message: 'Cada color debe ser de tipo cadena' })
-  readonly coloresDisponibles: string[];
+  @IsNotEmpty({ message: 'El campo color es obligatorio' })
+  @IsString({ message: 'El color debe ser de tipo cadena' })
+  readonly color: string;
 
   @ApiProperty()
-  @IsArray({ message: 'El campo imagenes debe ser un array' })
-  @IsString({ each: true, message: 'Cada imagen debe ser una URL válida' })
-  readonly imagenes: string[];
+  @IsNotEmpty({ message: 'El campo imagenes es obligatorio' })
+  @IsString({ message: 'La imagen debe ser una URL válida' })
+  readonly imagenes: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo idCategoria es obligatorio' })
   @IsNumber({}, { message: 'El campo idCategoria debe ser de tipo número' })
   readonly idCategoria: number;
-
-  @ApiProperty()
-  @IsNotEmpty({ message: 'El campo tipo es obligatorio' })
-  @IsString({ message: 'El campo tipo debe ser de tipo cadena' })
-  @MaxLength(50, { message: 'El campo tipo no debe ser mayor a 50 caracteres' })
-  readonly tipo: string;
-
-  @ApiProperty()
-  @IsBoolean({ message: 'El campo activo debe ser de tipo booleano' })
-  readonly activo: boolean;
 }

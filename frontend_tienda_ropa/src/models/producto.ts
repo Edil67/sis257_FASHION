@@ -6,11 +6,9 @@ export interface Producto {
   descripcion: string
   precio: number
   stock: number
-  tallasDisponibles: string
-  coloresDisponibles: string
+  talla: string
+  color: string
   imagenes: string
-  fechaCreacion: Date
-
   fechaModificacion: Date
 
   categoria: Categoria

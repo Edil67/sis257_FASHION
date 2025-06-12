@@ -55,21 +55,29 @@ function formatDate(dateString: string): string {
           <th>Descripción</th>
           <th>Precio Unitario</th>
           <th>Stock</th>
+          <th>Talla</th>
+          <th>Color</th>
+          <th>Imagenes</th>
           <th>Fecha de Registro</th>
-          <th>Fecha de Modificacion</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(producto, index) in productos" :key="producto.id">
           <td>{{ index + 1 }}</td>
-          <td>{{ producto.categoria.nombre }}</td>
+          <td>{{ producto.categoria?.nombre }}</td>
           <td>{{ producto.nombre }}</td>
           <td>{{ producto.descripcion }}</td>
-          <td>{{ producto.precioUnitario }}</td>
+          <td>{{ producto.precio }}</td>
           <td>{{ producto.stock }}</td>
+          <td>{{ producto.talla }}</td>
+          <td>{{ producto.color }}</td>
+          <td>
+  <img :src="producto.imagenes" alt="Imagen" style="max-width: 80px; max-height: 80px;" />
+</td>
+
+
           <td>{{ formatDate(producto.fechaCreacion) }}</td>
-          <td>{{ formatDate(producto.fechaModificacion) }}</td>
 
           <td>
             <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(producto)" />

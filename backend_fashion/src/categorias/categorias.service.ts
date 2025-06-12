@@ -8,6 +8,7 @@ import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Categoria } from './entities/categoria.entity';
 import { Repository } from 'typeorm';
+import { Producto } from 'src/productos/entities/producto.entity';
 
 @Injectable()
 export class CategoriasService {
@@ -47,7 +48,18 @@ export class CategoriasService {
   }
 
   async remove(id: number) {
-    const categoria = await this.findOne(id);
-    return this.categoriasRepository.softRemove(categoria);
+    const categoria = await this.categoriasRepository.findOne({
+      where: { id },
+      relations: ['productos'],
+    });
+    if (!categoria) {
+      throw new NotFoundException('La categoría no existe');
+    }
+    if (categoria.productos && categoria.productos.length > 0) {
+      throw new ConflictException(
+        'No se puede eliminar la categoría porque tiene productos asociados',
+      );
+    }
+    return this.categoriasRepository.remove(categoria);
   }
 }

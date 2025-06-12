@@ -28,14 +28,14 @@ export class Producto {
   @Column()
   stock: number;
 
-  @Column('simple-array')
-  tallasDisponibles: string[];
+  @Column()
+  talla: string;
 
-  @Column('simple-array')
-  coloresDisponibles: string[];
+  @Column()
+  color: string;
 
-  @Column('simple-array')
-  imagenes: string[];
+  @Column()
+  imagenes: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
@@ -49,12 +49,6 @@ export class Producto {
   @ManyToOne(() => Categoria, (categoria) => categoria.productos)
   @JoinColumn({ name: 'idCategoria', referencedColumnName: 'id' })
   categoria: Categoria;
-
-  @Column({ length: 50 })
-  tipo: string;
-
-  @Column({ default: true })
-  activo: boolean;
 
   @OneToMany(() => VentaDetalle, (ventadetalle) => ventadetalle.producto)
   ventadetalles: VentaDetalle[];

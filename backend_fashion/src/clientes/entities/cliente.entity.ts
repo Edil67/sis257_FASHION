@@ -25,7 +25,7 @@ export class Cliente {
   @Column('varchar', { length: 20, nullable: false }) // Mejor longitud para teléfono
   telefono: string;
 
-  @Column('varchar', { length: 50, nullable: false }) // Tipo explícito
+  @Column('varchar', { length: 50, nullable: false, unique: true }) // Tipo explícito
   email: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })

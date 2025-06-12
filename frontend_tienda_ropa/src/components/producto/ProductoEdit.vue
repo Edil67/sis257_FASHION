@@ -18,12 +18,16 @@ const producto = ref<Producto>({
   id: 0,
   nombre: '',
   descripcion: '',
-  precioUnitario: 0,
+  precio: 0,
   stock: 0,
   categoria: {
     id: 0,
     nombre: '',
+    descripcion: ''
   },
+  talla: '',
+  color: '',
+  imagenes: ''
 })
 
 const categorias = ref<Categoria[]>([])
@@ -43,8 +47,11 @@ async function actualizarProducto() {
       idCategoria: producto.value.categoria.id,
       nombre: producto.value.nombre,
       descripcion: producto.value.descripcion,
-      precioUnitario: producto.value.precioUnitario,
+      precio: producto.value.precio,
       stock: producto.value.stock,
+      talla: producto.value.talla,
+      color: producto.value.color,
+      imagenes: producto.value.imagenes,
     })
     router.push('/productos')
   } catch (error) {
@@ -115,7 +122,7 @@ function goBack() {
           <input
             type="number"
             class="form-control"
-            v-model="producto.precioUnitario"
+            v-model="producto.precio"
             placeholder="Precio Unitario"
             required
           />
@@ -133,6 +140,36 @@ function goBack() {
           <label for="stock">Stock</label>
         </div>
 
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            v-model="producto.talla"
+            placeholder="Talla"
+            required
+          />
+          <label for="talla">Talla</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            v-model="producto.color"
+            placeholder="Color"
+            required
+          />
+          <label for="color">Color</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            v-model="producto.imagenes"
+            placeholder="Imagen"
+            required
+          />
+          <label for="imagenes">Imagen</label>
+        </div>
         <div class="text-center mt-3">
           <button type="submit" class="btn btn-primary btn-lg">
             <font-awesome-icon icon="fa-solid fa-save" title="Guardar" />

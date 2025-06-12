@@ -13,10 +13,12 @@ import {
 export class VentaDetalle {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column('varchar', { length: 50, nullable: false })
-  cantidad: string;
-  @Column('varchar', { length: 50, nullable: false })
-  subtotal: string;
+  @Column('int', { nullable: false })
+  precioUnitario: number;
+  @Column('int', { nullable: false })
+  cantidad: number;
+  @Column('int', { nullable: false })
+  subtotal: number;
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 
