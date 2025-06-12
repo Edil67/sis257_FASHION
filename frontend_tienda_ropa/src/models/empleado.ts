@@ -5,7 +5,6 @@ export interface Empleado {
   nombres: string
   apellidos: string
   cargo: string
-  fechaContratacion: Date
   fechaCreacion: Date
   usuario: Usuario
 }

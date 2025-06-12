@@ -9,6 +9,14 @@ export class CreateVentaDetalleDto {
   readonly cantidad: number;
 
   @ApiProperty()
+  @IsNotEmpty({ message: 'El campo precio unitario no debe ser vacío' })
+  @IsNumber(
+    {},
+    { message: 'El campo precio unitario debe ser de tipo numérico' },
+  )
+  precioUnitario: number;
+
+  @ApiProperty()
   @IsNotEmpty({ message: 'El campo subtotal no debe ser vacío' })
   @IsNumber({}, { message: 'El campo subtotal debe ser de tipo número' })
   readonly subtotal: number;

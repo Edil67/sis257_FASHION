@@ -38,7 +38,7 @@ defineExpose({ obtenerLista })
 function formatDate(dateString: string): string {
   const date = new Date(dateString)
   const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0') // Los meses son de 0 a 11
+  const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
   return `${year}-${month}-${day}`
 }
@@ -46,34 +46,37 @@ function formatDate(dateString: string): string {
 
 <template>
   <div>
-    <table>
-      <thead>
+    <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+      <thead style="background: #f0f0f0;">
         <tr>
           <th>Cliente</th>
           <th>Empleado</th>
-          <th>Cantidad</th>
-          <th>Total</th>
+          <th>Total Venta (Bs.)</th>
           <th>Fecha de Venta</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(venta, index) in ventas" :key="venta.id">
-          <td>{{ index + 1 }}</td>
-          <td>{{ venta.cliente.nombres }}</td>
-          <td>{{ venta.empleado.nombres }}</td>
-          <td>{{ venta.totalVenta }}</td>
-          <td>{{ formatDate(venta.fechaCreacion) }}</td>
-
+          <td>
+            {{ venta.cliente?.nombres || '' }} {{ venta.cliente?.apellidos || '' }}
+          </td>
+          <td>
+            {{ venta.empleado?.nombres || '' }} {{ venta.empleado?.apellidos || '' }}
+          </td>
+          <td>
+            {{ venta.totalVenta?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+          </td>
+          <td>
+            {{ formatDate(venta.fechaCreacion) }}
+          </td>
           <td>
             <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(venta)" />
-            <Button
-              icon="pi pi-trash"
-              aria-label="Eliminar"
-              text
-              @click="mostrarEliminarConfirm(venta)"
-            />
+            <Button icon="pi pi-trash" aria-label="Eliminar" text @click="mostrarEliminarConfirm(venta)" />
           </td>
+        </tr>
+        <tr v-if="ventas.length === 0">
+          <td colspan="6" style="text-align: center;">No hay ventas registradas.</td>
         </tr>
       </tbody>
     </table>
@@ -97,4 +100,15 @@ function formatDate(dateString: string): string {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+}
+th, td {
+  text-align: left;
+}
+th {
+  background: #e0e0e0;
+}
+</style>

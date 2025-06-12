@@ -15,8 +15,6 @@ const empleado = ref<Empleado>({
   nombres: '',
   apellidos: '',
   cargo: '',
-  fechaContratacion: new Date().toISOString().substring(0, 10), // Fecha actual yyyy-mm-dd
-  usuario: {} as Usuario,
 })
 
 const usuarios = ref<Usuario[]>([])
@@ -30,7 +28,6 @@ async function crearEmpleado() {
       nombres: empleado.value.nombres,
       apellidos: empleado.value.apellidos,
       cargo: empleado.value.cargo,
-      fechaContratacion: empleado.value.fechaContratacion,
     })
     emit('saved')
   } catch (error) {

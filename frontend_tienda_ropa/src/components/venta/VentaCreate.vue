@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
 import http from '@/plugins/axios'
-import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import type { Producto } from '@/models/producto'
 import type { Cliente } from '@/models/cliente'
@@ -10,18 +9,14 @@ import type { Empleado } from '@/models/empleado'
 const clientes = ref<Cliente[]>([])
 const productos = ref<Producto[]>([])
 const empleados = ref<Empleado[]>([])
-const detallesVenta = ref<
-  Array<{
-    cantidad: number
-    precioUnitario: number
-    totalVenta: number
-    idCliente: string
-    idProducto: string
-    descripcion?: string
-    stock?: number
-    descuento: number
-  }>
->([])
+const detallesVenta = ref<Array<{
+  cantidad: number
+  precio: number
+  totalVenta: number
+  idProducto: number | null
+  stock?: number
+  descuento?: number
+}>>([])
 
 const props = defineProps<{
   ENDPOINT_API: string
@@ -29,7 +24,7 @@ const props = defineProps<{
 }>()
 
 const router = useRouter()
-const selectedClienteId = ref<string>('')
+const selectedClienteId = ref<number | null>(null)
 const crearClienteModal = ref<boolean>(false)
 
 const nombres = ref('')
@@ -55,39 +50,39 @@ async function getEmpleados() {
 onMounted(() => {
   getClientes()
   getProductos()
-  getEmpleados() // Asegúrate de llamar a getEmpleados aquí o en otro lugar adecuado
+  getEmpleados()
 })
-
-function mostrarTotalVenta() {
-  const sumaTotalVenta = detallesVenta.value
-    .reduce((total, venta) => total + venta.totalVenta, 0)
-    .toFixed(2)
-  alert(`La suma total de las ventas es: ${sumaTotalVenta}`)
-}
 
 function agregarDetalle() {
   detallesVenta.value.push({
-    cantidad: 0,
-    precioUnitario: 0,
+    cantidad: 1,
+    precio: 0,
     totalVenta: 0.0,
-    idCliente: selectedClienteId.value,
-    idProducto: '',
-    descripcion: '',
+    idProducto: 1,
     stock: 0,
   })
 }
 
+function onProductoChange(detalle) {
+  const producto = productos.value.find(p => p.id === detalle.idProducto)
+  if (producto) {
+    detalle.precioUnitario = producto.precioUnitario
+    detalle.totalVenta = detalle.cantidad * producto.precioUnitario
+    detalle.stock = producto.stock - detalle.cantidad
+  }
+}
+
 watch(
   detallesVenta,
-  async (detalles) => {
+  (detalles) => {
     for (let i = 0; i < detalles.length; i++) {
       const detalle = detalles[i]
       if (detalle.idProducto) {
         const producto = productos.value.find((p) => p.id === detalle.idProducto)
         if (producto) {
-          detalle.precioUnitario = producto.precioUnitario
-          detalle.totalVenta = detalle.cantidad * detalle.precioUnitario
-          detalle.stock = producto.stock - detalle.cantidad // Disminuir el stock en tiempo real
+          detalle.precio = producto.precio
+          detalle.totalVenta = detalle.cantidad * detalle.precio
+          detalle.stock = producto.stock - detalle.cantidad
         }
       }
     }
@@ -96,20 +91,38 @@ watch(
 )
 
 async function crearDetalles() {
+  // Validar detalles antes de enviar
+  for (const detalle of detallesVenta.value) {
+    if (
+      !detalle.idProducto ||
+      !detalle.cantidad ||
+      !detalle.precioUnitario
+    ) {
+      alert('Completa todos los campos de los productos antes de guardar la venta.')
+      return
+    }
+  }
   const data = {
     clienteId: selectedClienteId.value,
     empleadoId: props.empleadoId,
-    detallesVenta: detallesVenta.value,
-    fechaCreacion: fechaCreacion.value, // Añadir la fecha a los detalles de la venta
+    detallesVenta: detallesVenta.value.map(d => ({
+      idProducto: d.idProducto,
+      cantidad: d.cantidad,
+      precio: d.precio
+    })),
+    fechaCreacion: fechaCreacion.value,
   }
   await http
     .post(`${props.ENDPOINT_API}/detalles`, data)
-    .then((response) => {
-      console.log(response)
-      getProductos() // Recargar la lista de productos después de la venta
+    .then(() => {
+      getProductos()
+      detallesVenta.value = []
+      dineroRecibido.value = 0
+      alert('Venta registrada correctamente')
     })
     .catch((error) => {
       console.error(error)
+      alert('Error al registrar la venta')
     })
 }
 
@@ -138,7 +151,7 @@ function crearCliente() {
     .post('clientes', nuevoCliente)
     .then(() => {
       crearClienteModal.value = false
-      getClientes() // Recargar la lista de clientes después de agregar uno nuevo
+      getClientes()
     })
     .catch((error) => {
       console.error(error)
@@ -157,7 +170,7 @@ function crearCliente() {
     <div class="row">
       <form @submit.prevent="crearDetalles">
         <div class="form-floating mb-3">
-          <select v-model="selectedClienteId" class="form-select" required>
+          <select v-model.number="selectedClienteId" class="form-select" required>
             <option v-for="cliente in clientes" :value="cliente.id" :key="cliente.id">
               {{ cliente.nombres + ' ' + cliente.apellidos }}
             </option>
@@ -187,9 +200,9 @@ function crearCliente() {
         <div v-for="(detalle, index) in detallesVenta" :key="index" class="row align-items-center">
           <div class="col">
             <div class="form-floating mb-3">
-              <select v-model="detalle.idProducto" class="form-select" required>
+              <select v-model.number="detalle.idProducto" class="form-select" required @change="onProductoChange(detalle)">
                 <option v-for="producto in productos" :value="producto.id" :key="producto.id">
-                  {{ producto.nombre }} (Bs.{{ producto.precioUnitario }})
+                  {{ producto.nombre }}
                 </option>
               </select>
               <label for="producto">Producto</label>
@@ -203,8 +216,9 @@ function crearCliente() {
               <input
                 type="number"
                 class="form-control"
-                v-model="detalle.cantidad"
+                v-model.number="detalle.cantidad"
                 placeholder="Cantidad"
+                min="1"
                 required
               />
               <label for="cantidad">Cantidad</label>
@@ -215,12 +229,13 @@ function crearCliente() {
               <input
                 type="number"
                 class="form-control"
-                :value="detalle.precioUnitario"
+                v-model.number="detalle.precioUnitario"
                 placeholder="Precio Unitario"
                 step="0.01"
-                readonly
+                min="0"
+                required
               />
-              <label for="precioUnitario">Precio por Unidad (Bs.)</label>
+              <label for="precio">Precio por Unidad (Bs.)</label>
             </div>
           </div>
           <div class="col">

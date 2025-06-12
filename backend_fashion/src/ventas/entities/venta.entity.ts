@@ -34,4 +34,6 @@ export class Venta {
   // Una venta puede tener varios detalles de venta
   @OneToMany(() => VentaDetalle, (ventadetalle) => ventadetalle.venta)
   ventadetalles: VentaDetalle[];
+  cantidad: number | undefined;
+  producto: import('d:/DARWIN/sis257-desarr-inter-INFOR/PROYECTO/sis257_FASHION/backend_fashion/src/productos/entities/producto.entity').Producto;
 }

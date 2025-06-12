@@ -23,7 +23,6 @@ const emit = defineEmits(['guardar', 'close', 'eliminar'])
 
 const empleado = ref<Empleado>({
   ...props.empleado,
-  fechaContratacion: props.empleado?.fechaContratacion || new Date().toISOString().substring(0, 10),
 })
 const usuarios = ref<Usuario[]>([])
 
@@ -32,7 +31,6 @@ watch(
   (newVal) => {
     empleado.value = {
       ...newVal,
-      fechaContratacion: newVal?.fechaContratacion || new Date().toISOString().substring(0, 10),
     }
   },
   { immediate: true },
@@ -61,7 +59,6 @@ async function handleSave() {
       nombres: empleado.value.nombres,
       apellidos: empleado.value.apellidos,
       cargo: empleado.value.cargo,
-      fechaContratacion: empleado.value.fechaContratacion,
     }
 
     if (props.modoEdicion) {

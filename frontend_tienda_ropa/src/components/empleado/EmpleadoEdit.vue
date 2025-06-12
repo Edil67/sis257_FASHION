@@ -39,7 +39,6 @@ async function actualizarEmpleado() {
       nombres: empleado.value.nombres,
       apellidos: empleado.value.apellidos,
       cargo: empleado.value.cargo,
-      fechaContratacion: empleado.value.fechaContratacion,
     })
     emit('saved')
   } catch (error) {

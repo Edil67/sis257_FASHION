@@ -66,8 +66,6 @@ function formatDate(dateString: string): string {
           <th>Nombres</th>
           <th>Apellidos</th>
           <th>Cargo</th>
-          <th>Fecha de Contratación</th>
-          <th>Fecha de Registro</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -77,7 +75,6 @@ function formatDate(dateString: string): string {
           <td>{{ empleado.nombres }}</td>
           <td>{{ empleado.apellidos }}</td>
           <td>{{ empleado.cargo }}</td>
-          <td>{{ formatDate(empleado.fechaCreacion) }}</td>
           <td>
             <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(empleado)" />
             <Button
