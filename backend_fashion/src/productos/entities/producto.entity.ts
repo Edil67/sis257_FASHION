@@ -44,7 +44,7 @@ export class Producto {
   fechaModificacion: Date;
 
   @Column()
-  categoriaId: number;
+  idCategoria: number;
 
   @ManyToOne(() => Categoria, (categoria) => categoria.productos)
   @JoinColumn({ name: 'idCategoria', referencedColumnName: 'id' })

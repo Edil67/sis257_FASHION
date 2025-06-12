@@ -30,7 +30,7 @@ export class ProductosService {
     producto.tallasDisponibles = createProductoDto.tallasDisponibles;
     producto.coloresDisponibles = createProductoDto.coloresDisponibles;
     producto.imagenes = createProductoDto.imagenes;
-    producto.categoriaId = createProductoDto.categoriaId;
+    producto.idCategoria = createProductoDto.idCategoria;
     producto.tipo = createProductoDto.tipo.trim();
     producto.activo = createProductoDto.activo;
     return this.productosRepository.save(producto);

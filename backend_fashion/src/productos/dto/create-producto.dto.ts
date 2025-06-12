@@ -54,9 +54,9 @@ export class CreateProductoDto {
   readonly imagenes: string[];
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El campo categoriaId es obligatorio' })
-  @IsNumber({}, { message: 'El campo categoriaId debe ser de tipo número' })
-  readonly categoriaId: number;
+  @IsNotEmpty({ message: 'El campo idCategoria es obligatorio' })
+  @IsNumber({}, { message: 'El campo idCategoria debe ser de tipo número' })
+  readonly idCategoria: number;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo tipo es obligatorio' })
