@@ -11,7 +11,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
-      <nav >
+      <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/cliente">Clientes</RouterLink>
         <RouterLink to="/producto">Productos</RouterLink>
@@ -20,7 +20,6 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/categoria">Categoria</RouterLink>
         <RouterLink to="/empleado">Empleado</RouterLink>
         <RouterLink to="/usuario">Usuario</RouterLink>
-
       </nav>
     </div>
   </header>

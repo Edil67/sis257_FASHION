@@ -28,4 +28,3 @@ app.use(PrimeVue, {
 
 app.mount('#app')
 import 'bootstrap/dist/css/bootstrap.min.css'
-
