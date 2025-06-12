@@ -17,9 +17,9 @@ const props = defineProps({
   mostrar: Boolean,
   producto: {
     type: Object as () => Producto,
-    default: () => ({}) as Producto
+    default: () => ({}) as Producto,
   },
-  modoEdicion: Boolean // Indica si es modo edición
+  modoEdicion: Boolean, // Indica si es modo edición
 })
 
 // Emitimos eventos 'guardar', 'close' y 'eliminar' para acciones
@@ -35,7 +35,7 @@ watch(
   (newVal) => {
     producto.value = { ...newVal }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 // Computed para manejar la visibilidad del diálogo
@@ -43,7 +43,7 @@ const dialogVisible = computed({
   get: () => props.mostrar,
   set: (value) => {
     if (!value) emit('close') // Cerrar diálogo si cambia el valor
-  }
+  },
 })
 
 // Función para obtener categorías del backend
@@ -61,7 +61,7 @@ async function handleSave() {
   try {
     const body = {
       idCategoria: producto.value.categoria?.id,
-      nombre:producto.value.nombre,
+      nombre: producto.value.nombre,
       descripcion: producto.value.descripcion,
       precioUnitario: producto.value.precioUnitario,
       stock: producto.value.stock,
@@ -74,7 +74,7 @@ async function handleSave() {
       // Crea un nuevo producto
       await http.post(ENDPOINT, body)
       // Aumentar stock de la categoría correspondiente si es necesario
-      await updateStock(producto.value.categoria.id, producto.value.stock);
+      await updateStock(producto.value.categoria.id, producto.value.stock)
     }
 
     emit('guardar') // Emite el evento guardar
@@ -88,21 +88,21 @@ async function handleSave() {
 // Función para eliminar un producto y disminuir su stock
 async function handleDelete() {
   try {
-    await http.delete(`${ENDPOINT}/${producto.value.id}`);
-    await updateStock(producto.value.categoria.id, -producto.value.stock); // Disminuir stock al eliminar el producto
-    emit('eliminar'); // Emitir evento de eliminación
-    dialogVisible.value = false; // Cerrar diálogo tras eliminación
+    await http.delete(`${ENDPOINT}/${producto.value.id}`)
+    await updateStock(producto.value.categoria.id, -producto.value.stock) // Disminuir stock al eliminar el producto
+    emit('eliminar') // Emitir evento de eliminación
+    dialogVisible.value = false // Cerrar diálogo tras eliminación
   } catch (error: any) {
-    alert(error?.response?.data?.message || 'Error al eliminar el producto');
+    alert(error?.response?.data?.message || 'Error al eliminar el producto')
   }
 }
 
 // Función para actualizar el stock de la categoría
 async function updateStock(categoriaId: number, cantidad: number) {
   try {
-    await http.patch(`categorias/${categoriaId}/stock`, { cantidad });
+    await http.patch(`categorias/${categoriaId}/stock`, { cantidad })
   } catch (error) {
-    console.error('Error al actualizar el stock:', error);
+    console.error('Error al actualizar el stock:', error)
   }
 }
 
@@ -111,13 +111,17 @@ watch(
   () => props.mostrar,
   (nuevoValor) => {
     if (nuevoValor) obtenerCategorias()
-  }
+  },
 )
 </script>
 
 <template>
   <div class="card flex justify-center">
-    <Dialog v-model:visible="dialogVisible" :header="props.modoEdicion ? 'Editar Producto' : 'Crear Producto'" style="width: 25rem">
+    <Dialog
+      v-model:visible="dialogVisible"
+      :header="props.modoEdicion ? 'Editar Producto' : 'Crear Producto'"
+      style="width: 25rem"
+    >
       <!-- Selector para la categoría -->
       <div class="flex items-center gap-4 mb-4">
         <label for="categoria" class="font-semibold w-4">Categoría</label>
@@ -133,16 +137,9 @@ watch(
 
       <!-- Campo de descripción del producto -->
 
-
-
       <div class="flex items-center gap-4 mb-4">
         <label for="nombre" class="font-semibold w-4">Nombre</label>
-        <InputText
-          id="nombre"
-          v-model="producto.nombre"
-          class="flex-auto"
-          autocomplete="off"
-        />
+        <InputText id="nombre" v-model="producto.nombre" class="flex-auto" autocomplete="off" />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
@@ -157,34 +154,34 @@ watch(
 
       <!-- Campo para el precio del producto -->
       <div class="flex items-center gap-4 mb-4">
-        <label for="precio" class="font-semibold w-4">Precio  Bs.</label>
-        <InputNumber
-          id="precio"
-          v-model="producto.precioUnitario"
-
-          class="flex-auto"
-          :min="0"
-        />
+        <label for="precio" class="font-semibold w-4">Precio Bs.</label>
+        <InputNumber id="precio" v-model="producto.precioUnitario" class="flex-auto" :min="0" />
       </div>
 
       <!-- Campo para el stock del producto -->
       <div class="flex items-center gap-4 mb-4">
         <label for="stock" class="font-semibold w-4">Stock</label>
-        <InputNumber
-          id="stock"
-          v-model="producto.stock"
-          class="flex-auto"
-          :min="0"
-        />
+        <InputNumber id="stock" v-model="producto.stock" class="flex-auto" :min="0" />
       </div>
-
-
 
       <!-- Botones de acción -->
       <div class="flex justify-end gap-2">
-        <Button type="button" label="Cancelar" icon="pi pi-times" severity="secondary" @click="dialogVisible = false"></Button>
+        <Button
+          type="button"
+          label="Cancelar"
+          icon="pi pi-times"
+          severity="secondary"
+          @click="dialogVisible = false"
+        ></Button>
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
-        <Button v-if="props.modoEdicion" type="button" label="Eliminar" icon="pi pi-trash" severity="danger" @click="handleDelete"></Button>
+        <Button
+          v-if="props.modoEdicion"
+          type="button"
+          label="Eliminar"
+          icon="pi pi-trash"
+          severity="danger"
+          @click="handleDelete"
+        ></Button>
       </div>
     </Dialog>
   </div>

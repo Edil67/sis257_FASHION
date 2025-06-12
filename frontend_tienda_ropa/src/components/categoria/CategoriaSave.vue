@@ -11,9 +11,9 @@ const props = defineProps({
   mostrar: Boolean,
   categoria: {
     type: Object as () => Categoria,
-    default: () => ({}) as Categoria
+    default: () => ({}) as Categoria,
   },
-  modoEdicion: Boolean
+  modoEdicion: Boolean,
 })
 const emit = defineEmits(['guardar', 'close'])
 
@@ -21,7 +21,7 @@ const dialogVisible = computed({
   get: () => props.mostrar,
   set: (value) => {
     if (!value) emit('close')
-  }
+  },
 })
 
 const categoria = ref<Categoria>({ ...props.categoria })
@@ -29,7 +29,7 @@ watch(
   () => props.categoria,
   (newVal) => {
     categoria.value = { ...newVal }
-  }
+  },
 )
 
 async function handleSave() {

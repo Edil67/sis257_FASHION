@@ -15,7 +15,7 @@ const id = router.currentRoute.value.params['id']
 async function editarCategoria() {
   await http
     .patch(`${ENDPOINT}/${id}`, {
-      nombre: nombre.value
+      nombre: nombre.value,
     })
 
     .then(() => router.push('/categorias'))

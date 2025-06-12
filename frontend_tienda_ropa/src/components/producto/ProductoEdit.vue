@@ -22,8 +22,8 @@ const producto = ref<Producto>({
   stock: 0,
   categoria: {
     id: 0,
-    nombre: ''
-  }
+    nombre: '',
+  },
 })
 
 const categorias = ref<Categoria[]>([])
@@ -44,7 +44,7 @@ async function actualizarProducto() {
       nombre: producto.value.nombre,
       descripcion: producto.value.descripcion,
       precioUnitario: producto.value.precioUnitario,
-      stock: producto.value.stock
+      stock: producto.value.stock,
     })
     router.push('/productos')
   } catch (error) {

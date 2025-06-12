@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+
 import HelloWorld from './components/HelloWorld.vue'
 </script>
 
@@ -10,7 +11,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
-      <nav>
+      <nav >
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/cliente">Clientes</RouterLink>
         <RouterLink to="/producto">Productos</RouterLink>

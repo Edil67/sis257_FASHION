@@ -1,6 +1,6 @@
 <script setup lang="ts">
- import VentaList from '@/components/venta/VentaList.vue'
- import VentaSave from '@/components/venta/VentaSave.vue'
+import VentaList from '@/components/venta/VentaList.vue'
+import VentaSave from '@/components/venta/VentaSave.vue'
 import Button from 'primevue/button'
 import { ref } from 'vue'
 

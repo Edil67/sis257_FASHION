@@ -11,9 +11,9 @@ const props = defineProps({
   mostrar: Boolean,
   cliente: {
     type: Object as () => Cliente,
-    default: () => ({} as Cliente)
+    default: () => ({}) as Cliente,
   },
-  modoEdicion: Boolean
+  modoEdicion: Boolean,
 })
 const emit = defineEmits(['guardar', 'close'])
 
@@ -21,7 +21,7 @@ const dialogVisible = computed({
   get: () => props.mostrar,
   set: (value) => {
     if (!value) emit('close')
-  }
+  },
 })
 
 const cliente = ref<Cliente>({ ...props.cliente })
@@ -29,16 +29,16 @@ watch(
   () => props.cliente,
   (newVal) => {
     cliente.value = { ...newVal }
-  }
+  },
 )
 
 async function handleSave() {
   try {
     const body = {
       nombres: cliente.value.nombres,
-      apellidos:cliente.value.apellidos,
+      apellidos: cliente.value.apellidos,
       direccion: cliente.value.direccion,
-      telefono:cliente.value.telefono,
+      telefono: cliente.value.telefono,
       email: cliente.value.email,
     }
     if (props.modoEdicion) {
@@ -47,7 +47,7 @@ async function handleSave() {
       await http.post(ENDPOINT, body)
     }
     emit('guardar')
-    cliente.value = {} as Cliente  // Reiniciar cliente tras guardar
+    cliente.value = {} as Cliente // Reiniciar cliente tras guardar
     dialogVisible.value = false
   } catch (error: any) {
     alert(error?.response?.data?.message)
@@ -95,25 +95,14 @@ async function handleSave() {
         />
       </div>
 
-
       <div class="flex items-center gap-4 mb-4">
         <label for="telefono" class="font-semibold w-4">Telefono</label>
-        <InputText
-          id="telefono"
-          v-model="cliente.telefono"
-          class="flex-auto"
-          autocomplete="off"
-        />
+        <InputText id="telefono" v-model="cliente.telefono" class="flex-auto" autocomplete="off" />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
         <label for="email" class="font-semibold w-4">Email</label>
-        <InputText
-          id="email"
-          v-model="cliente.email"
-          class="flex-auto"
-          autocomplete="off"
-        />
+        <InputText id="email" v-model="cliente.email" class="flex-auto" autocomplete="off" />
       </div>
 
       <div class="flex justify-end gap-2">

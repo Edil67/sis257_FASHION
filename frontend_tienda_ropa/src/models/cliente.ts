@@ -4,5 +4,5 @@ export interface Cliente {
   apellidos: string
   telefono: string
   email: string
-  fechaCreacion: Date;
+  fechaCreacion: Date
 }

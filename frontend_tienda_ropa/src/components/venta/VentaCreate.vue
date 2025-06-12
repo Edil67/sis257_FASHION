@@ -73,7 +73,7 @@ function agregarDetalle() {
     idCliente: selectedClienteId.value,
     idProducto: '',
     descripcion: '',
-    stock: 0
+    stock: 0,
   })
 }
 
@@ -92,7 +92,7 @@ watch(
       }
     }
   },
-  { deep: true }
+  { deep: true },
 )
 
 async function crearDetalles() {
@@ -100,7 +100,7 @@ async function crearDetalles() {
     clienteId: selectedClienteId.value,
     empleadoId: props.empleadoId,
     detallesVenta: detallesVenta.value,
-    fechaCreacion: fechaCreacion.value // Añadir la fecha a los detalles de la venta
+    fechaCreacion: fechaCreacion.value, // Añadir la fecha a los detalles de la venta
   }
   await http
     .post(`${props.ENDPOINT_API}/detalles`, data)
@@ -132,7 +132,7 @@ function crearCliente() {
     apellidos: apellidos.value,
     direccion: direccion.value,
     telefono: telefono.value,
-    email: email.value
+    email: email.value,
   }
   http
     .post('clientes', nuevoCliente)
@@ -231,7 +231,7 @@ function crearCliente() {
                 :value="
                   detalle.totalVenta.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
+                    maximumFractionDigits: 2,
                   })
                 "
                 placeholder="totalVenta"

@@ -19,7 +19,6 @@ function emitirEdicion(ventaDetalle: VentaDetalle) {
   emit('edit', ventaDetalle)
 }
 
-
 function mostrarEliminarConfirm(ventaDetalle: VentaDetalle) {
   ventaDetalleDelete.value = ventaDetalle
   mostrarConfirmDialog.value = true
@@ -36,16 +35,13 @@ onMounted(() => {
 })
 defineExpose({ obtenerLista })
 
-
 function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses son de 0 a 11
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  const date = new Date(dateString)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Los meses son de 0 a 11
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
-
-
 </script>
 
 <template>
@@ -57,7 +53,7 @@ function formatDate(dateString: string): string {
           <th>Venta</th>
           <th>Productos</th>
           <th>Cantidad</th>
-          <th>Subtotal </th>
+          <th>Subtotal</th>
           <th>Fecha de VentaDetalle</th>
         </tr>
       </thead>
@@ -68,9 +64,7 @@ function formatDate(dateString: string): string {
           <td>{{ ventaDetalle.producto.nombre }}</td>
           <td>{{ ventaDetalle.cantidad }}</td>
           <td>{{ ventaDetalle.Subtotal }}</td>
-          <td>{{ formatDate(ventaDetalle. fechaCreacion) }}</td>
-
-
+          <td>{{ formatDate(ventaDetalle.fechaCreacion) }}</td>
 
           <td>
             <Button

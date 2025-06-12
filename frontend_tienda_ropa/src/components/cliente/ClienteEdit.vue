@@ -23,7 +23,7 @@ async function editarCliente() {
       apellidos: apellidos.value,
       direccion: direccion.value,
       telefono: telefono.value,
-      email: email.value
+      email: email.value,
     })
 
     .then(() => router.push('/clientes'))

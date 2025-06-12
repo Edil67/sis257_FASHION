@@ -1,57 +1,57 @@
 <script setup lang="ts">
-import type { Usuario } from '@/models/usuario';
-import http from '@/plugins/axios';
-import Button from 'primevue/button';
-import Dialog from 'primevue/dialog';
-import { onMounted, ref } from 'vue';
+import type { Usuario } from '@/models/usuario'
+import http from '@/plugins/axios'
+import Button from 'primevue/button'
+import Dialog from 'primevue/dialog'
+import { onMounted, ref } from 'vue'
 
-const ENDPOINT = 'usuarios';
-let usuarios = ref<Usuario[]>([]);
-const emit = defineEmits(['edit']);
-const usuarioDelete = ref<Usuario | null>(null);
-const mostrarConfirmDialog = ref<boolean>(false);
+const ENDPOINT = 'usuarios'
+let usuarios = ref<Usuario[]>([])
+const emit = defineEmits(['edit'])
+const usuarioDelete = ref<Usuario | null>(null)
+const mostrarConfirmDialog = ref<boolean>(false)
 
 async function obtenerLista() {
   try {
-    const response = await http.get(ENDPOINT);
-    usuarios.value = response.data;
+    const response = await http.get(ENDPOINT)
+    usuarios.value = response.data
   } catch (error) {
-    console.error('Error al obtener la lista de usuarios:', error);
+    console.error('Error al obtener la lista de usuarios:', error)
   }
 }
 
 function emitirEdicion(usuario: Usuario) {
-  emit('edit', usuario);
+  emit('edit', usuario)
 }
 
 function mostrarEliminarConfirm(usuario: Usuario) {
-  usuarioDelete.value = usuario;
-  mostrarConfirmDialog.value = true;
+  usuarioDelete.value = usuario
+  mostrarConfirmDialog.value = true
 }
 
 async function eliminar() {
   try {
     if (usuarioDelete.value) {
-      await http.delete(`${ENDPOINT}/${usuarioDelete.value.id}`);
-      obtenerLista();
-      mostrarConfirmDialog.value = false;
+      await http.delete(`${ENDPOINT}/${usuarioDelete.value.id}`)
+      obtenerLista()
+      mostrarConfirmDialog.value = false
     }
   } catch (error) {
-    console.error('Error al eliminar el usuario:', error);
+    console.error('Error al eliminar el usuario:', error)
   }
 }
 
 onMounted(() => {
-  obtenerLista();
-});
-defineExpose({ obtenerLista });
+  obtenerLista()
+})
+defineExpose({ obtenerLista })
 
 function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  const date = new Date(dateString)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 </script>
 

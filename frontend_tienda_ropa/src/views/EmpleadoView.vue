@@ -1,6 +1,6 @@
 <script setup lang="ts">
- import EmpleadoList from '@/components/empleado/EmpleadoList.vue'
- import EmpleadoSave from '@/components/empleado/EmpleadoSave.vue'
+import EmpleadoList from '@/components/empleado/EmpleadoList.vue'
+import EmpleadoSave from '@/components/empleado/EmpleadoSave.vue'
 import Button from 'primevue/button'
 import { ref } from 'vue'
 

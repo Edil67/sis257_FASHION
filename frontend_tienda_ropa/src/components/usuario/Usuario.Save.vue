@@ -11,9 +11,9 @@ const props = defineProps({
   mostrar: Boolean,
   usuario: {
     type: Object as () => Usuario,
-    default: () => ({} as Usuario)
+    default: () => ({}) as Usuario,
   },
-  modoEdicion: Boolean
+  modoEdicion: Boolean,
 })
 const emit = defineEmits(['guardar', 'close'])
 
@@ -21,7 +21,7 @@ const dialogVisible = computed({
   get: () => props.mostrar,
   set: (value) => {
     if (!value) emit('close')
-  }
+  },
 })
 
 const usuario = ref<Usuario>({ ...props.usuario })
@@ -29,7 +29,7 @@ watch(
   () => props.usuario,
   (newVal) => {
     usuario.value = { ...newVal }
-  }
+  },
 )
 
 async function handleSave() {
@@ -43,7 +43,7 @@ async function handleSave() {
       await http.post(ENDPOINT, body)
     }
     emit('guardar')
-    usuario.value = {} as Usuario  // Reiniciar usuario tras guardar
+    usuario.value = {} as Usuario // Reiniciar usuario tras guardar
     dialogVisible.value = false
   } catch (error: any) {
     alert(error?.response?.data?.message)
@@ -68,12 +68,6 @@ async function handleSave() {
           autofocus
         />
       </div>
-
-
-
-
-
-
 
       <div class="flex justify-end gap-2">
         <Button

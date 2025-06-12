@@ -27,7 +27,7 @@ const router = createRouter({
     {
       path: '/ventaDetalle',
       name: 'ventaDetalle',
-      component: () => import('../views/VentadetalleView.vue'),
+      component: () => import('../views/VentasDetallesView.vue'),
     },
     {
       path: '/categoria',

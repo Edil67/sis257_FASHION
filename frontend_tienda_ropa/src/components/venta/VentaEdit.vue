@@ -18,8 +18,8 @@ const venta = ref<Venta>({
   totalVenta: '',
   cliente: {
     id: 0,
-    nombres: ''
-  }
+    nombres: '',
+  },
 })
 const clientes = ref<Cliente[]>([])
 
@@ -36,7 +36,7 @@ async function actualizarVenta() {
   try {
     await http.patch(`${ENDPOINT}/${venta.value.id}`, {
       idCliente: venta.value.cliente.id,
-      totalVenta: venta.value.totalVenta
+      totalVenta: venta.value.totalVenta,
     })
     router.push('/ventas')
   } catch (error) {

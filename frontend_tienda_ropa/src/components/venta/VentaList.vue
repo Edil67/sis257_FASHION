@@ -19,7 +19,6 @@ function emitirEdicion(venta: Venta) {
   emit('edit', venta)
 }
 
-
 function mostrarEliminarConfirm(venta: Venta) {
   ventaDelete.value = venta
   mostrarConfirmDialog.value = true
@@ -36,16 +35,13 @@ onMounted(() => {
 })
 defineExpose({ obtenerLista })
 
-
 function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses son de 0 a 11
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  const date = new Date(dateString)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Los meses son de 0 a 11
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
-
-
 </script>
 
 <template>
@@ -57,7 +53,7 @@ function formatDate(dateString: string): string {
           <th>Cliente</th>
           <th>Productos</th>
           <th>Empleado</th>
-          <th>Cantidad </th>
+          <th>Cantidad</th>
           <th>precioUnitario</th>
           <th>Total</th>
           <th>Fecha de Venta</th>
@@ -75,15 +71,8 @@ function formatDate(dateString: string): string {
           <td>{{ venta.totalVenta }}</td>
           <td>{{ formatDate(venta.fechaCreacion) }}</td>
 
-
-
           <td>
-            <Button
-              icon="pi pi-pencil"
-              aria-label="Editar"
-              text
-              @click="emitirEdicion(venta)"
-            />
+            <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(venta)" />
             <Button
               icon="pi pi-trash"
               aria-label="Eliminar"

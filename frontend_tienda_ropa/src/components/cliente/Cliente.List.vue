@@ -35,13 +35,12 @@ onMounted(() => {
 })
 defineExpose({ obtenerLista })
 
-
 function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses son de 0 a 11
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  const date = new Date(dateString)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Los meses son de 0 a 11
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 </script>
 
@@ -68,14 +67,9 @@ function formatDate(dateString: string): string {
           <td>{{ cliente.direccion }}</td>
           <td>{{ cliente.telefono }}</td>
           <td>{{ cliente.email }}</td>
-          <td>{{ formatDate (cliente.fechaCreacion) }}</td>
+          <td>{{ formatDate(cliente.fechaCreacion) }}</td>
           <td>
-            <Button
-              icon="pi pi-pencil"
-              aria-label="Editar"
-              text
-              @click="emitirEdicion(cliente)"
-            />
+            <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(cliente)" />
             <Button
               icon="pi pi-trash"
               aria-label="Eliminar"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ClienteList from '@/components/cliente/Cliente.List.vue';
-import ClienteSave from '@/components/cliente/Cliente.Save.vue';
+import ClienteList from '@/components/cliente/Cliente.List.vue'
+import ClienteSave from '@/components/cliente/Cliente.Save.vue'
 import Button from 'primevue/button'
 import { ref } from 'vue'
 
@@ -9,22 +9,22 @@ const clienteListRef = ref<typeof ClienteList | null>(null)
 const clienteEdit = ref<any>(null)
 
 function hableCreate() {
-  clienteEdit.value = null  // Reinicia clienteEdit para creación
+  clienteEdit.value = null // Reinicia clienteEdit para creación
   mostrarDialog.value = true
 }
 
 function handleEdit(cliente: any) {
-  clienteEdit.value = { ...cliente }  // Crea una copia del cliente para evitar modificar el original
+  clienteEdit.value = { ...cliente } // Crea una copia del cliente para evitar modificar el original
   mostrarDialog.value = true
 }
 
 function handleCloseDialog() {
-  clienteEdit.value = null  // Resetea el valor al cerrar
+  clienteEdit.value = null // Resetea el valor al cerrar
   mostrarDialog.value = false
 }
 
 function handleGuardar() {
-  clienteListRef.value?.obtenerLista()  // Refresca la lista tras guardar
+  clienteListRef.value?.obtenerLista() // Refresca la lista tras guardar
 }
 </script>
 

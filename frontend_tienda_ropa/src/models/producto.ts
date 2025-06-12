@@ -1,4 +1,4 @@
-import type { Categoria } from "./categoria"
+import type { Categoria } from './categoria'
 
 export interface Producto {
   id: number
@@ -9,9 +9,9 @@ export interface Producto {
   tallasDisponibles: string
   coloresDisponibles: string
   imagenes: string
-  fechaCreacion: Date;
+  fechaCreacion: Date
 
-  fechaModificacion:Date
+  fechaModificacion: Date
 
   categoria: Categoria
 }

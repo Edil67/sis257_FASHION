@@ -19,13 +19,12 @@ const empleado = ref<Empleado>({
 
   cargo: 'admin',
 
-
   fechaContratacion: new Date(),
 
   usuario: {
     id: 0,
-    nombreUsuario: ''
-  }
+    nombreUsuario: '',
+  },
 })
 
 const usuarios = ref<Usuario[]>([])
@@ -37,7 +36,7 @@ async function crearEmpleado() {
       nombres: empleado.value.nombres,
       apellidos: empleado.value.apellidos,
       cargo: empleado.value.cargo,
-      fechaContratacion: empleado.value.fechaContratacion
+      fechaContratacion: empleado.value.fechaContratacion,
     })
     router.push('/empleados')
   } catch (error) {

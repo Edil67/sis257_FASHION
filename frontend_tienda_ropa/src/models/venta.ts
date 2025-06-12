@@ -1,21 +1,21 @@
-import type { Cliente } from "./cliente";
-import type { Empleado } from "./empleado";
-import type { Producto } from "./producto";
+import type { Cliente } from './cliente'
+import type { Empleado } from './empleado'
+import type { Producto } from './producto'
 
 export interface Venta {
-  id: number;
+  id: number
 
-  cantidad: number;
+  cantidad: number
 
-  precioUnitario: number;
+  precioUnitario: number
 
-  totalVenta: number;
+  totalVenta: number
 
-  fechaCreacion: Date;
+  fechaCreacion: Date
 
-  cliente: Cliente;
+  cliente: Cliente
 
-  producto: Producto;
+  producto: Producto
 
-  empleado: Empleado;
+  empleado: Empleado
 }

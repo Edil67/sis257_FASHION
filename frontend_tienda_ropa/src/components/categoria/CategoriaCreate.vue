@@ -32,7 +32,7 @@ async function crearCategoria() {
 
   try {
     await http.post(ENDPOINT, {
-      nombre: nombre.value
+      nombre: nombre.value,
     })
     router.push('/categorias')
   } catch (error) {

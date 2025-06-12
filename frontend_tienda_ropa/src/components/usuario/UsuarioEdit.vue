@@ -17,7 +17,7 @@ async function editarUsuario() {
   await http
     .patch(`${ENDPOINT}/${id}`, {
       nombreUsuario: nombreUsuario.value,
-      email: email.value
+      email: email.value,
     })
 
     .then(() => router.push('/usuarios'))

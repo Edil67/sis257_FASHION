@@ -15,7 +15,7 @@ async function crearUsuario() {
   await http
     .post(ENDPOINT, {
       nombreUsuario: nombreUsuario.value,
-      email: email.value
+      email: email.value,
     })
     .then(() => router.push('/usuarios'))
 }
