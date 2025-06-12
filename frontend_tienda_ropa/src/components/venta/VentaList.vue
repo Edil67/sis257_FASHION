@@ -49,12 +49,9 @@ function formatDate(dateString: string): string {
     <table>
       <thead>
         <tr>
-          <th>Nro.</th>
           <th>Cliente</th>
-          <th>Productos</th>
           <th>Empleado</th>
           <th>Cantidad</th>
-          <th>precioUnitario</th>
           <th>Total</th>
           <th>Fecha de Venta</th>
           <th>Acciones</th>
@@ -64,10 +61,7 @@ function formatDate(dateString: string): string {
         <tr v-for="(venta, index) in ventas" :key="venta.id">
           <td>{{ index + 1 }}</td>
           <td>{{ venta.cliente.nombres }}</td>
-          <td>{{ venta.producto.nombre }}</td>
           <td>{{ venta.empleado.nombres }}</td>
-          <td>{{ venta.cantidad }}</td>
-          <td>{{ venta.precioUnitario }}</td>
           <td>{{ venta.totalVenta }}</td>
           <td>{{ formatDate(venta.fechaCreacion) }}</td>
 

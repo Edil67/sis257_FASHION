@@ -73,9 +73,8 @@ function formatDate(dateString: string): string {
           <td>{{ producto.talla }}</td>
           <td>{{ producto.color }}</td>
           <td>
-  <img :src="producto.imagenes" alt="Imagen" style="max-width: 80px; max-height: 80px;" />
-</td>
-
+            <img :src="producto.imagenes" alt="Imagen" style="max-width: 80px; max-height: 80px" />
+          </td>
 
           <td>{{ formatDate(producto.fechaCreacion) }}</td>
 

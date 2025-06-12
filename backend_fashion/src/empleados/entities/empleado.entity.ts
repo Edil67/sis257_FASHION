@@ -4,6 +4,7 @@ import {
   OneToMany,
   OneToOne,
   Column,
+  CreateDateColumn,
 } from 'typeorm';
 import { Venta } from 'src/ventas/entities/venta.entity';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';

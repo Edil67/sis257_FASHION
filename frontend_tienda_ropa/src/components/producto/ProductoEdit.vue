@@ -23,11 +23,11 @@ const producto = ref<Producto>({
   categoria: {
     id: 0,
     nombre: '',
-    descripcion: ''
+    descripcion: '',
   },
   talla: '',
   color: '',
-  imagenes: ''
+  imagenes: '',
 })
 
 const categorias = ref<Categoria[]>([])
