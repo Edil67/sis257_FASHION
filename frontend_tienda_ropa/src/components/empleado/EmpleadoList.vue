@@ -14,10 +14,7 @@ const empleadoDelete = ref<Empleado | null>(null)
 const mostrarConfirmDialog = ref<boolean>(false)
 
 async function obtenerLista() {
-  const [empleadosRes, usuariosRes] = await Promise.all([
-    http.get(ENDPOINT),
-    http.get('usuarios')
-  ])
+  const [empleadosRes, usuariosRes] = await Promise.all([http.get(ENDPOINT), http.get('usuarios')])
   console.log('Empleados:', empleadosRes.data)
   console.log('Usuarios:', usuariosRes.data)
   usuarios.value = usuariosRes.data
@@ -25,7 +22,9 @@ async function obtenerLista() {
     ...e,
     usuario: e.usuario // Si ya viene embebido
       ? e.usuario
-      : usuarios.value.find(u => u.id === e.idUsuario || u.id === e.usuarioId) || { nombreUsuario: 'Sin usuario' }
+      : usuarios.value.find((u) => u.id === e.idUsuario || u.id === e.usuarioId) || {
+          nombreUsuario: 'Sin usuario',
+        },
   }))
 }
 
@@ -116,7 +115,8 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
-th, td {
+th,
+td {
   border: 1px solid #ddd;
   padding: 8px;
 }

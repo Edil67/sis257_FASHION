@@ -110,7 +110,12 @@ watch(
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="apellidos" class="font-semibold w-4">Apellidos</label>
-        <InputText id="apellidos" v-model="empleado.apellidos" class="flex-auto" autocomplete="off" />
+        <InputText
+          id="apellidos"
+          v-model="empleado.apellidos"
+          class="flex-auto"
+          autocomplete="off"
+        />
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="cargo" class="font-semibold w-4">Cargo</label>

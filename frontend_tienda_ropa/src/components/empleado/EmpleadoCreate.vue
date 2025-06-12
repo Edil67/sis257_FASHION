@@ -67,21 +67,37 @@ onMounted(getUsuarios)
           <label for="usuario">Usuario</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" v-model="empleado.nombres" placeholder="Nombres" required />
+          <input
+            type="text"
+            class="form-control"
+            v-model="empleado.nombres"
+            placeholder="Nombres"
+            required
+          />
           <label for="nombres">Nombres</label>
         </div>
         <div class="form-floating mb-2">
-          <input type="text" class="form-control" v-model="empleado.apellidos" placeholder="Apellidos" required />
+          <input
+            type="text"
+            class="form-control"
+            v-model="empleado.apellidos"
+            placeholder="Apellidos"
+            required
+          />
           <label for="apellidos">Apellidos</label>
         </div>
         <div class="form-floating mb-2">
-          <input type="text" class="form-control" v-model="empleado.cargo" placeholder="Cargo" required />
+          <input
+            type="text"
+            class="form-control"
+            v-model="empleado.cargo"
+            placeholder="Cargo"
+            required
+          />
           <label for="cargo">Cargo</label>
         </div>
         <div class="text-center mt-3">
-          <button type="submit" class="btn btn-primary btn-lg">
-            Guardar
-          </button>
+          <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
         </div>
       </form>
     </div>
