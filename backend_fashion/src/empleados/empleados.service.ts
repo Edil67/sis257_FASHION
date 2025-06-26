@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateEmpleadoDto } from './dto/create-empleado.dto';
 import { UpdateEmpleadoDto } from './dto/update-empleado.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,7 +11,10 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class EmpleadosService {
-  constructor(@InjectRepository(Empleado) private empleadosRepository: Repository<Empleado>) {}
+  constructor(
+    @InjectRepository(Empleado)
+    private empleadosRepository: Repository<Empleado>,
+  ) {}
 
   async create(createEmpleadoDto: CreateEmpleadoDto): Promise<Empleado> {
     const existe = await this.empleadosRepository.findOneBy({

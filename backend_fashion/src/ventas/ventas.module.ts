@@ -10,16 +10,10 @@ import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      Venta,
-      DetalleVenta,
-      Producto,
-      Cliente,
-      Usuario
-    ])
+    TypeOrmModule.forFeature([Venta, DetalleVenta, Producto, Cliente, Usuario]),
   ],
   controllers: [VentasController],
   providers: [VentasService],
-  exports: [VentasService]
+  exports: [VentasService],
 })
 export class VentasModule {}

@@ -1,5 +1,14 @@
 import { Venta } from 'src/ventas/entities/venta.entity';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('clientes')
 export class Cliente {
@@ -27,7 +36,7 @@ export class Cliente {
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;
 
-  @ManyToOne(() => Venta, venta => venta.cliente)
+  @ManyToOne(() => Venta, (venta) => venta.cliente)
   @JoinColumn({ name: 'id_venta', referencedColumnName: 'id' })
   venta: Venta;
 }

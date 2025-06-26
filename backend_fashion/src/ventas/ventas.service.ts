@@ -24,16 +24,12 @@ export class VentasService {
     @InjectRepository(Cliente)
     private clienteRepository: Repository<Cliente>,
     private dataSource: DataSource,
-  ) { }
+  ) {}
 
   async obtenerVentas(): Promise<Venta[]> {
     console.log('Obteniendo todas las ventas...');
     const ventas = await this.ventaRepository.find({
-      relations: [
-        'cliente',
-        'ventadetalles',
-        'ventadetalles.producto',
-      ],
+      relations: ['cliente', 'ventadetalles', 'ventadetalles.producto'],
     });
     console.log('Ventas obtenidas:', ventas);
     return ventas;
@@ -43,11 +39,7 @@ export class VentasService {
     console.log(`Buscando venta por ID: ${id}`);
     const venta = await this.ventaRepository.findOne({
       where: { id },
-      relations: [
-        'cliente',
-        'ventadetalles',
-        'ventadetalles.producto',
-      ],
+      relations: ['cliente', 'ventadetalles', 'ventadetalles.producto'],
     });
 
     if (!venta) {
@@ -107,7 +99,7 @@ export class VentasService {
         totalVenta: 0,
         estado: 'pendiente',
         montoPagado: null, // Puede ser null
-        cambio: null,      // Puede ser null
+        cambio: null, // Puede ser null
       });
 
       if (cliente) {
@@ -191,7 +183,10 @@ export class VentasService {
       }
 
       // Calcular cambio solo si montoPagado está definido
-      if (createVentaDto.montoPagado !== undefined && createVentaDto.montoPagado !== null) {
+      if (
+        createVentaDto.montoPagado !== undefined &&
+        createVentaDto.montoPagado !== null
+      ) {
         const montoPagado = Number(createVentaDto.montoPagado);
         if (montoPagado < totalVenta) {
           throw new BadRequestException(
@@ -202,7 +197,10 @@ export class VentasService {
 
         ventaGuardada.montoPagado = montoPagado;
         ventaGuardada.cambio = cambio;
-        console.log('Monto pagado y cambio calculados:', { montoPagado, cambio });
+        console.log('Monto pagado y cambio calculados:', {
+          montoPagado,
+          cambio,
+        });
       }
 
       ventaGuardada.totalVenta = totalVenta;
@@ -290,7 +288,9 @@ export class VentasService {
       venta.totalVenta = 0;
       venta.fechaAnulacion = fechaAnulacion;
       await queryRunner.manager.save(venta);
-      console.log('Venta marcada como anulada, totalVenta puesto en 0 y fechaAnulacion actualizada');
+      console.log(
+        'Venta marcada como anulada, totalVenta puesto en 0 y fechaAnulacion actualizada',
+      );
 
       await queryRunner.commitTransaction();
       console.log('Transacción de anulación confirmada.');
@@ -368,7 +368,7 @@ export class VentasService {
 
   async softRemoveVenta(id: number): Promise<{ mensaje: string }> {
     console.log(`Iniciando eliminación suave de venta con ID: ${id}`);
-    
+
     const venta = await this.ventaRepository.findOne({
       where: { id },
       relations: ['ventadetalles'],
@@ -411,7 +411,7 @@ export class VentasService {
 
   async updateVenta(id: number, updateVentaDto: any): Promise<Venta> {
     console.log(`Actualizando venta con ID: ${id}`, updateVentaDto);
-    
+
     const venta = await this.ventaRepository.findOne({
       where: { id },
       relations: ['cliente', 'ventadetalles', 'ventadetalles.producto'],

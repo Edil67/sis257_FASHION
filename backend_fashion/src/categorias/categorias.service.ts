@@ -15,7 +15,7 @@ export class CategoriasService {
   constructor(
     @InjectRepository(Categoria)
     private categoriasRepository: Repository<Categoria>,
-  ) { }
+  ) {}
 
   async create(createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
     const existe = await this.categoriasRepository.findOneBy({

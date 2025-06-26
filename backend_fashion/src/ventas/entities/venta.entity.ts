@@ -44,10 +44,24 @@ export class Venta {
   @Column({ name: 'fecha_anulacion', type: 'timestamp', nullable: true })
   fechaAnulacion: Date | null;
 
-  @Column({ name: 'monto_pagado', type: 'numeric', precision: 10, scale: 2, default: 0, nullable: true })
+  @Column({
+    name: 'monto_pagado',
+    type: 'numeric',
+    precision: 10,
+    scale: 2,
+    default: 0,
+    nullable: true,
+  })
   montoPagado: number | null;
 
-  @Column({ name: 'cambio', type: 'numeric', precision: 10, scale: 2, default: 0, nullable: true })
+  @Column({
+    name: 'cambio',
+    type: 'numeric',
+    precision: 10,
+    scale: 2,
+    default: 0,
+    nullable: true,
+  })
   cambio: number | null;
 
   //  muchas ventas puede realizar  un cliente

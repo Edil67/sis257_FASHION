@@ -36,7 +36,7 @@ export class VentasController {
   @Get(':id/detalles')
   @ApiResponse({ status: 200, description: 'Detalles de una venta específica' })
   @ApiResponse({ status: 404, description: 'Detalles no encontrados' })
-  async obtenerVentaDetalles(@Param('id') id: number){
+  async obtenerVentaDetalles(@Param('id') id: number) {
     return this.ventasService.obtenerVentaDetalles(id);
   }
 
@@ -58,7 +58,10 @@ export class VentasController {
   }
 
   @Patch(':id/soft-remove')
-  @ApiResponse({ status: 200, description: 'Venta eliminada exitosamente (soft)' })
+  @ApiResponse({
+    status: 200,
+    description: 'Venta eliminada exitosamente (soft)',
+  })
   @ApiResponse({ status: 404, description: 'Venta no encontrada' })
   async softRemoveVenta(
     @Param('id', ParseIntPipe) id: number,
