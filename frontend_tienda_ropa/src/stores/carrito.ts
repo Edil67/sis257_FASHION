@@ -7,14 +7,14 @@ export const useCarritoStore = defineStore('carrito', () => {
   // Estado
   const items = ref<ItemCarrito[]>([])
   const datosCheckout = ref<DatosCheckout>({
-    metodoPago: 'efectivo'
+    metodoPago: 'efectivo',
   })
 
   // Getters
   const carrito = computed<Carrito>(() => ({
     items: items.value,
     total: items.value.reduce((sum, item) => sum + item.subtotal, 0),
-    cantidadTotal: items.value.reduce((sum, item) => sum + item.cantidad, 0)
+    cantidadTotal: items.value.reduce((sum, item) => sum + item.cantidad, 0),
   }))
 
   const cantidadItems = computed(() => carrito.value.cantidadTotal)
@@ -23,19 +23,19 @@ export const useCarritoStore = defineStore('carrito', () => {
 
   // Acciones
   function agregarAlCarrito(producto: Producto, cantidad: number = 1) {
-    const itemExistente = items.value.find(item => item.producto.id === producto.id)
-    
+    const itemExistente = items.value.find((item) => item.producto.id === producto.id)
+
     if (itemExistente) {
       // Si el producto ya existe, aumentar cantidad
       itemExistente.cantidad += cantidad
       itemExistente.subtotal = itemExistente.cantidad * itemExistente.producto.precio
-      
+
       // Notificación de cantidad actualizada
       mostrarNotificacion({
         tipo: 'info',
         titulo: 'Cantidad actualizada',
         mensaje: `${producto.nombre} - Nueva cantidad: ${itemExistente.cantidad}`,
-        duracion: 2500
+        duracion: 2500,
       })
     } else {
       // Si es nuevo, agregarlo
@@ -43,25 +43,25 @@ export const useCarritoStore = defineStore('carrito', () => {
         id: `${producto.id}-${Date.now()}`,
         producto,
         cantidad,
-        subtotal: producto.precio * cantidad
+        subtotal: producto.precio * cantidad,
       }
       items.value.push(nuevoItem)
-      
+
       // Notificación de producto agregado
       mostrarNotificacion({
         tipo: 'success',
         titulo: '¡Agregado al carrito!',
         mensaje: `${producto.nombre} - ${formatearPrecio(producto.precio)}`,
-        duracion: 3000
+        duracion: 3000,
       })
     }
-    
+
     // Guardar en localStorage
     guardarEnStorage()
   }
 
   function removerDelCarrito(itemId: string) {
-    const index = items.value.findIndex(item => item.id === itemId)
+    const index = items.value.findIndex((item) => item.id === itemId)
     if (index > -1) {
       items.value.splice(index, 1)
       guardarEnStorage()
@@ -69,7 +69,7 @@ export const useCarritoStore = defineStore('carrito', () => {
   }
 
   function actualizarCantidad(itemId: string, nuevaCantidad: number) {
-    const item = items.value.find(item => item.id === itemId)
+    const item = items.value.find((item) => item.id === itemId)
     if (item) {
       if (nuevaCantidad <= 0) {
         removerDelCarrito(itemId)
@@ -90,12 +90,12 @@ export const useCarritoStore = defineStore('carrito', () => {
   function obtenerDetallesVenta(): VentaRequest {
     return {
       metodoPago: datosCheckout.value.metodoPago,
-      detalles: items.value.map(item => ({
+      detalles: items.value.map((item) => ({
         idProducto: item.producto.id,
-        cantidad: item.cantidad
+        cantidad: item.cantidad,
       })),
       montoPagado: totalCarrito.value,
-      cambio: 0
+      cambio: 0,
     }
   }
 
@@ -106,10 +106,13 @@ export const useCarritoStore = defineStore('carrito', () => {
 
   // Persistencia en localStorage
   function guardarEnStorage() {
-    localStorage.setItem('carrito-fashion', JSON.stringify({
-      items: items.value,
-      datosCheckout: datosCheckout.value
-    }))
+    localStorage.setItem(
+      'carrito-fashion',
+      JSON.stringify({
+        items: items.value,
+        datosCheckout: datosCheckout.value,
+      }),
+    )
   }
 
   function cargarDesdeStorage() {
@@ -131,7 +134,7 @@ export const useCarritoStore = defineStore('carrito', () => {
     return new Intl.NumberFormat('es-BO', {
       style: 'currency',
       currency: 'BOB',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     }).format(precio)
   }
 
@@ -144,9 +147,11 @@ export const useCarritoStore = defineStore('carrito', () => {
   }) {
     // Disparar evento global para notificaciones
     if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('mostrar-notificacion', {
-        detail: notificacion
-      }))
+      window.dispatchEvent(
+        new CustomEvent('mostrar-notificacion', {
+          detail: notificacion,
+        }),
+      )
     }
   }
 
@@ -157,13 +162,13 @@ export const useCarritoStore = defineStore('carrito', () => {
     // Estado
     items,
     datosCheckout,
-    
+
     // Getters
     carrito,
     cantidadItems,
     totalCarrito,
     estaVacio,
-    
+
     // Acciones
     agregarAlCarrito,
     removerDelCarrito,
@@ -173,6 +178,6 @@ export const useCarritoStore = defineStore('carrito', () => {
     actualizarDatosCheckout,
     guardarEnStorage,
     cargarDesdeStorage,
-    formatearPrecio
+    formatearPrecio,
   }
 })

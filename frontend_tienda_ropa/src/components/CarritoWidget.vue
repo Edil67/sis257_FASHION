@@ -26,18 +26,14 @@
       <div v-else class="carrito-contenido">
         <!-- Items del carrito -->
         <div class="carrito-items">
-          <div 
-            v-for="item in carritoStore.items" 
-            :key="item.id" 
-            class="carrito-item"
-          >
+          <div v-for="item in carritoStore.items" :key="item.id" class="carrito-item">
             <div class="item-imagen">
-              <img 
-                :src="item.producto.imagenes || '/placeholder-product.jpg'" 
+              <img
+                :src="item.producto.imagenes || '/placeholder-product.jpg'"
                 :alt="item.producto.nombre"
-              >
+              />
             </div>
-            
+
             <div class="item-detalles">
               <h4>{{ item.producto.nombre }}</h4>
               <p class="item-info">{{ item.producto.talla }} - {{ item.producto.color }}</p>
@@ -46,7 +42,7 @@
 
             <div class="item-controles">
               <div class="cantidad-controles">
-                <button 
+                <button
                   @click="carritoStore.actualizarCantidad(item.id, item.cantidad - 1)"
                   class="btn-cantidad"
                   :disabled="item.cantidad <= 1"
@@ -54,14 +50,14 @@
                   -
                 </button>
                 <span class="cantidad">{{ item.cantidad }}</span>
-                <button 
+                <button
                   @click="carritoStore.actualizarCantidad(item.id, item.cantidad + 1)"
                   class="btn-cantidad"
                 >
                   +
                 </button>
               </div>
-              <button 
+              <button
                 @click="carritoStore.removerDelCarrito(item.id)"
                 class="btn-remover"
                 title="Eliminar del carrito"
@@ -81,14 +77,12 @@
           <div class="total">
             <strong>Total: {{ carritoStore.formatearPrecio(carritoStore.totalCarrito) }}</strong>
           </div>
-          
+
           <div class="carrito-acciones">
             <button @click="carritoStore.vaciarCarrito()" class="btn btn-outline">
               Vaciar carrito
             </button>
-            <button @click="irACheckout" class="btn btn-primary">
-              Proceder al pago
-            </button>
+            <button @click="irACheckout" class="btn btn-primary">Proceder al pago</button>
           </div>
         </div>
       </div>
@@ -393,12 +387,12 @@ onUnmounted(() => {
     width: 300px;
     right: -50px;
   }
-  
+
   .carrito-item {
     grid-template-columns: 50px 1fr auto;
     gap: 0.5rem;
   }
-  
+
   .item-subtotal {
     grid-column: 1 / -1;
     text-align: center;

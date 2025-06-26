@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import Footer from './Footer.vue';
-import NavBar from './NavBar.vue';
-import Slider from './Slider.vue';
-import Banner from './Banner.vue';
-import Product from './Product.vue';
-import CarritoFlotante from '@/components/CarritoFlotante.vue';
+import Footer from './Footer.vue'
+import NavBar from './NavBar.vue'
+import Slider from './Slider.vue'
+import Banner from './Banner.vue'
+import Product from './Product.vue'
+import CarritoFlotante from '@/components/CarritoFlotante.vue'
 </script>
 
 <template class="animsition">
   <NavBar />
-  
+
   <div id="slider-section">
     <Slider />
   </div>

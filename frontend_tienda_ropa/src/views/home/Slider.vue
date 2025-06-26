@@ -1,54 +1,54 @@
 <script setup lang="ts">
-import { onMounted, nextTick } from 'vue';
+import { onMounted, nextTick } from 'vue'
 
 // Importar las imágenes correctamente con Vite
-import slide01 from '@/assets/images/slide-01.jpg';
-import slide02 from '@/assets/images/slide-02.jpg';
-import slide03 from '@/assets/images/slide-03.jpg';
+import slide01 from '@/assets/images/slide-01.jpg'
+import slide02 from '@/assets/images/slide-02.jpg'
+import slide03 from '@/assets/images/slide-03.jpg'
 
 // Configuración de slides
 const slides = [
   {
     image: slide01,
-    subtitle: "Colección de Mujeres 2025",
-    title: "NUEVA TEMPORADA",
+    subtitle: 'Colección de Mujeres 2025',
+    title: 'NUEVA TEMPORADA',
     animations: {
-      subtitle: { appear: "fadeInDown", delay: 0 },
-      title: { appear: "fadeInUp", delay: 800 },
-      button: { appear: "zoomIn", delay: 1600 }
-    }
+      subtitle: { appear: 'fadeInDown', delay: 0 },
+      title: { appear: 'fadeInUp', delay: 800 },
+      button: { appear: 'zoomIn', delay: 1600 },
+    },
   },
   {
     image: slide02,
-    subtitle: "Nueva Temporada para Hombres",
-    title: "Chaquetas",
+    subtitle: 'Nueva Temporada para Hombres',
+    title: 'Chaquetas',
     animations: {
-      subtitle: { appear: "rollIn", delay: 0 },
-      title: { appear: "lightSpeedIn", delay: 800 },
-      button: { appear: "slideInUp", delay: 1600 }
-    }
+      subtitle: { appear: 'rollIn', delay: 0 },
+      title: { appear: 'lightSpeedIn', delay: 800 },
+      button: { appear: 'slideInUp', delay: 1600 },
+    },
   },
   {
     image: slide03,
-    subtitle: "Colección de Hombres 2025",
-    title: "Nuevas Llegadas",
+    subtitle: 'Colección de Hombres 2025',
+    title: 'Nuevas Llegadas',
     animations: {
-      subtitle: { appear: "rotateInDownLeft", delay: 0 },
-      title: { appear: "rotateInUpRight", delay: 800 },
-      button: { appear: "rotateIn", delay: 1600 }
-    }
-  }
-];
+      subtitle: { appear: 'rotateInDownLeft', delay: 0 },
+      title: { appear: 'rotateInUpRight', delay: 800 },
+      button: { appear: 'rotateIn', delay: 1600 },
+    },
+  },
+]
 
 onMounted(async () => {
   // Esperamos a que Vue renderice el componente completamente
-  await nextTick();
+  await nextTick()
 
   // Esperamos un poco más para asegurar que jQuery esté disponible
   setTimeout(() => {
-    const $ = (window as any).$;
+    const $ = (window as any).$
     if ($) {
-      console.log('Inicializando slider con jQuery');
+      console.log('Inicializando slider con jQuery')
 
       // Inicializar Slick slider
       $('.slick1').slick({
@@ -60,69 +60,77 @@ onMounted(async () => {
         speed: 1000,
         fade: true,
         cssEase: 'linear',
-        prevArrow: '<button class="arrow-slick1 prev-slick1"><i class="zmdi zmdi-chevron-left"></i></button>',
-        nextArrow: '<button class="arrow-slick1 next-slick1"><i class="zmdi zmdi-chevron-right"></i></button>'
-      });
+        prevArrow:
+          '<button class="arrow-slick1 prev-slick1"><i class="zmdi zmdi-chevron-left"></i></button>',
+        nextArrow:
+          '<button class="arrow-slick1 next-slick1"><i class="zmdi zmdi-chevron-right"></i></button>',
+      })
 
       // Función para activar animaciones en la diapositiva activa
       function activateSlideAnimations() {
         $('.slick1 .slick-active .layer-slick1').each(function (index: number) {
-          const $element = $(this as any);
-          const animationName = $element.attr('data-appear');
-          const delay = $element.attr('data-delay') || '0';
+          const $element = $(this as any)
+          const animationName = $element.attr('data-appear')
+          const delay = $element.attr('data-delay') || '0'
 
           setTimeout(() => {
-            $element.removeClass('visible-false').addClass('animated ' + animationName);
-          }, parseInt(delay));
-        });
+            $element.removeClass('visible-false').addClass('animated ' + animationName)
+          }, parseInt(delay))
+        })
       }
 
       // Función para resetear animaciones
       function resetSlideAnimations() {
-        $('.layer-slick1').removeClass('animated fadeInDown fadeInUp zoomIn rollIn lightSpeedIn slideInUp rotateInDownLeft rotateInUpRight rotateIn').addClass('visible-false');
+        $('.layer-slick1')
+          .removeClass(
+            'animated fadeInDown fadeInUp zoomIn rollIn lightSpeedIn slideInUp rotateInDownLeft rotateInUpRight rotateIn',
+          )
+          .addClass('visible-false')
       }
 
       // Activar animaciones en la primera diapositiva
       setTimeout(() => {
-        activateSlideAnimations();
-      }, 500);
+        activateSlideAnimations()
+      }, 500)
 
       // Eventos del slider
-      $('.slick1').on('beforeChange', function (event: any, slick: any, currentSlide: any, nextSlide: any) {
-        resetSlideAnimations();
-      });
+      $('.slick1').on(
+        'beforeChange',
+        function (event: any, slick: any, currentSlide: any, nextSlide: any) {
+          resetSlideAnimations()
+        },
+      )
 
       $('.slick1').on('afterChange', function (event: any, slick: any, currentSlide: any) {
         setTimeout(() => {
-          activateSlideAnimations();
-        }, 100);
-      });
+          activateSlideAnimations()
+        }, 100)
+      })
 
-      console.log('Slider inicializado correctamente');
+      console.log('Slider inicializado correctamente')
     } else {
-      console.error('jQuery no está disponible para inicializar el slider');
+      console.error('jQuery no está disponible para inicializar el slider')
     }
-  }, 1000);
-});
+  }, 1000)
+})
 </script>
-
 
 <template>
   <!-- Slider -->
   <section class="section-slide">
     <div class="wrap-slick1">
       <div class="slick1">
-        <div 
-          v-for="(slide, index) in slides" 
+        <div
+          v-for="(slide, index) in slides"
           :key="index"
-          class="item-slick1" 
+          class="item-slick1"
           :style="{ backgroundImage: `url(${slide.image})` }"
         >
           <div class="container h-full">
             <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
-              <div 
-                class="layer-slick1 animated visible-false" 
-                :data-appear="slide.animations.subtitle.appear" 
+              <div
+                class="layer-slick1 animated visible-false"
+                :data-appear="slide.animations.subtitle.appear"
                 :data-delay="slide.animations.subtitle.delay"
               >
                 <span class="ltext-101 cl2 respon2">
@@ -130,9 +138,9 @@ onMounted(async () => {
                 </span>
               </div>
 
-              <div 
-                class="layer-slick1 animated visible-false" 
-                :data-appear="slide.animations.title.appear" 
+              <div
+                class="layer-slick1 animated visible-false"
+                :data-appear="slide.animations.title.appear"
                 :data-delay="slide.animations.title.delay"
               >
                 <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
@@ -140,12 +148,15 @@ onMounted(async () => {
                 </h2>
               </div>
 
-              <div 
-                class="layer-slick1 animated visible-false" 
-                :data-appear="slide.animations.button.appear" 
+              <div
+                class="layer-slick1 animated visible-false"
+                :data-appear="slide.animations.button.appear"
                 :data-delay="slide.animations.button.delay"
               >
-                <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                <a
+                  href="product.html"
+                  class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
+                >
                   Comprar Ahora
                 </a>
               </div>
@@ -429,17 +440,17 @@ onMounted(async () => {
     height: 70vh;
     min-height: 500px;
   }
-  
+
   :deep(.arrow-slick1) {
     width: 45px;
     height: 45px;
     font-size: 16px;
   }
-  
+
   :deep(.prev-slick1) {
     left: 15px;
   }
-  
+
   :deep(.next-slick1) {
     right: 15px;
   }

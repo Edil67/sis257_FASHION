@@ -21,7 +21,7 @@ const {
   datosPaginados: ventasPaginadas,
   totalRegistros,
   onCambioPagina,
-  onCambioRecordsPorPagina
+  onCambioRecordsPorPagina,
 } = usePaginacion(ventas, { recordsPorPaginaInicial: 5 })
 
 async function obtenerLista() {
@@ -90,7 +90,12 @@ function formatDate(dateString: string): string {
               {{ venta.cliente?.nombre || '' }} {{ venta.cliente?.apellido || '' }}
             </td>
             <td class="total-cell">
-              {{ venta.totalVenta?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+              {{
+                venta.totalVenta?.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })
+              }}
             </td>
             <td>
               {{ venta.metodoPago }}
@@ -99,35 +104,45 @@ function formatDate(dateString: string): string {
               {{ venta.estado }}
             </td>
             <td>
-              {{ venta.montoPagado?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+              {{
+                venta.montoPagado?.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })
+              }}
             </td>
             <td>
-              {{ venta.cambio?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+              {{
+                venta.cambio?.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })
+              }}
             </td>
             <td>
               {{ formatDate(venta.fechaCreacion) }}
             </td>
             <td class="actions-cell">
-              <Button 
-                icon="pi pi-eye" 
-                aria-label="Ver Detalles" 
-                text 
-                severity="info" 
-                @click="mostrarDetalles(venta.id)" 
+              <Button
+                icon="pi pi-eye"
+                aria-label="Ver Detalles"
+                text
+                severity="info"
+                @click="mostrarDetalles(venta.id)"
               />
-              <Button 
-                icon="pi pi-pencil" 
-                aria-label="Editar" 
-                text 
-                severity="success" 
-                @click="emitirEdicion(venta)" 
+              <Button
+                icon="pi pi-pencil"
+                aria-label="Editar"
+                text
+                severity="success"
+                @click="emitirEdicion(venta)"
               />
-              <Button 
-                icon="pi pi-trash" 
-                aria-label="Eliminar" 
-                text 
+              <Button
+                icon="pi pi-trash"
+                aria-label="Eliminar"
+                text
                 severity="danger"
-                @click="mostrarEliminarConfirm(venta)" 
+                @click="mostrarEliminarConfirm(venta)"
               />
             </td>
           </tr>
@@ -146,22 +161,30 @@ function formatDate(dateString: string): string {
       @cambio-records-por-pagina="onCambioRecordsPorPagina"
     />
 
-    <Dialog v-model:visible="mostrarConfirmDialog" header="Confirmar Eliminación" :style="{ width: '25rem' }">
+    <Dialog
+      v-model:visible="mostrarConfirmDialog"
+      header="Confirmar Eliminación"
+      :style="{ width: '25rem' }"
+    >
       <p>¿Estás seguro de que deseas eliminar este registro?</p>
       <div class="flex justify-end gap-2">
-        <Button type="button" label="Cancelar" severity="secondary" @click="mostrarConfirmDialog = false" />
+        <Button
+          type="button"
+          label="Cancelar"
+          severity="secondary"
+          @click="mostrarConfirmDialog = false"
+        />
         <Button type="button" label="Eliminar" @click="eliminar" />
       </div>
     </Dialog>
 
-    <VentaDetalle 
+    <VentaDetalle
       :mostrar="mostrarDetalleDialog"
       :venta-id="ventaDetalleId"
       @close="cerrarDetalles"
     />
   </div>
 </template>
-
 
 <style scoped>
 .table-container {

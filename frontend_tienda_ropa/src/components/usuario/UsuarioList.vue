@@ -18,7 +18,7 @@ const {
   datosPaginados: usuariosPaginados,
   totalRegistros,
   onCambioPagina,
-  onCambioRecordsPorPagina
+  onCambioRecordsPorPagina,
 } = usePaginacion(usuarios, { recordsPorPaginaInicial: 5 })
 
 async function getUsuarios() {

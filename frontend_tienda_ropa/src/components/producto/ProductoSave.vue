@@ -192,7 +192,18 @@ watch(
         <Select
           id="color"
           v-model="producto.color"
-          :options="['Blanco', 'Negro', 'Azul', 'Rojo', 'Verde', 'Amarillo', 'Rosa', 'Gris', 'Marrón', 'Violeta']"
+          :options="[
+            'Blanco',
+            'Negro',
+            'Azul',
+            'Rojo',
+            'Verde',
+            'Amarillo',
+            'Rosa',
+            'Gris',
+            'Marrón',
+            'Violeta',
+          ]"
           class="flex-auto"
           placeholder="Seleccione un color"
         />
@@ -200,7 +211,13 @@ watch(
       <!-- campo para imagen-->
       <div class="flex items-center gap-4 mb-4">
         <label for="imagen" class="font-semibold w-4">URL Imagen</label>
-        <InputText id="imagen" v-model="producto.imagenes" class="flex-auto" autocomplete="off" type="url" />
+        <InputText
+          id="imagen"
+          v-model="producto.imagenes"
+          class="flex-auto"
+          autocomplete="off"
+          type="url"
+        />
       </div>
 
       <!-- Botones de acción -->

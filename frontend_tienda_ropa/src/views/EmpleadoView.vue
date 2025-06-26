@@ -34,12 +34,7 @@ function handleGuardar() {
         <i class="pi pi-users"></i>
         Empleados
       </h1>
-      <Button 
-        label="Crear Nuevo" 
-        icon="pi pi-plus" 
-        class="create-btn"
-        @click="hableCreate" 
-      />
+      <Button label="Crear Nuevo" icon="pi pi-plus" class="create-btn" @click="hableCreate" />
     </div>
     <EmpleadoList ref="empleadoListRef" @edit="handleEdit" />
     <EmpleadoSave

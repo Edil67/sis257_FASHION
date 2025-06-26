@@ -18,7 +18,7 @@ const {
   datosPaginados: clientesPaginados,
   totalRegistros,
   onCambioPagina,
-  onCambioRecordsPorPagina
+  onCambioRecordsPorPagina,
 } = usePaginacion(clientes, { recordsPorPaginaInicial: 5 })
 
 async function obtenerLista() {
@@ -80,7 +80,13 @@ function formatDate(dateString: string): string {
             <td>{{ cliente.email }}</td>
             <td>{{ formatDate(cliente.fechaCreacion) }}</td>
             <td class="actions-cell">
-              <Button icon="pi pi-pencil" aria-label="Editar" text severity="info" @click="emitirEdicion(cliente)" />
+              <Button
+                icon="pi pi-pencil"
+                aria-label="Editar"
+                text
+                severity="info"
+                @click="emitirEdicion(cliente)"
+              />
               <Button
                 icon="pi pi-trash"
                 aria-label="Eliminar"

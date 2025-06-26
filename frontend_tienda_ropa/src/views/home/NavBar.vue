@@ -3,7 +3,6 @@
   <header>
     <!-- Header desktop -->
     <div class="container-menu-desktop" :class="{ 'navbar-solid': !isTransparent }">
-
       <!-- Topbar -->
       <div v-if="!isLoggedIn" class="top-bar" :class="{ 'navbar-solid': !isTransparent }">
         <div class="content-topbar flex-sb-m h-full container">
@@ -12,19 +11,35 @@
           </div>
 
           <div class="right-top-bar flex-w h-full">
-            <a href="#" class="flex-c-m trans-04 p-lr-25" :style="{ color: !isTransparent ? '#333' : '' }">
+            <a
+              href="#"
+              class="flex-c-m trans-04 p-lr-25"
+              :style="{ color: !isTransparent ? '#333' : '' }"
+            >
               Ayuda & Preguntas Frecuentes
             </a>
 
-            <router-link to="/login" class="flex-c-m trans-04 p-lr-25" :style="{ color: !isTransparent ? '#333' : '' }">
+            <router-link
+              to="/login"
+              class="flex-c-m trans-04 p-lr-25"
+              :style="{ color: !isTransparent ? '#333' : '' }"
+            >
               Iniciar Sesión
             </router-link>
 
-            <a href="#" class="flex-c-m trans-04 p-lr-25" :style="{ color: !isTransparent ? '#333' : '' }">
+            <a
+              href="#"
+              class="flex-c-m trans-04 p-lr-25"
+              :style="{ color: !isTransparent ? '#333' : '' }"
+            >
               ES
             </a>
 
-            <a href="#" class="flex-c-m trans-04 p-lr-25" :style="{ color: !isTransparent ? '#333' : '' }">
+            <a
+              href="#"
+              class="flex-c-m trans-04 p-lr-25"
+              :style="{ color: !isTransparent ? '#333' : '' }"
+            >
               BOB
             </a>
           </div>
@@ -39,28 +54,43 @@
           </div>
 
           <div class="right-top-bar flex-w h-full">
-            <router-link to="/empleados" class="flex-c-m trans-04 p-lr-25"
-              :style="{ color: !isTransparent ? '#333' : '' }">
+            <router-link
+              to="/empleados"
+              class="flex-c-m trans-04 p-lr-25"
+              :style="{ color: !isTransparent ? '#333' : '' }"
+            >
               Empleados
             </router-link>
 
-            <router-link to="/productos" class="flex-c-m trans-04 p-lr-25"
-              :style="{ color: !isTransparent ? '#333' : '' }">
+            <router-link
+              to="/productos"
+              class="flex-c-m trans-04 p-lr-25"
+              :style="{ color: !isTransparent ? '#333' : '' }"
+            >
               Productos
             </router-link>
 
-            <router-link to="/ventas" class="flex-c-m trans-04 p-lr-25"
-              :style="{ color: !isTransparent ? '#333' : '' }">
+            <router-link
+              to="/ventas"
+              class="flex-c-m trans-04 p-lr-25"
+              :style="{ color: !isTransparent ? '#333' : '' }"
+            >
               Ventas
             </router-link>
 
-            <router-link to="/cliente" class="flex-c-m trans-04 p-lr-25"
-              :style="{ color: !isTransparent ? '#333' : '' }">
+            <router-link
+              to="/cliente"
+              class="flex-c-m trans-04 p-lr-25"
+              :style="{ color: !isTransparent ? '#333' : '' }"
+            >
               Clientes
             </router-link>
 
-            <router-link to="/categoria" class="flex-c-m trans-04 p-lr-25"
-              :style="{ color: !isTransparent ? '#333' : '' }">
+            <router-link
+              to="/categoria"
+              class="flex-c-m trans-04 p-lr-25"
+              :style="{ color: !isTransparent ? '#333' : '' }"
+            >
               Categorías
             </router-link>
           </div>
@@ -69,28 +99,35 @@
 
       <div class="wrap-menu-desktop" :class="{ 'navbar-solid': !isTransparent }">
         <nav class="limiter-menu-desktop container">
-
           <!-- Logo desktop -->
-            <router-link to="/" class="logo">
-            <img src="@/assets/images/icons/logo-01.png" alt="IMG-LOGO">
-            </router-link>
+          <router-link to="/" class="logo">
+            <img src="@/assets/images/icons/logo-01.png" alt="IMG-LOGO" />
+          </router-link>
 
           <!-- Menu desktop -->
           <div class="menu-desktop">
             <ul class="main-menu">
               <li class="active-menu">
-                <router-link to="/" @click.native="scrollToSection($event, 'slider-section')">Inicio</router-link>
+                <router-link to="/" @click.native="scrollToSection($event, 'slider-section')"
+                  >Inicio</router-link
+                >
               </li>
 
               <li>
-                <a href="#product-section" @click="scrollToSection($event, 'product-section')">Tienda</a>
+                <a href="#product-section" @click="scrollToSection($event, 'product-section')"
+                  >Tienda</a
+                >
               </li>
 
               <li>
-                <a href="#banner-section" @click="scrollToSection($event, 'banner-section')">Categorías</a>
+                <a href="#banner-section" @click="scrollToSection($event, 'banner-section')"
+                  >Categorías</a
+                >
               </li>
               <li>
-                <a href="#footer-section" @click="scrollToSection($event, 'footer-section')">Contacto</a>
+                <a href="#footer-section" @click="scrollToSection($event, 'footer-section')"
+                  >Contacto</a
+                >
               </li>
             </ul>
           </div>
@@ -106,8 +143,11 @@
               <CarritoWidget />
             </div>
 
-            <div v-if="isLoggedIn" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11"
-              @click="authStore.logout">
+            <div
+              v-if="isLoggedIn"
+              class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11"
+              @click="authStore.logout"
+            >
               <i class="zmdi zmdi-power"></i>
             </div>
           </div>
@@ -118,108 +158,108 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, onUnmounted } from 'vue';
-import { useAuthStore } from '@/stores';
-import CarritoWidget from '@/components/CarritoWidget.vue';
+import { computed, onMounted, ref, onUnmounted } from 'vue'
+import { useAuthStore } from '@/stores'
+import CarritoWidget from '@/components/CarritoWidget.vue'
 
-const authStore = useAuthStore();
-const isLoggedIn = computed(() => !!authStore.token);
+const authStore = useAuthStore()
+const isLoggedIn = computed(() => !!authStore.token)
 
 // Estado para el navbar dinámico
-const isTransparent = ref(true);
+const isTransparent = ref(true)
 
 // Función para manejar el scroll y cambiar el estilo del navbar
 const handleScroll = () => {
-  const scrollPosition = window.scrollY;
+  const scrollPosition = window.scrollY
 
   // Si estamos al inicio de la página (en el slider), navbar transparente
   if (scrollPosition < 50) {
-    isTransparent.value = true;
+    isTransparent.value = true
   } else {
-    isTransparent.value = false;
+    isTransparent.value = false
   }
-};
+}
 
 // Función para scroll suave a las secciones
 const scrollToSection = (event: Event, sectionId: string) => {
-  event.preventDefault();
+  event.preventDefault()
 
-  const element = document.getElementById(sectionId);
+  const element = document.getElementById(sectionId)
   if (element) {
     // Calcular la altura del header para el offset
-    const header = document.querySelector('header');
-    const headerHeight = header ? header.offsetHeight : 0;
+    const header = document.querySelector('header')
+    const headerHeight = header ? header.offsetHeight : 0
 
     // Obtener la posición del elemento menos la altura del header
-    const elementPosition = element.offsetTop - headerHeight;
+    const elementPosition = element.offsetTop - headerHeight
 
     // Scroll suave a la posición
     window.scrollTo({
       top: elementPosition,
-      behavior: 'smooth'
-    });
+      behavior: 'smooth',
+    })
 
     // Cerrar menú móvil si está abierto
-    const menuMobile = document.querySelector('.menu-mobile');
+    const menuMobile = document.querySelector('.menu-mobile')
     if (menuMobile) {
-      menuMobile.classList.remove('show-menu-mobile');
+      menuMobile.classList.remove('show-menu-mobile')
     }
 
     // Remover clase active de todos los elementos del menú
-    const menuItems = document.querySelectorAll('.main-menu li, .main-menu-m li');
-    menuItems.forEach(item => item.classList.remove('active-menu'));
+    const menuItems = document.querySelectorAll('.main-menu li, .main-menu-m li')
+    menuItems.forEach((item) => item.classList.remove('active-menu'))
 
     // Agregar clase active al elemento clickeado
-    const clickedElement = (event.target as HTMLElement).closest('li');
+    const clickedElement = (event.target as HTMLElement).closest('li')
     if (clickedElement) {
-      clickedElement.classList.add('active-menu');
+      clickedElement.classList.add('active-menu')
     }
   }
-};
+}
 
 onMounted(() => {
   // Agregar listener para el scroll
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('scroll', handleScroll)
   // Ejecutar una vez al cargar para establecer el estado inicial
-  handleScroll();
+  handleScroll()
 
   // Esperar a que jQuery esté disponible
   setTimeout(() => {
-    const $ = (window as any).$;
+    const $ = (window as any).$
     if ($) {
       // Funcionalidad del carrito
       $('.js-show-cart').on('click', function () {
-        $('.js-panel-cart').addClass('show-header-cart');
-      });
+        $('.js-panel-cart').addClass('show-header-cart')
+      })
 
       $('.js-hide-cart').on('click', function () {
-        $('.js-panel-cart').removeClass('show-header-cart');
-      });
+        $('.js-panel-cart').removeClass('show-header-cart')
+      })
 
       // Funcionalidad del modal de búsqueda
       $('.js-show-modal-search').on('click', function () {
-        $('.js-hide-modal-search').addClass('show-modal-search');
-      });
+        $('.js-hide-modal-search').addClass('show-modal-search')
+      })
 
       $('.js-hide-modal-search').on('click', function () {
-        $('.js-hide-modal-search').removeClass('show-modal-search');
-      });
+        $('.js-hide-modal-search').removeClass('show-modal-search')
+      })
 
       // Funcionalidad del menú móvil
       $('.btn-show-menu-mobile').on('click', function (this: HTMLElement) {
-        $(this).toggleClass('is-active');
-        $('.menu-mobile').slideToggle();
-      });
+        $(this).toggleClass('is-active')
+        $('.menu-mobile').slideToggle()
+      })
 
-      console.log('Funcionalidades del NavBar inicializadas');
+      console.log('Funcionalidades del NavBar inicializadas')
     }
-  }, 1000);
-});
+  }, 1000)
+})
 
 onUnmounted(() => {
   // Limpiar el listener del scroll
-  window.removeEventListener('scroll', handleScroll);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style scoped>
@@ -257,8 +297,8 @@ header {
 }
 
 /* Estilo para enlaces activos */
-.main-menu li.active-menu>a,
-.main-menu-m li.active-menu>a {
+.main-menu li.active-menu > a,
+.main-menu-m li.active-menu > a {
   color: #717fe0 !important;
 }
 
@@ -307,13 +347,13 @@ html {
 }
 
 /* Offset para las secciones cuando hay header fijo */
-div[id*="-section"] {
+div[id*='-section'] {
   scroll-margin-top: 120px;
   /* Ajusta según la altura de tu header */
 }
 
 @media (max-width: 991px) {
-  div[id*="-section"] {
+  div[id*='-section'] {
     scroll-margin-top: 80px;
     /* Menos offset en móvil */
   }

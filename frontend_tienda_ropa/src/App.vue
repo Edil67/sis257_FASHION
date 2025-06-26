@@ -4,10 +4,9 @@
   <router-view />
 </template>
 <script setup lang="ts">
-import { Toast } from 'primevue';
-import GlobalNotifications from '@/components/GlobalNotifications.vue';
+import { Toast } from 'primevue'
+import GlobalNotifications from '@/components/GlobalNotifications.vue'
 </script>
-
 
 <style>
 @import '@fortawesome/fontawesome-free/css/all.css';

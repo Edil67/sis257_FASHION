@@ -9,12 +9,12 @@ const loading = ref(false)
 
 async function onSubmit() {
   if (loading.value) return
-  
+
   loading.value = true
   error.value = false
-  
+
   const authStore = useAuthStore()
-  
+
   try {
     await authStore.login(nombreUsuario.value, clave.value)
   } catch {
@@ -30,7 +30,7 @@ async function onSubmit() {
     <div class="login-background">
       <div class="login-overlay"></div>
     </div>
-    
+
     <div class="login-content">
       <div class="login-card">
         <div class="login-header">
@@ -62,10 +62,10 @@ async function onSubmit() {
             <label class="input-label">Contraseña</label>
             <div class="input-wrapper">
               <i class="pi pi-lock input-icon"></i>
-              <input 
-                v-model="clave" 
-                type="password" 
-                class="form-input" 
+              <input
+                v-model="clave"
+                type="password"
+                class="form-input"
                 placeholder="Ingresa tu contraseña"
                 :disabled="loading"
                 required
@@ -78,8 +78,8 @@ async function onSubmit() {
             Usuario y/o contraseña incorrectos
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             class="login-button"
             :disabled="loading || !nombreUsuario || !clave"
           >
@@ -94,9 +94,7 @@ async function onSubmit() {
         </form>
 
         <div class="login-footer">
-          <p class="footer-text">
-            Sistema de gestión de inventario y ventas
-          </p>
+          <p class="footer-text">Sistema de gestión de inventario y ventas</p>
         </div>
       </div>
     </div>
@@ -132,7 +130,8 @@ async function onSubmit() {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="50" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="30" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="50" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="30" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>')
+    repeat;
 }
 
 .login-overlay {
@@ -156,7 +155,7 @@ async function onSubmit() {
   backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 3rem;
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.1),
     0 8px 16px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -330,9 +329,15 @@ async function onSubmit() {
 
 /* Animaciones */
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes cardSlideIn {
@@ -347,7 +352,8 @@ async function onSubmit() {
 }
 
 @keyframes iconFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -356,10 +362,19 @@ async function onSubmit() {
 }
 
 @keyframes errorShake {
-  0%, 20%, 40%, 60%, 80%, 100% {
+  0%,
+  20%,
+  40%,
+  60%,
+  80%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-5px);
   }
 }
@@ -369,15 +384,15 @@ async function onSubmit() {
   .login-container {
     padding: 1rem;
   }
-  
+
   .login-card {
     padding: 2rem;
   }
-  
+
   .brand-title {
     font-size: 1.75rem;
   }
-  
+
   .logo-icon {
     font-size: 2.5rem;
   }
@@ -387,15 +402,15 @@ async function onSubmit() {
   .login-card {
     padding: 1.5rem;
   }
-  
+
   .brand-title {
     font-size: 1.5rem;
   }
-  
+
   .form-input {
     padding: 0.875rem 0.875rem 0.875rem 2.75rem;
   }
-  
+
   .login-button {
     padding: 0.875rem 1rem;
   }

@@ -18,7 +18,7 @@ const {
   datosPaginados: productosPaginados,
   totalRegistros,
   onCambioPagina,
-  onCambioRecordsPorPagina
+  onCambioRecordsPorPagina,
 } = usePaginacion(productos, { recordsPorPaginaInicial: 5 })
 
 async function obtenerLista() {
@@ -95,9 +95,20 @@ function obtenerNumeroFila(index: number): number {
             </td>
             <td>{{ formatDate(producto.fechaCreacion) }}</td>
             <td class="actions-cell">
-              <Button icon="pi pi-pencil" aria-label="Editar" text severity="info" @click="emitirEdicion(producto)" />
-              <Button icon="pi pi-trash" aria-label="Eliminar" text severity="danger"
-                @click="mostrarEliminarConfirm(producto)" />
+              <Button
+                icon="pi pi-pencil"
+                aria-label="Editar"
+                text
+                severity="info"
+                @click="emitirEdicion(producto)"
+              />
+              <Button
+                icon="pi pi-trash"
+                aria-label="Eliminar"
+                text
+                severity="danger"
+                @click="mostrarEliminarConfirm(producto)"
+              />
             </td>
           </tr>
         </tbody>
@@ -112,10 +123,19 @@ function obtenerNumeroFila(index: number): number {
       @cambio-records-por-pagina="onCambioRecordsPorPagina"
     />
 
-    <Dialog v-model:visible="mostrarConfirmDialog" header="Confirmar Eliminación" :style="{ width: '25rem' }">
+    <Dialog
+      v-model:visible="mostrarConfirmDialog"
+      header="Confirmar Eliminación"
+      :style="{ width: '25rem' }"
+    >
       <p>¿Estás seguro de que deseas eliminar este registro?</p>
       <div class="flex justify-end gap-2">
-        <Button type="button" label="Cancelar" severity="secondary" @click="mostrarConfirmDialog = false" />
+        <Button
+          type="button"
+          label="Cancelar"
+          severity="secondary"
+          @click="mostrarConfirmDialog = false"
+        />
         <Button type="button" label="Eliminar" @click="eliminar" />
       </div>
     </Dialog>
