@@ -4,12 +4,9 @@ export interface UsePaginacionOptions {
   recordsPorPaginaInicial?: number
 }
 
-export function usePaginacion<T>(
-  datos: Ref<T[]>,
-  options: UsePaginacionOptions = {}
-) {
+export function usePaginacion<T>(datos: Ref<T[]>, options: UsePaginacionOptions = {}) {
   const { recordsPorPaginaInicial = 5 } = options
-  
+
   const paginaActual = ref(1)
   const recordsPorPagina = ref(recordsPorPaginaInicial)
 
@@ -23,12 +20,12 @@ export function usePaginacion<T>(
   // Información de paginación
   const totalRegistros = computed(() => datos.value.length)
   const totalPaginas = computed(() => Math.ceil(totalRegistros.value / recordsPorPagina.value))
-  
+
   const inicioRegistro = computed(() => {
     if (totalRegistros.value === 0) return 0
     return (paginaActual.value - 1) * recordsPorPagina.value + 1
   })
-  
+
   const finRegistro = computed(() => {
     if (totalRegistros.value === 0) return 0
     const fin = paginaActual.value * recordsPorPagina.value
@@ -81,22 +78,22 @@ export function usePaginacion<T>(
     paginaActual,
     recordsPorPagina,
     datosPaginados,
-    
+
     // Información computada
     totalRegistros,
     totalPaginas,
     inicioRegistro,
     finRegistro,
-    
+
     // Funciones de navegación
     irAPagina,
     paginaAnterior,
     paginaSiguiente,
     cambiarRecordsPorPagina,
     resetearPaginacion,
-    
+
     // Manejadores de eventos
     onCambioPagina,
-    onCambioRecordsPorPagina
+    onCambioRecordsPorPagina,
   }
 }

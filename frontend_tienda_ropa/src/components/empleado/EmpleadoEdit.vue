@@ -58,23 +58,53 @@ onMounted(getUsuarios)
     <div class="row">
       <form @submit.prevent="actualizarEmpleado">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" v-model="empleado.nombre" placeholder="Nombres" required />
+          <input
+            type="text"
+            class="form-control"
+            v-model="empleado.nombre"
+            placeholder="Nombres"
+            required
+          />
           <label for="nombres">Nombres</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" v-model="empleado.apellido" placeholder="Apellidos" required />
+          <input
+            type="text"
+            class="form-control"
+            v-model="empleado.apellido"
+            placeholder="Apellidos"
+            required
+          />
           <label for="apellidos">Apellidos</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" v-model="empleado.telefono" placeholder="Teléfono" required />
+          <input
+            type="text"
+            class="form-control"
+            v-model="empleado.telefono"
+            placeholder="Teléfono"
+            required
+          />
           <label for="telefono">Teléfono</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" v-model="empleado.direccion" placeholder="Dirección" required />
+          <input
+            type="text"
+            class="form-control"
+            v-model="empleado.direccion"
+            placeholder="Dirección"
+            required
+          />
           <label for="direccion">Dirección</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" v-model="empleado.cargo" placeholder="Cargo" required />
+          <input
+            type="text"
+            class="form-control"
+            v-model="empleado.cargo"
+            placeholder="Cargo"
+            required
+          />
           <label for="cargo">Cargo</label>
         </div>
         <!-- Campo de fecha eliminado -->

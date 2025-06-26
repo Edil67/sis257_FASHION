@@ -20,7 +20,7 @@ const {
   datosPaginados: empleadosPaginados,
   totalRegistros,
   onCambioPagina,
-  onCambioRecordsPorPagina
+  onCambioRecordsPorPagina,
 } = usePaginacion(empleados, { recordsPorPaginaInicial: 5 })
 
 async function obtenerLista() {
@@ -81,7 +81,13 @@ defineExpose({ obtenerLista })
             <td class="address-cell">{{ empleado.direccion }}</td>
             <td class="position-cell">{{ empleado.cargo }}</td>
             <td class="actions-cell">
-              <Button icon="pi pi-pencil" aria-label="Editar" text severity="info" @click="emitirEdicion(empleado)" />
+              <Button
+                icon="pi pi-pencil"
+                aria-label="Editar"
+                text
+                severity="info"
+                @click="emitirEdicion(empleado)"
+              />
               <Button
                 icon="pi pi-trash"
                 aria-label="Eliminar"

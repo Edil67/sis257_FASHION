@@ -6,7 +6,7 @@
         <span>Inicio</span>
       </router-link>
     </div>
-    
+
     <div class="nav-item" v-if="$route.path !== '/checkout' && !carritoStore.estaVacio">
       <router-link to="/checkout" class="nav-link checkout">
         <i class="fas fa-shopping-cart"></i>
@@ -192,27 +192,27 @@ const carritoStore = useCarritoStore()
     padding: 0.5rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
-  
+
   .nav-item {
     flex: 1;
     margin: 0;
     border-radius: 20px;
   }
-  
+
   .nav-link span {
     display: none;
   }
-  
+
   .nav-link {
     justify-content: center;
     padding: 0.75rem;
   }
-  
+
   .carrito-info {
     justify-content: center;
     padding: 0.75rem;
   }
-  
+
   .carrito-info span:first-of-type {
     display: none;
   }
@@ -223,7 +223,7 @@ const carritoStore = useCarritoStore()
     left: 0.5rem;
     right: 0.5rem;
   }
-  
+
   .nav-link {
     padding: 0.5rem;
   }

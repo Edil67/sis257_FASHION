@@ -1,159 +1,163 @@
 <template>
+  <!-- Producto -->
+  <section class="bg0 p-t-23 p-b-140">
+    <div class="container">
+      <div class="p-b-10">
+        <h3 class="ltext-103 cl5">Vista General del Producto</h3>
 
-    <!-- Producto -->
-    <section class="bg0 p-t-23 p-b-140">
-        <div class="container">
-            <div class="p-b-10">
-                <h3 class="ltext-103 cl5">
-                    Vista General del Producto
-                </h3>
-                
-                <!-- Información de filtrado -->
-                <div class="flex-w flex-sb-m p-t-10">
-                    <div class="flex-w flex-l-m">
-                        <span class="stext-102 cl6">
-                            <template v-if="categoriaSeleccionada === null">
-                                Mostrando {{ productosAMostrar.length }} de {{ productosFiltrados.length }} productos
-                            </template>
-                            <template v-else>
-                                Mostrando {{ productosAMostrar.length }} de {{ productosFiltrados.length }} productos 
-                                en "{{ categorias.find(c => c.id === categoriaSeleccionada)?.nombre }}"
-                            </template>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex-w flex-sb-m p-b-52">
-                <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-                    <button 
-                        class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-                        :class="{ 'how-active1': categoriaSeleccionada === null }"
-                        data-filter="*"
-                        @click="filtrarPorCategoria(null)">
-                        Todos los Productos
-                    </button>
-
-                    <template v-if="cargando">
-                        <span class="stext-106 cl6 m-r-32 m-tb-5">Cargando categorías...</span>
-                    </template>
-                    
-                    <button 
-                        v-for="categoria in categorias" 
-                        :key="categoria.id"
-                        class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" 
-                        :class="{ 'how-active1': categoriaSeleccionada === categoria.id }"
-                        :data-filter="`.categoria-${categoria.id}`"
-                        @click="filtrarPorCategoria(categoria.id)">
-                        {{ categoria.nombre }}
-                    </button>
-                </div>
-            </div>
-
-            <div class="row isotope-grid">
-                <!-- Indicador de carga de productos -->
-                <div v-if="cargandoProductos" class="col-12 text-center p-t-50 p-b-50">
-                    <span class="stext-106 cl6">Cargando productos...</span>
-                </div>
-
-                <!-- Mensaje cuando no hay productos -->
-                <div v-else-if="productosAMostrar.length === 0" class="col-12 text-center p-t-50 p-b-50">
-                    <span class="stext-106 cl6">No se encontraron productos en esta categoría.</span>
-                </div>
-
-                <!-- Productos dinámicos -->
-                <div 
-                    v-for="producto in productosAMostrar" 
-                    :key="producto.id"
-                    class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item"
-                    :class="`categoria-${producto.categoria.id}`">
-                    <!-- Block2 -->
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <img :src="producto.imagenes" :alt="producto.nombre" class="product-image">
-                            
-                            <!-- Badge de categoría -->
-                            <div class="category-badge">
-                                {{ producto.categoria.nombre }}
-                            </div>
-                            
-                            <!-- Badge de stock -->
-                            <div class="stock-badge" :class="{ 'low-stock': producto.stock <= 5, 'out-of-stock': producto.stock === 0 }">
-                                <i class="fas fa-boxes"></i>
-                                {{ producto.stock }}
-                            </div>
-
-                            <div class="product-overlay">
-                                <button 
-                                    v-if="producto.stock > 0"
-                                    @click="agregarAlCarrito(producto)"
-                                    class="add-to-cart-btn">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    Agregar al carrito
-                                </button>
-                                <div 
-                                    v-else
-                                    class="out-of-stock-message">
-                                    <i class="fas fa-times-circle"></i>
-                                    Sin stock disponible
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-info-card">
-                            <div class="product-main-info">
-                                <h4 class="product-title">
-                                    {{ producto.nombre }}
-                                </h4>
-
-                                <div class="product-price">
-                                    Bs {{ Number(producto.precio).toFixed(2) }}
-                                </div>
-                            </div>
-                            
-                            <!-- Información detallada del producto -->
-                            <div class="product-details">
-                                <div class="product-attributes">
-                                    <div class="attribute-item">
-                                        <span class="attribute-label">
-                                            <i class="fas fa-tag"></i>
-                                            Talla:
-                                        </span>
-                                        <span class="attribute-value talla-badge">{{ producto.talla }}</span>
-                                    </div>
-                                    
-                                    <div class="attribute-item">
-                                        <span class="attribute-label">
-                                            <i class="fas fa-palette"></i>
-                                            Color:
-                                        </span>
-                                        <span class="attribute-value">
-                                            {{ producto.color }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Load more -->
-            <div v-if="hayMasProductos" class="flex-c-m flex-w w-full p-t-45">
-                <button 
-                    @click="cargarMasProductos"
-                    class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04"
-                    style="border: none; background: inherit;">
-                    Cargar más
-                </button>
-            </div>
-
-            <!-- Mensaje cuando se han mostrado todos los productos -->
-            <div v-else-if="productosAMostrar.length > 0" class="flex-c-m flex-w w-full p-t-45">
-                <span class="stext-101 cl6">Se han mostrado todos los productos</span>
-            </div>
+        <!-- Información de filtrado -->
+        <div class="flex-w flex-sb-m p-t-10">
+          <div class="flex-w flex-l-m">
+            <span class="stext-102 cl6">
+              <template v-if="categoriaSeleccionada === null">
+                Mostrando {{ productosAMostrar.length }} de
+                {{ productosFiltrados.length }} productos
+              </template>
+              <template v-else>
+                Mostrando {{ productosAMostrar.length }} de
+                {{ productosFiltrados.length }} productos en "{{
+                  categorias.find((c) => c.id === categoriaSeleccionada)?.nombre
+                }}"
+              </template>
+            </span>
+          </div>
         </div>
-    </section>
+      </div>
+
+      <div class="flex-w flex-sb-m p-b-52">
+        <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+          <button
+            class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+            :class="{ 'how-active1': categoriaSeleccionada === null }"
+            data-filter="*"
+            @click="filtrarPorCategoria(null)"
+          >
+            Todos los Productos
+          </button>
+
+          <template v-if="cargando">
+            <span class="stext-106 cl6 m-r-32 m-tb-5">Cargando categorías...</span>
+          </template>
+
+          <button
+            v-for="categoria in categorias"
+            :key="categoria.id"
+            class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+            :class="{ 'how-active1': categoriaSeleccionada === categoria.id }"
+            :data-filter="`.categoria-${categoria.id}`"
+            @click="filtrarPorCategoria(categoria.id)"
+          >
+            {{ categoria.nombre }}
+          </button>
+        </div>
+      </div>
+
+      <div class="row isotope-grid">
+        <!-- Indicador de carga de productos -->
+        <div v-if="cargandoProductos" class="col-12 text-center p-t-50 p-b-50">
+          <span class="stext-106 cl6">Cargando productos...</span>
+        </div>
+
+        <!-- Mensaje cuando no hay productos -->
+        <div v-else-if="productosAMostrar.length === 0" class="col-12 text-center p-t-50 p-b-50">
+          <span class="stext-106 cl6">No se encontraron productos en esta categoría.</span>
+        </div>
+
+        <!-- Productos dinámicos -->
+        <div
+          v-for="producto in productosAMostrar"
+          :key="producto.id"
+          class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item"
+          :class="`categoria-${producto.categoria.id}`"
+        >
+          <!-- Block2 -->
+          <div class="product-card">
+            <div class="product-image-container">
+              <img :src="producto.imagenes" :alt="producto.nombre" class="product-image" />
+
+              <!-- Badge de categoría -->
+              <div class="category-badge">
+                {{ producto.categoria.nombre }}
+              </div>
+
+              <!-- Badge de stock -->
+              <div
+                class="stock-badge"
+                :class="{ 'low-stock': producto.stock <= 5, 'out-of-stock': producto.stock === 0 }"
+              >
+                <i class="fas fa-boxes"></i>
+                {{ producto.stock }}
+              </div>
+
+              <div class="product-overlay">
+                <button
+                  v-if="producto.stock > 0"
+                  @click="agregarAlCarrito(producto)"
+                  class="add-to-cart-btn"
+                >
+                  <i class="fas fa-shopping-cart"></i>
+                  Agregar al carrito
+                </button>
+                <div v-else class="out-of-stock-message">
+                  <i class="fas fa-times-circle"></i>
+                  Sin stock disponible
+                </div>
+              </div>
+            </div>
+
+            <div class="product-info-card">
+              <div class="product-main-info">
+                <h4 class="product-title">
+                  {{ producto.nombre }}
+                </h4>
+
+                <div class="product-price">Bs {{ Number(producto.precio).toFixed(2) }}</div>
+              </div>
+
+              <!-- Información detallada del producto -->
+              <div class="product-details">
+                <div class="product-attributes">
+                  <div class="attribute-item">
+                    <span class="attribute-label">
+                      <i class="fas fa-tag"></i>
+                      Talla:
+                    </span>
+                    <span class="attribute-value talla-badge">{{ producto.talla }}</span>
+                  </div>
+
+                  <div class="attribute-item">
+                    <span class="attribute-label">
+                      <i class="fas fa-palette"></i>
+                      Color:
+                    </span>
+                    <span class="attribute-value">
+                      {{ producto.color }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Load more -->
+      <div v-if="hayMasProductos" class="flex-c-m flex-w w-full p-t-45">
+        <button
+          @click="cargarMasProductos"
+          class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04"
+          style="border: none; background: inherit"
+        >
+          Cargar más
+        </button>
+      </div>
+
+      <!-- Mensaje cuando se han mostrado todos los productos -->
+      <div v-else-if="productosAMostrar.length > 0" class="flex-c-m flex-w w-full p-t-45">
+        <span class="stext-101 cl6">Se han mostrado todos los productos</span>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -215,9 +219,7 @@ const productosFiltrados = computed(() => {
   if (categoriaSeleccionada.value === null) {
     return productos.value
   }
-  return productos.value.filter(producto => 
-    producto.categoria.id === categoriaSeleccionada.value
-  )
+  return productos.value.filter((producto) => producto.categoria.id === categoriaSeleccionada.value)
 })
 
 // Productos a mostrar (paginados)
@@ -236,7 +238,7 @@ const hayMasProductos = computed(() => {
 const filtrarPorCategoria = (categoriaId: number | null) => {
   categoriaSeleccionada.value = categoriaId
   paginaActual.value = 1 // Resetear paginación al cambiar filtro
-  
+
   // Scroll suave hacia el inicio de los productos
   const productGrid = document.querySelector('.isotope-grid')
   if (productGrid) {
@@ -254,32 +256,32 @@ const cargarMasProductos = () => {
 // Función para obtener color hexadecimal aproximado
 const getColorHex = (colorName: string): string => {
   const colores: { [key: string]: string } = {
-    'rojo': '#dc3545',
-    'azul': '#007bff',
-    'verde': '#28a745',
-    'amarillo': '#ffc107',
-    'negro': '#343a40',
-    'blanco': '#f8f9fa',
-    'gris': '#6c757d',
-    'rosa': '#e83e8c',
-    'morado': '#6f42c1',
-    'naranja': '#fd7e14',
-    'cafe': '#8B4513',
-    'café': '#8B4513',
-    'marrón': '#8B4513',
-    'marron': '#8B4513',
-    'beige': '#F5F5DC',
-    'celeste': '#87CEEB',
-    'turquesa': '#40E0D0',
-    'violeta': '#8A2BE2',
-    'dorado': '#FFD700',
-    'plateado': '#C0C0C0',
-    'coral': '#FF7F50',
-    'salmon': '#FA8072',
-    'lima': '#32CD32',
-    'oliva': '#808000'
+    rojo: '#dc3545',
+    azul: '#007bff',
+    verde: '#28a745',
+    amarillo: '#ffc107',
+    negro: '#343a40',
+    blanco: '#f8f9fa',
+    gris: '#6c757d',
+    rosa: '#e83e8c',
+    morado: '#6f42c1',
+    naranja: '#fd7e14',
+    cafe: '#8B4513',
+    café: '#8B4513',
+    marrón: '#8B4513',
+    marron: '#8B4513',
+    beige: '#F5F5DC',
+    celeste: '#87CEEB',
+    turquesa: '#40E0D0',
+    violeta: '#8A2BE2',
+    dorado: '#FFD700',
+    plateado: '#C0C0C0',
+    coral: '#FF7F50',
+    salmon: '#FA8072',
+    lima: '#32CD32',
+    oliva: '#808000',
   }
-  
+
   const colorLower = colorName.toLowerCase().trim()
   return colores[colorLower] || '#6c757d' // Color gris por defecto
 }
@@ -571,30 +573,30 @@ onMounted(() => {
   .product-image-container {
     height: 220px;
   }
-  
+
   .product-info-card {
     padding: 16px;
     gap: 12px;
   }
-  
+
   .product-title {
     font-size: 1rem;
   }
-  
+
   .product-price {
     font-size: 1.1rem;
   }
-  
+
   .add-to-cart-btn,
   .out-of-stock-message {
     padding: 12px 20px;
     font-size: 0.8rem;
   }
-  
+
   .attribute-item {
     padding: 6px 0;
   }
-  
+
   .attribute-label,
   .attribute-value {
     font-size: 0.8rem;
@@ -605,21 +607,21 @@ onMounted(() => {
   .product-image-container {
     height: 200px;
   }
-  
+
   .product-info-card {
     padding: 12px;
   }
-  
+
   .category-badge,
   .stock-badge {
     font-size: 0.7rem;
     padding: 4px 8px;
   }
-  
+
   .product-actions {
     gap: 6px;
   }
-  
+
   .product-actions button {
     width: 35px;
     height: 35px;
@@ -664,7 +666,11 @@ onMounted(() => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

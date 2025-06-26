@@ -1,19 +1,19 @@
 <template>
   <transition-group name="notificacion" tag="div" class="notificaciones-container">
-    <div 
-      v-for="notif in notificaciones" 
+    <div
+      v-for="notif in notificaciones"
       :key="notif.id"
       :class="['notificacion', `notificacion-${notif.tipo}`]"
     >
       <div class="notificacion-icon">
         <i :class="obtenerIcono(notif.tipo)"></i>
       </div>
-      
+
       <div class="notificacion-content">
         <h4 v-if="notif.titulo">{{ notif.titulo }}</h4>
         <p>{{ notif.mensaje }}</p>
       </div>
-      
+
       <button @click="cerrarNotificacion(notif.id)" class="btn-cerrar">
         <i class="fas fa-times"></i>
       </button>
@@ -39,7 +39,7 @@ function obtenerIcono(tipo: string): string {
     success: 'fas fa-check-circle',
     error: 'fas fa-exclamation-circle',
     warning: 'fas fa-exclamation-triangle',
-    info: 'fas fa-info-circle'
+    info: 'fas fa-info-circle',
   }
   return iconos[tipo as keyof typeof iconos] || iconos.info
 }
@@ -49,11 +49,11 @@ function agregarNotificacion(notificacion: Omit<Notificacion, 'id'>) {
   const nuevaNotificacion: Notificacion = {
     ...notificacion,
     id,
-    duracion: notificacion.duracion || 3000
+    duracion: notificacion.duracion || 3000,
   }
-  
+
   notificaciones.value.push(nuevaNotificacion)
-  
+
   // Auto cerrar después de la duración especificada
   if (nuevaNotificacion.duracion > 0) {
     setTimeout(() => {
@@ -63,7 +63,7 @@ function agregarNotificacion(notificacion: Omit<Notificacion, 'id'>) {
 }
 
 function cerrarNotificacion(id: string) {
-  const index = notificaciones.value.findIndex(n => n.id === id)
+  const index = notificaciones.value.findIndex((n) => n.id === id)
   if (index > -1) {
     notificaciones.value.splice(index, 1)
   }
@@ -84,7 +84,7 @@ onUnmounted(() => {
 
 // Exponer función para usar desde otros componentes
 defineExpose({
-  agregarNotificacion
+  agregarNotificacion,
 })
 </script>
 
@@ -212,7 +212,7 @@ defineExpose({
     left: 10px;
     max-width: none;
   }
-  
+
   .notificacion {
     min-width: auto;
   }

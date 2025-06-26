@@ -1,49 +1,45 @@
-(function($){
-	"use strict";
-    $.fn.extend({ 
-         
-        parallax100: function(options) {
-            var defaults = {
-            	speedScroll: 3
-            }
- 
-            var options =  $.extend(defaults, options);
- 
-            return this.each(function() {
+;(function ($) {
+  'use strict'
+  $.fn.extend({
+    parallax100: function (options) {
+      var defaults = {
+        speedScroll: 3,
+      }
 
-            	var obj = $(this);
-				var bgParallax = $(obj);
-			    var posWindow = $(window).scrollTop();
-			    var hWindow = $(window).height();
-			    var posParallax = $(obj).offset().top;
-			    var hParallax = $(obj).outerHeight();
-			    var x = 0;
-			    var y = options.speedScroll;
+      var options = $.extend(defaults, options)
 
-			    var setPosParallax = function() {
-			        if($(window).width() > 992) {  //&& $(this).outerHeight() < $(window).height()
+      return this.each(function () {
+        var obj = $(this)
+        var bgParallax = $(obj)
+        var posWindow = $(window).scrollTop()
+        var hWindow = $(window).height()
+        var posParallax = $(obj).offset().top
+        var hParallax = $(obj).outerHeight()
+        var x = 0
+        var y = options.speedScroll
 
-			            x = $(obj).offset().top - $(window).scrollTop();
+        var setPosParallax = function () {
+          if ($(window).width() > 992) {
+            //&& $(this).outerHeight() < $(window).height()
 
-			            $(bgParallax).css('background-position','center '+(x/y)+'px');
-			        }
-			        else {
-			            $(bgParallax).css('background-position','center', '0');
-			        }
-			    }
+            x = $(obj).offset().top - $(window).scrollTop()
 
-			    setPosParallax();
-
-			    $(window).on('resize', function(){
-			        setPosParallax();
-			    });
-
-			    $(window).on('scroll',function(){
-			        setPosParallax();
-			    });
-
-            });
+            $(bgParallax).css('background-position', 'center ' + x / y + 'px')
+          } else {
+            $(bgParallax).css('background-position', 'center', '0')
+          }
         }
-    });
-     
-})(jQuery);
+
+        setPosParallax()
+
+        $(window).on('resize', function () {
+          setPosParallax()
+        })
+
+        $(window).on('scroll', function () {
+          setPosParallax()
+        })
+      })
+    },
+  })
+})(jQuery)

@@ -11,8 +11,16 @@ const routes = [
     component: MainLayout,
     children: [
       { path: '', name: 'home', component: HomeView },
-      { path: 'empleados', name: 'empleados', component: () => import('../views/EmpleadoView.vue') },
-      { path: 'productos', name: 'productos', component: () => import('../views/ProductoView.vue') },
+      {
+        path: 'empleados',
+        name: 'empleados',
+        component: () => import('../views/EmpleadoView.vue'),
+      },
+      {
+        path: 'productos',
+        name: 'productos',
+        component: () => import('../views/ProductoView.vue'),
+      },
       { path: 'ventas', name: 'ventas', component: () => import('../views/VentaView.vue') },
       // {
       //   path: 'registrar-venta',
@@ -21,25 +29,29 @@ const routes = [
       //   meta: { requiresAuth: true }
       // },
       { path: 'cliente', name: 'clientes', component: () => import('../views/ClienteView.vue') },
-      { path: 'categoria', name: 'categoria', component: () => import('../views/CategoriaView.vue') }
-    ]
+      {
+        path: 'categoria',
+        name: 'categoria',
+        component: () => import('../views/CategoriaView.vue'),
+      },
+    ],
   },
-  { 
-    path: '/checkout', 
-    name: 'checkout', 
-    component: () => import('../views/CheckoutView.vue')
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: () => import('../views/CheckoutView.vue'),
   },
-  { 
-    path: '/confirmacion/:referencia', 
-    name: 'ConfirmacionCompra', 
-    component: () => import('../views/ConfirmacionCompra.vue')
+  {
+    path: '/confirmacion/:referencia',
+    name: 'ConfirmacionCompra',
+    component: () => import('../views/ConfirmacionCompra.vue'),
   },
-  { path: '/login', name: 'login', component: LoginView }
+  { path: '/login', name: 'login', component: LoginView },
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
+  routes,
 })
 
 // Implementación del guard de navegación global

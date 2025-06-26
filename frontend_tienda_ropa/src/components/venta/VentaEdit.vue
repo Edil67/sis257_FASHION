@@ -36,7 +36,7 @@ async function actualizarVenta() {
     await http.patch(`${ENDPOINT}/${venta.value?.id}`, {
       idCliente: venta.value?.cliente.id,
       totalVenta: venta.value?.totalVenta,
-      detallesVenta: detallesVenta.value.map(d => ({
+      detallesVenta: detallesVenta.value.map((d) => ({
         idProducto: d.idProducto,
         cantidad: d.cantidad,
         precioUnitario: d.precioUnitario,
@@ -100,17 +100,16 @@ function goBack() {
         <!-- Detalles de la venta -->
         <div v-for="(detalle, idx) in detallesVenta" :key="detalle.id" class="mb-2">
           <div>
-            Producto ID: {{ detalle.idProducto }}<br>
-            Cantidad: <input type="number" v-model.number="detalle.cantidad" min="1" />
-            Precio Unitario: <input type="number" v-model.number="detalle.precioUnitario" min="0" step="0.01" />
+            Producto ID: {{ detalle.idProducto }}<br />
+            Cantidad: <input type="number" v-model.number="detalle.cantidad" min="1" /> Precio
+            Unitario:
+            <input type="number" v-model.number="detalle.precioUnitario" min="0" step="0.01" />
             Subtotal: {{ detalle.subtotal }}
           </div>
         </div>
 
         <div class="text-center mt-3">
-          <button type="submit" class="btn btn-primary btn-lg">
-            Guardar
-          </button>
+          <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
         </div>
       </form>
     </div>

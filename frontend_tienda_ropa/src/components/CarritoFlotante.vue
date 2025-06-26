@@ -1,14 +1,10 @@
 <template>
   <div class="carrito-flotante" v-if="!carritoStore.estaVacio">
-    <button 
-      @click="abrirCarrito"
-      class="btn-carrito-flotante"
-      :class="{ 'pulse': hayNuevosItems }"
-    >
+    <button @click="abrirCarrito" class="btn-carrito-flotante" :class="{ pulse: hayNuevosItems }">
       <i class="fas fa-shopping-cart"></i>
       <span class="badge-carrito">{{ carritoStore.cantidadItems }}</span>
     </button>
-    
+
     <!-- Mini preview del carrito -->
     <div v-if="mostrarPreview" class="carrito-preview">
       <div class="preview-header">
@@ -17,26 +13,22 @@
           <i class="fas fa-times"></i>
         </button>
       </div>
-      
+
       <div class="preview-items">
-        <div 
-          v-for="item in carritoStore.items.slice(0, 3)" 
-          :key="item.id"
-          class="preview-item"
-        >
-          <img :src="item.producto.imagenes" :alt="item.producto.nombre">
+        <div v-for="item in carritoStore.items.slice(0, 3)" :key="item.id" class="preview-item">
+          <img :src="item.producto.imagenes" :alt="item.producto.nombre" />
           <div class="item-info">
             <span class="nombre">{{ item.producto.nombre }}</span>
             <span class="precio">{{ carritoStore.formatearPrecio(item.subtotal) }}</span>
           </div>
           <span class="cantidad">x{{ item.cantidad }}</span>
         </div>
-        
+
         <div v-if="carritoStore.items.length > 3" class="mas-items">
           +{{ carritoStore.items.length - 3 }} productos más
         </div>
       </div>
-      
+
       <div class="preview-footer">
         <div class="total">
           <strong>Total: {{ carritoStore.formatearPrecio(carritoStore.totalCarrito) }}</strong>
@@ -65,15 +57,18 @@ const hayNuevosItems = ref(false)
 const cantidadAnterior = ref(0)
 
 // Detectar cuando se agregan nuevos items para hacer el pulse
-watch(() => carritoStore.cantidadItems, (nuevaCantidad) => {
-  if (nuevaCantidad > cantidadAnterior.value) {
-    hayNuevosItems.value = true
-    setTimeout(() => {
-      hayNuevosItems.value = false
-    }, 2000)
-  }
-  cantidadAnterior.value = nuevaCantidad
-})
+watch(
+  () => carritoStore.cantidadItems,
+  (nuevaCantidad) => {
+    if (nuevaCantidad > cantidadAnterior.value) {
+      hayNuevosItems.value = true
+      setTimeout(() => {
+        hayNuevosItems.value = false
+      }, 2000)
+    }
+    cantidadAnterior.value = nuevaCantidad
+  },
+)
 
 function abrirCarrito() {
   mostrarPreview.value = !mostrarPreview.value
@@ -316,7 +311,7 @@ function irACheckout() {
     bottom: 1rem;
     right: 1rem;
   }
-  
+
   .carrito-preview {
     width: 300px;
     right: -50px;

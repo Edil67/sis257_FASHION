@@ -50,7 +50,7 @@ const loading = ref(false)
 
 async function obtenerDetalles() {
   if (!props.ventaId) return
-  
+
   loading.value = true
   try {
     const response = await http.get(`ventas/${props.ventaId}/detalles`)
@@ -62,11 +62,14 @@ async function obtenerDetalles() {
   }
 }
 
-watch(() => props.mostrar, (newVal) => {
-  if (newVal && props.ventaId) {
-    obtenerDetalles()
-  }
-})
+watch(
+  () => props.mostrar,
+  (newVal) => {
+    if (newVal && props.ventaId) {
+      obtenerDetalles()
+    }
+  },
+)
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString)
@@ -76,7 +79,7 @@ function formatDate(dateString: string): string {
 function formatCurrency(amount: string): string {
   return parseFloat(amount).toLocaleString('es-ES', {
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   })
 }
 </script>
@@ -120,8 +123,8 @@ function formatCurrency(amount: string): string {
                 {{ detalle.producto.nombre }}
               </td>
               <td class="imagen-cell">
-                <img 
-                  :src="detalle.producto.imagenes" 
+                <img
+                  :src="detalle.producto.imagenes"
                   :alt="detalle.producto.nombre"
                   class="producto-imagen"
                   @error="$event.target.src = '/qr-placeholder.svg'"
@@ -149,11 +152,14 @@ function formatCurrency(amount: string): string {
           </tbody>
           <tfoot>
             <tr class="total-row">
-              <td colspan="7" class="text-right font-bold">
-                TOTAL VENTA:
-              </td>
+              <td colspan="7" class="text-right font-bold">TOTAL VENTA:</td>
               <td class="text-right font-bold total-amount">
-                {{ formatCurrency(detalles.reduce((sum, d) => sum + parseFloat(d.subtotal), 0).toString()) }} Bs.
+                {{
+                  formatCurrency(
+                    detalles.reduce((sum, d) => sum + parseFloat(d.subtotal), 0).toString(),
+                  )
+                }}
+                Bs.
               </td>
             </tr>
           </tfoot>
@@ -162,9 +168,9 @@ function formatCurrency(amount: string): string {
     </div>
 
     <template #footer>
-      <Button 
-        label="Cerrar" 
-        icon="pi pi-times" 
+      <Button
+        label="Cerrar"
+        icon="pi pi-times"
         @click="dialogVisible = false"
         severity="secondary"
       />

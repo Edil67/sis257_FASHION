@@ -18,7 +18,7 @@ const {
   datosPaginados: categoriasPaginadas,
   totalRegistros,
   onCambioPagina,
-  onCambioRecordsPorPagina
+  onCambioRecordsPorPagina,
 } = usePaginacion(categorias, { recordsPorPaginaInicial: 5 })
 
 async function obtenerLista() {

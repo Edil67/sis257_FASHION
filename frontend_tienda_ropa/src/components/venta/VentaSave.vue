@@ -79,29 +79,32 @@ onMounted(() => {
 })
 
 // Inicializar datos cuando se abre el modal en modo edición
-watch(() => props.mostrar, (newVal) => {
-  if (newVal) {
-    if (props.modoEdicion && props.venta) {
-      venta.value = {
-        cliente: props.venta.cliente,
-        empleado: props.venta.empleado,
-        ventaDetalles: props.venta.ventaDetalles || [],
-        totalVenta: props.venta.totalVenta,
-        estado: props.venta.estado || 'pendiente',
-        metodoPago: props.venta.metodoPago || 'efectivo',
-      }
-    } else {
-      venta.value = {
-        cliente: null,
-        empleado: null,
-        ventaDetalles: [],
-        totalVenta: 0,
-        estado: 'pendiente',
-        metodoPago: 'efectivo',
+watch(
+  () => props.mostrar,
+  (newVal) => {
+    if (newVal) {
+      if (props.modoEdicion && props.venta) {
+        venta.value = {
+          cliente: props.venta.cliente,
+          empleado: props.venta.empleado,
+          ventaDetalles: props.venta.ventaDetalles || [],
+          totalVenta: props.venta.totalVenta,
+          estado: props.venta.estado || 'pendiente',
+          metodoPago: props.venta.metodoPago || 'efectivo',
+        }
+      } else {
+        venta.value = {
+          cliente: null,
+          empleado: null,
+          ventaDetalles: [],
+          totalVenta: 0,
+          estado: 'pendiente',
+          metodoPago: 'efectivo',
+        }
       }
     }
-  }
-})
+  },
+)
 
 watch(
   () => detalle.value.producto,
@@ -167,27 +170,46 @@ async function handleSave() {
 
 <template>
   <div class="card flex justify-center">
-    <Dialog v-model:visible="dialogVisible" :header="props.modoEdicion ? 'Editar Estado de Venta' : 'Crear Venta'"
-      :modal="true" :draggable="false" style="max-width: 900px; width: 100%"
-      contentStyle="overflow-x: auto; padding: 2rem;">
+    <Dialog
+      v-model:visible="dialogVisible"
+      :header="props.modoEdicion ? 'Editar Estado de Venta' : 'Crear Venta'"
+      :modal="true"
+      :draggable="false"
+      style="max-width: 900px; width: 100%"
+      contentStyle="overflow-x: auto; padding: 2rem;"
+    >
       <!-- Modo Edición: Solo cambiar estado -->
       <div v-if="props.modoEdicion" class="estado-edicion">
         <div class="info-venta mb-4 p-4 bg-gray-50 rounded-lg">
           <h3 class="text-lg font-semibold mb-2">Información de la Venta</h3>
-          <p><strong>Cliente:</strong> {{ props.venta?.cliente?.nombre || '' }} {{ props.venta?.cliente?.apellido || ''
-          }}</p>
+          <p>
+            <strong>Cliente:</strong> {{ props.venta?.cliente?.nombre || '' }}
+            {{ props.venta?.cliente?.apellido || '' }}
+          </p>
           <p><strong>Empleado:</strong> {{ props.venta?.empleado?.nombres || '' }}</p>
-          <p><strong>Total:</strong> {{ props.venta?.totalVenta?.toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }) }} Bs.</p>
+          <p>
+            <strong>Total:</strong>
+            {{
+              props.venta?.totalVenta?.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
+            }}
+            Bs.
+          </p>
           <p><strong>Estado Actual:</strong> {{ props.venta?.estado || 'pendiente' }}</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-4 mb-4">
           <label class="font-semibold w-32">Nuevo Estado</label>
-          <Select v-model="venta.estado" :options="estadosDisponibles" optionLabel="label" optionValue="value"
-            placeholder="Seleccione el estado" class="flex-1 min-w-[200px]" />
+          <Select
+            v-model="venta.estado"
+            :options="estadosDisponibles"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccione el estado"
+            class="flex-1 min-w-[200px]"
+          />
         </div>
       </div>
 
@@ -196,28 +218,55 @@ async function handleSave() {
         <!-- Select Cliente -->
         <div class="flex flex-wrap items-center gap-4 mb-4">
           <label class="font-semibold w-32">Cliente</label>
-          <Select v-model="venta.cliente" :options="clientes" optionLabel="nombres" placeholder="Seleccione un cliente"
-            class="flex-1 min-w-[200px]" />
+          <Select
+            v-model="venta.cliente"
+            :options="clientes"
+            optionLabel="nombres"
+            placeholder="Seleccione un cliente"
+            class="flex-1 min-w-[200px]"
+          />
         </div>
         <!-- Select Empleado -->
         <div class="flex flex-wrap items-center gap-4 mb-4">
           <label class="font-semibold w-32">Empleado</label>
-          <Select v-model="venta.empleado" :options="empleados" optionLabel="nombres"
-            placeholder="Seleccione un empleado" class="flex-1 min-w-[200px]" />
+          <Select
+            v-model="venta.empleado"
+            :options="empleados"
+            optionLabel="nombres"
+            placeholder="Seleccione un empleado"
+            class="flex-1 min-w-[200px]"
+          />
         </div>
         <!-- Select Método de Pago -->
         <div class="flex flex-wrap items-center gap-4 mb-4">
           <label class="font-semibold w-32">Método de Pago</label>
-          <Select v-model="venta.metodoPago" :options="metodosPago" optionLabel="label" optionValue="value"
-            placeholder="Seleccione método de pago" class="flex-1 min-w-[200px]" />
+          <Select
+            v-model="venta.metodoPago"
+            :options="metodosPago"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccione método de pago"
+            class="flex-1 min-w-[200px]"
+          />
         </div>
         <!-- Agregar Detalle de Producto -->
         <div class="flex flex-wrap items-center gap-4 mb-4">
           <label class="font-semibold w-32">Producto</label>
-          <Select v-model="detalle.producto" :options="productos" optionLabel="nombre"
-            placeholder="Seleccione un producto" class="flex-1 min-w-[200px]" />
+          <Select
+            v-model="detalle.producto"
+            :options="productos"
+            optionLabel="nombre"
+            placeholder="Seleccione un producto"
+            class="flex-1 min-w-[200px]"
+          />
           <InputNumber v-model="detalle.cantidad" :min="1" placeholder="Cantidad" class="w-28" />
-          <InputNumber v-model="detalle.precioUnitario" :min="0" placeholder="Precio" class="w-32" disabled />
+          <InputNumber
+            v-model="detalle.precioUnitario"
+            :min="0"
+            placeholder="Precio"
+            class="w-32"
+            disabled
+          />
           <Button label="Agregar" @click="agregarDetalle" />
         </div>
         <!-- Tabla de Detalles -->
@@ -252,10 +301,19 @@ async function handleSave() {
 
       <!-- Botones de acción -->
       <div class="flex justify-end gap-2">
-        <Button type="button" label="Cancelar" icon="pi pi-times" severity="secondary"
-          @click="dialogVisible = false"></Button>
-        <Button type="button" :label="props.modoEdicion ? 'Actualizar Estado' : 'Guardar'" icon="pi pi-save"
-          @click="handleSave"></Button>
+        <Button
+          type="button"
+          label="Cancelar"
+          icon="pi pi-times"
+          severity="secondary"
+          @click="dialogVisible = false"
+        ></Button>
+        <Button
+          type="button"
+          :label="props.modoEdicion ? 'Actualizar Estado' : 'Guardar'"
+          icon="pi pi-save"
+          @click="handleSave"
+        ></Button>
       </div>
     </Dialog>
   </div>

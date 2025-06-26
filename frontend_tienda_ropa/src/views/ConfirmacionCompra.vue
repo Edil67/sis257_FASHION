@@ -2,7 +2,7 @@
   <div class="confirmacion-container">
     <!-- Navegación rápida -->
     <NavegacionRapida />
-    
+
     <div class="confirmacion-content">
       <!-- Icono de éxito -->
       <div class="success-icon">
@@ -37,19 +37,28 @@
         <div class="info-card">
           <i class="fas fa-shipping-fast"></i>
           <h3>Entrega</h3>
-          <p>Tu pedido será procesado y te contactaremos para coordinar la entrega en las próximas 24 horas.</p>
+          <p>
+            Tu pedido será procesado y te contactaremos para coordinar la entrega en las próximas 24
+            horas.
+          </p>
         </div>
-        
+
         <div class="info-card">
           <i class="fas fa-headset"></i>
           <h3>Soporte</h3>
-          <p>¿Tienes alguna pregunta? Contáctanos al teléfono <strong>+591 70123456</strong> o por WhatsApp.</p>
+          <p>
+            ¿Tienes alguna pregunta? Contáctanos al teléfono <strong>+591 70123456</strong> o por
+            WhatsApp.
+          </p>
         </div>
-        
+
         <div class="info-card">
           <i class="fas fa-receipt"></i>
           <h3>Comprobante</h3>
-          <p>Guarda el número de referencia <strong>#{{ referencia }}</strong> para cualquier consulta sobre tu pedido.</p>
+          <p>
+            Guarda el número de referencia <strong>#{{ referencia }}</strong> para cualquier
+            consulta sobre tu pedido.
+          </p>
         </div>
       </div>
 
@@ -59,7 +68,7 @@
           <i class="fas fa-shopping-bag"></i>
           Seguir comprando
         </router-link>
-        
+
         <button @click="enviarPorWhatsApp" class="btn btn-primary">
           <i class="fab fa-whatsapp"></i>
           Enviar por WhatsApp
@@ -93,7 +102,7 @@ function formatearFecha(fecha: Date): string {
     month: 'long',
     day: 'numeric',
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   })
 }
 
@@ -114,7 +123,7 @@ Me gustaría confirmar los detalles de entrega. ¡Gracias!`
 
 onMounted(() => {
   // Obtener referencia de los parámetros de la ruta
-  referencia.value = route.params.referencia as string || 'N/A'
+  referencia.value = (route.params.referencia as string) || 'N/A'
   fechaActual.value = formatearFecha(new Date())
 
   // Confetti o animación de éxito (opcional)
@@ -341,19 +350,19 @@ onMounted(() => {
     padding: 2rem 1.5rem;
     margin: 1rem;
   }
-  
+
   .success-message h1 {
     font-size: 1.5rem;
   }
-  
+
   .info-adicional {
     grid-template-columns: 1fr;
   }
-  
+
   .action-buttons {
     flex-direction: column;
   }
-  
+
   .btn {
     width: 100%;
     justify-content: center;
@@ -364,7 +373,7 @@ onMounted(() => {
   .success-icon i {
     font-size: 3.5rem;
   }
-  
+
   .detail-item {
     flex-direction: column;
     align-items: flex-start;

@@ -4,9 +4,9 @@
     <div class="pagination-controls">
       <div class="records-per-page">
         <label for="recordsSelect">Registros por página:</label>
-        <select 
-          id="recordsSelect" 
-          v-model="recordsPorPagina" 
+        <select
+          id="recordsSelect"
+          v-model="recordsPorPagina"
           @change="cambiarRecordsPorPagina"
           class="records-select"
         >
@@ -26,17 +26,17 @@
 
     <!-- Controles de navegación -->
     <div class="pagination-navigation">
-      <button 
-        @click="irAPagina(1)" 
+      <button
+        @click="irAPagina(1)"
         :disabled="paginaActual === 1"
         class="pagination-btn"
         title="Primera página"
       >
         ❮❮
       </button>
-      
-      <button 
-        @click="irAPagina(paginaActual - 1)" 
+
+      <button
+        @click="irAPagina(paginaActual - 1)"
         :disabled="paginaActual === 1"
         class="pagination-btn"
         title="Página anterior"
@@ -50,23 +50,23 @@
           v-for="pagina in paginasVisibles"
           :key="pagina"
           @click="irAPagina(pagina)"
-          :class="['pagination-btn', { 'active': pagina === paginaActual }]"
+          :class="['pagination-btn', { active: pagina === paginaActual }]"
         >
           {{ pagina }}
         </button>
       </div>
 
-      <button 
-        @click="irAPagina(paginaActual + 1)" 
+      <button
+        @click="irAPagina(paginaActual + 1)"
         :disabled="paginaActual === totalPaginas"
         class="pagination-btn"
         title="Página siguiente"
       >
         ❯
       </button>
-      
-      <button 
-        @click="irAPagina(totalPaginas)" 
+
+      <button
+        @click="irAPagina(totalPaginas)"
         :disabled="paginaActual === totalPaginas"
         class="pagination-btn"
         title="Última página"
@@ -88,7 +88,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   recordsPorPaginaInicial: 5,
-  paginaInicial: 1
+  paginaInicial: 1,
 })
 
 const emit = defineEmits<{
@@ -117,20 +117,20 @@ const paginasVisibles = computed(() => {
   const total = totalPaginas.value
   const actual = paginaActual.value
   const paginas: number[] = []
-  
+
   // Mostrar máximo 5 páginas visibles
   let inicio = Math.max(1, actual - 2)
   let fin = Math.min(total, inicio + 4)
-  
+
   // Ajustar el inicio si estamos cerca del final
   if (fin - inicio < 4) {
     inicio = Math.max(1, fin - 4)
   }
-  
+
   for (let i = inicio; i <= fin; i++) {
     paginas.push(i)
   }
-  
+
   return paginas
 })
 
@@ -149,17 +149,20 @@ function cambiarRecordsPorPagina() {
 }
 
 // Watchers
-watch(() => props.totalRegistros, () => {
-  // Si el total de registros cambia y la página actual ya no es válida, ir a la última página válida
-  if (paginaActual.value > totalPaginas.value && totalPaginas.value > 0) {
-    irAPagina(totalPaginas.value)
-  }
-})
+watch(
+  () => props.totalRegistros,
+  () => {
+    // Si el total de registros cambia y la página actual ya no es válida, ir a la última página válida
+    if (paginaActual.value > totalPaginas.value && totalPaginas.value > 0) {
+      irAPagina(totalPaginas.value)
+    }
+  },
+)
 
 // Exponer funciones para uso externo
 defineExpose({
   irAPagina,
-  resetearPagina: () => irAPagina(1)
+  resetearPagina: () => irAPagina(1),
 })
 </script>
 
@@ -271,23 +274,23 @@ defineExpose({
   .pagination-container {
     padding: 0.75rem;
   }
-  
+
   .pagination-controls {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
   }
-  
+
   .pagination-navigation {
     justify-content: center;
   }
-  
+
   .pagination-btn {
     padding: 0.4rem 0.6rem;
     font-size: 0.85rem;
     min-width: 35px;
   }
-  
+
   .records-per-page {
     justify-content: center;
   }

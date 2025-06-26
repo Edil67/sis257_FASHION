@@ -4,7 +4,10 @@
  */
 @font-face {
   font-family: 'Material-Design-Iconic-Font';
-  src: url('../fonts/Material-Design-Iconic-Font.woff2?v=2.2.0') format('woff2'), url('../fonts/Material-Design-Iconic-Font.woff?v=2.2.0') format('woff'), url('../fonts/Material-Design-Iconic-Font.ttf?v=2.2.0') format('truetype');
+  src:
+    url('../fonts/Material-Design-Iconic-Font.woff2?v=2.2.0') format('woff2'),
+    url('../fonts/Material-Design-Iconic-Font.woff?v=2.2.0') format('woff'),
+    url('../fonts/Material-Design-Iconic-Font.ttf?v=2.2.0') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -56,95 +59,95 @@
   left: -1.85714286em;
 }
 .zmdi-hc-border {
-  padding: .1em .25em;
+  padding: 0.1em 0.25em;
   border: solid 0.1em #9e9e9e;
   border-radius: 2px;
 }
 .zmdi-hc-border-circle {
-  padding: .1em .25em;
+  padding: 0.1em 0.25em;
   border: solid 0.1em #9e9e9e;
   border-radius: 50%;
 }
 .zmdi.pull-left {
   float: left;
-  margin-right: .15em;
+  margin-right: 0.15em;
 }
 .zmdi.pull-right {
   float: right;
-  margin-left: .15em;
+  margin-left: 0.15em;
 }
 .zmdi-hc-spin {
   -webkit-animation: zmdi-spin 1.5s infinite linear;
-          animation: zmdi-spin 1.5s infinite linear;
+  animation: zmdi-spin 1.5s infinite linear;
 }
 .zmdi-hc-spin-reverse {
   -webkit-animation: zmdi-spin-reverse 1.5s infinite linear;
-          animation: zmdi-spin-reverse 1.5s infinite linear;
+  animation: zmdi-spin-reverse 1.5s infinite linear;
 }
 @-webkit-keyframes zmdi-spin {
   0% {
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
     -webkit-transform: rotate(359deg);
-            transform: rotate(359deg);
+    transform: rotate(359deg);
   }
 }
 @keyframes zmdi-spin {
   0% {
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
     -webkit-transform: rotate(359deg);
-            transform: rotate(359deg);
+    transform: rotate(359deg);
   }
 }
 @-webkit-keyframes zmdi-spin-reverse {
   0% {
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
     -webkit-transform: rotate(-359deg);
-            transform: rotate(-359deg);
+    transform: rotate(-359deg);
   }
 }
 @keyframes zmdi-spin-reverse {
   0% {
     -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
     -webkit-transform: rotate(-359deg);
-            transform: rotate(-359deg);
+    transform: rotate(-359deg);
   }
 }
 .zmdi-hc-rotate-90 {
   -webkit-transform: rotate(90deg);
-      -ms-transform: rotate(90deg);
-          transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 .zmdi-hc-rotate-180 {
   -webkit-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-          transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 .zmdi-hc-rotate-270 {
   -webkit-transform: rotate(270deg);
-      -ms-transform: rotate(270deg);
-          transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
 }
 .zmdi-hc-flip-horizontal {
   -webkit-transform: scale(-1, 1);
-      -ms-transform: scale(-1, 1);
-          transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
 }
 .zmdi-hc-flip-vertical {
   -webkit-transform: scale(1, -1);
-      -ms-transform: scale(1, -1);
-          transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
 }
 .zmdi-hc-stack {
   position: relative;
