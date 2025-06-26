@@ -1,13 +1,114 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Fashion</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+  
+  <!-- Scripts adicionales que dependen de jQuery -->
+  <script src="/parallax100/parallax100.js"></script>
+  <script src="/isotope/isotope.pkgd.min.js"></script>
+  <script src="/js/slick-custom.js"></script>
+  
+  <script>
+    // Script que se ejecuta después de que Vue se monte
+    window.addEventListener('DOMContentLoaded', function() {
+      // Esperamos un poco para asegurarnos de que jQuery esté disponible
+      setTimeout(function() {
+        if (typeof window.$ !== 'undefined') {
+          console.log('jQuery está disponible:', typeof window.$);
+          
+          // Configuración de select2
+          window.$(".js-select2").each(function () {
+            window.$(this).select2({
+              minimumResultsForSearch: 20,
+              dropdownParent: window.$(this).next('.dropDownSelect2')
+            });
+          });
+
+          // Parallax
+          if (typeof window.$('.parallax100').parallax100 === 'function') {
+            window.$('.parallax100').parallax100();
+          }
+
+          // Gallery lightbox
+          window.$('.gallery-lb').each(function () {
+            window.$(this).magnificPopup({
+              delegate: 'a',
+              type: 'image',
+              gallery: {
+                enabled: true
+              },
+              mainClass: 'mfp-fade'
+            });
+          });
+
+          // Wishlist functionality
+          window.$('.js-addwish-b2').on('click', function (e) {
+            e.preventDefault();
+          });
+
+          window.$('.js-addwish-b2').each(function () {
+            var nameProduct = window.$(this).parent().parent().find('.js-name-b2').html();
+            window.$(this).on('click', function () {
+              if (typeof window.swal === 'function') {
+                window.swal(nameProduct, "is added to wishlist !", "success");
+              }
+              window.$(this).addClass('js-addedwish-b2');
+              window.$(this).off('click');
+            });
+          });
+
+          window.$('.js-addwish-detail').each(function () {
+            var nameProduct = window.$(this).parent().parent().parent().find('.js-name-detail').html();
+            window.$(this).on('click', function () {
+              if (typeof window.swal === 'function') {
+                window.swal(nameProduct, "is added to wishlist !", "success");
+              }
+              window.$(this).addClass('js-addedwish-detail');
+              window.$(this).off('click');
+            });
+          });
+
+          // Add to cart functionality
+          window.$('.js-addcart-detail').each(function () {
+            var nameProduct = window.$(this).parent().parent().parent().parent().find('.js-name-detail').html();
+            window.$(this).on('click', function () {
+              if (typeof window.swal === 'function') {
+                window.swal(nameProduct, "is added to cart !", "success");
+              }
+            });
+          });
+
+          // Perfect scrollbar
+          window.$('.js-pscroll').each(function () {
+            window.$(this).css('position', 'relative');
+            window.$(this).css('overflow', 'hidden');
+            if (typeof window.PerfectScrollbar !== 'undefined') {
+              var ps = new window.PerfectScrollbar(this, {
+                wheelSpeed: 1,
+                scrollingThreshold: 1000,
+                wheelPropagation: false,
+              });
+
+              window.$(window).on('resize', function () {
+                ps.update();
+              });
+            }
+          });
+        } else {
+          console.warn('jQuery no está disponible todavía');
+        }
+      }, 500);
+    });
+  </script>
+</body>
+
 </html>
