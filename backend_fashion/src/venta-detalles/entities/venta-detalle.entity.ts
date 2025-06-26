@@ -29,4 +29,5 @@ export class VentaDetalle {
   @ManyToOne(() => Producto, (producto) => producto.ventadetalles)
   @JoinColumn({ name: 'id_producto', referencedColumnName: 'id' })
   producto: Producto;
+  static precioUnitario: number | undefined;
 }

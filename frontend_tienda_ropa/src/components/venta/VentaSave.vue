@@ -1,169 +1,203 @@
 <script setup lang="ts">
+import type { Cliente } from '@/models/cliente'
+import type { Empleado } from '@/models/empleado'
 import type { Producto } from '@/models/producto'
-import type { Categoria } from '@/models/categoria'
+import type { ventaDetalle } from '@/models/ventaDetalle'
 import http from '@/plugins/axios'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
-import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import Select from 'primevue/select'
-import { computed, ref, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 
-// Definición del endpoint de productos
-const ENDPOINT = 'productos'
+const ENDPOINT = 'ventas'
 
-// Props recibidas desde el componente padre
 const props = defineProps({
   mostrar: Boolean,
-  producto: {
-    type: Object as () => Producto,
-    default: () => ({}) as Producto,
+  venta: {
+    type: Object,
+    default: () => ({}),
   },
-  modoEdicion: Boolean, // Indica si es modo edición
+  modoEdicion: Boolean,
 })
 
-// Emitimos eventos 'guardar', 'close' y 'eliminar' para acciones
-const emit = defineEmits(['guardar', 'close', 'eliminar'])
+const emit = defineEmits(['guardar', 'close'])
 
-// Producto local para manejar los cambios y categorías
-const producto = ref<Producto>({ ...props.producto })
-const categorias = ref<Categoria[]>([])
-
-// Sincroniza el producto local con el prop `producto`
-watch(
-  () => props.producto,
-  (newVal) => {
-    producto.value = { ...newVal }
-  },
-  { immediate: true },
-)
-
-// Computed para manejar la visibilidad del diálogo
 const dialogVisible = computed({
   get: () => props.mostrar,
   set: (value) => {
-    if (!value) emit('close') // Cerrar diálogo si cambia el valor
+    if (!value) emit('close')
   },
 })
 
-// Función para obtener categorías del backend
-async function obtenerCategorias() {
-  try {
-    const response = await http.get('categorias') // Asume que esta es la ruta de la API
-    categorias.value = response.data
-  } catch (error) {
-    console.error('Error al cargar categorías:', error)
+const clientes = ref<Cliente[]>([])
+const empleados = ref<Empleado[]>([])
+const productos = ref<Producto[]>([])
+const venta = ref({
+  cliente: null as Cliente | null,
+  empleado: null as Empleado | null,
+  ventaDetalles: [] as ventaDetalle[],
+  totalVenta: 0,
+})
+
+const detalle = ref({
+  producto: null as Producto | null,
+  cantidad: 1,
+  precioUnitario: 0,
+  subtotal: 0,
+})
+
+async function obtenerClientes() {
+  clientes.value = (await http.get('clientes')).data
+}
+async function obtenerEmpleados() {
+  empleados.value = (await http.get('empleados')).data
+}
+async function obtenerProductos() {
+  productos.value = (await http.get('productos')).data
+}
+
+onMounted(() => {
+  obtenerClientes()
+  obtenerEmpleados()
+  obtenerProductos()
+})
+
+watch(
+  () => detalle.value.producto,
+  (nuevo) => {
+    if (nuevo) {
+      detalle.value.precioUnitario = nuevo.precio
+      detalle.value.cantidad = 1
+      detalle.value.subtotal = nuevo.precio
+    }
+  },
+)
+
+function agregarDetalle() {
+  if (detalle.value.producto && detalle.value.cantidad > 0) {
+    detalle.value.subtotal = detalle.value.cantidad * detalle.value.precioUnitario
+    venta.value.ventaDetalles.push({
+      ...detalle.value,
+      id: 0,
+      venta: undefined,
+    })
+    venta.value.totalVenta = venta.value.ventaDetalles.reduce((sum, d) => sum + d.subtotal, 0)
+    detalle.value = { producto: null, cantidad: 1, precioUnitario: 0, subtotal: 0 }
   }
 }
 
-// Función para guardar o actualizar el producto
+function eliminarDetalle(index: number) {
+  venta.value.ventaDetalles.splice(index, 1)
+  venta.value.totalVenta = venta.value.ventaDetalles.reduce((sum, d) => sum + d.subtotal, 0)
+}
+
 async function handleSave() {
   try {
     const body = {
-      idCategoria: producto.value.categoria?.id,
-      nombre: producto.value.nombre,
-      descripcion: producto.value.descripcion,
-      precioUnitario: producto.value.precioUnitario,
-      stock: producto.value.stock,
+      idCliente: venta.value.cliente?.id,
+      idEmpleado: venta.value.empleado?.id,
+      totalVenta: venta.value.totalVenta,
+      detalles: venta.value.ventaDetalles.map((d) => ({
+        idProducto: d.producto?.id,
+        cantidad: d.cantidad,
+        precioUnitario: d.precioUnitario,
+        subtotal: d.subtotal,
+      })),
     }
-
     if (props.modoEdicion) {
-      // Actualiza el producto si está en modo edición
-      await http.patch(`${ENDPOINT}/${producto.value.id}`, body)
+      await http.patch(`${ENDPOINT}/${props.venta.id}`, body)
     } else {
-      // Crea un nuevo producto
       await http.post(ENDPOINT, body)
-      // Aumentar stock de la categoría correspondiente si es necesario
-      await updateStock(producto.value.categoria.id, producto.value.stock)
     }
-
-    emit('guardar') // Emite el evento guardar
-    producto.value = {} as Producto // Resetea el producto
-    dialogVisible.value = false // Cierra el diálogo
+    emit('guardar')
+    dialogVisible.value = false
   } catch (error: any) {
-    alert(error?.response?.data?.message || 'Error al guardar el producto')
+    alert(error?.response?.data?.message || 'Error al guardar la venta')
   }
 }
-
-// Función para eliminar un producto y disminuir su stock
-async function handleDelete() {
-  try {
-    await http.delete(`${ENDPOINT}/${producto.value.id}`)
-    await updateStock(producto.value.categoria.id, -producto.value.stock) // Disminuir stock al eliminar el producto
-    emit('eliminar') // Emitir evento de eliminación
-    dialogVisible.value = false // Cerrar diálogo tras eliminación
-  } catch (error: any) {
-    alert(error?.response?.data?.message || 'Error al eliminar el producto')
-  }
-}
-
-// Función para actualizar el stock de la categoría
-async function updateStock(categoriaId: number, cantidad: number) {
-  try {
-    await http.patch(`categorias/${categoriaId}/stock`, { cantidad })
-  } catch (error) {
-    console.error('Error al actualizar el stock:', error)
-  }
-}
-
-// Carga las categorías cuando se muestra el diálogo
-watch(
-  () => props.mostrar,
-  (nuevoValor) => {
-    if (nuevoValor) obtenerCategorias()
-  },
-)
 </script>
 
 <template>
   <div class="card flex justify-center">
     <Dialog
       v-model:visible="dialogVisible"
-      :header="props.modoEdicion ? 'Editar Producto' : 'Crear Producto'"
-      style="width: 25rem"
+      :header="props.modoEdicion ? 'Editar Venta' : 'Crear Venta'"
+      :modal="true"
+      :draggable="false"
+      style="max-width: 900px; width: 100%"
+      contentStyle="overflow-x: auto; padding: 2rem;"
     >
-      <!-- Selector para la categoría -->
-      <div class="flex items-center gap-4 mb-4">
-        <label for="categoria" class="font-semibold w-4">Categoría</label>
+      <!-- Select Cliente -->
+      <div class="flex flex-wrap items-center gap-4 mb-4">
+        <label class="font-semibold w-32">Cliente</label>
         <Select
-          id="categoria"
-          v-model="producto.categoria"
-          :options="categorias"
+          v-model="venta.cliente"
+          :options="clientes"
+          optionLabel="nombres"
+          placeholder="Seleccione un cliente"
+          class="flex-1 min-w-[200px]"
+        />
+      </div>
+      <!-- Select Empleado -->
+      <div class="flex flex-wrap items-center gap-4 mb-4">
+        <label class="font-semibold w-32">Empleado</label>
+        <Select
+          v-model="venta.empleado"
+          :options="empleados"
+          optionLabel="nombres"
+          placeholder="Seleccione un empleado"
+          class="flex-1 min-w-[200px]"
+        />
+      </div>
+      <!-- Agregar Detalle de Producto -->
+      <div class="flex flex-wrap items-center gap-4 mb-4">
+        <label class="font-semibold w-32">Producto</label>
+        <Select
+          v-model="detalle.producto"
+          :options="productos"
           optionLabel="nombre"
-          class="flex-auto"
-          placeholder="Seleccione una categoría"
+          placeholder="Seleccione un producto"
+          class="flex-1 min-w-[200px]"
         />
-      </div>
-
-      <!-- Campo de descripción del producto -->
-
-      <div class="flex items-center gap-4 mb-4">
-        <label for="nombre" class="font-semibold w-4">Nombre</label>
-        <InputText id="nombre" v-model="producto.nombre" class="flex-auto" autocomplete="off" />
-      </div>
-
-      <div class="flex items-center gap-4 mb-4">
-        <label for="descripcion" class="font-semibold w-4">Descripción</label>
-        <InputText
-          id="descripcion"
-          v-model="producto.descripcion"
-          class="flex-auto"
-          autocomplete="off"
+        <InputNumber v-model="detalle.cantidad" :min="1" placeholder="Cantidad" class="w-28" />
+        <InputNumber
+          v-model="detalle.precioUnitario"
+          :min="0"
+          placeholder="Precio"
+          class="w-32"
+          disabled
         />
+        <Button label="Agregar" @click="agregarDetalle" />
       </div>
-
-      <!-- Campo para el precio del producto -->
-      <div class="flex items-center gap-4 mb-4">
-        <label for="precio" class="font-semibold w-4">Precio Bs.</label>
-        <InputNumber id="precio" v-model="producto.precioUnitario" class="flex-auto" :min="0" />
+      <!-- Tabla de Detalles -->
+      <div class="overflow-x-auto mb-4">
+        <table class="w-full text-sm">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Subtotal</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(d, i) in venta.ventaDetalles" :key="i">
+              <td>{{ d.producto?.nombre }}</td>
+              <td>{{ d.cantidad }}</td>
+              <td>{{ d.precioUnitario }}</td>
+              <td>{{ d.subtotal }}</td>
+              <td>
+                <Button icon="pi pi-trash" severity="danger" @click="eliminarDetalle(i)" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
-      <!-- Campo para el stock del producto -->
-      <div class="flex items-center gap-4 mb-4">
-        <label for="stock" class="font-semibold w-4">Stock</label>
-        <InputNumber id="stock" v-model="producto.stock" class="flex-auto" :min="0" />
+      <div class="flex justify-end mb-4">
+        <span class="font-bold text-lg">Total Venta: {{ venta.totalVenta }}</span>
       </div>
-
       <!-- Botones de acción -->
       <div class="flex justify-end gap-2">
         <Button
@@ -174,17 +208,20 @@ watch(
           @click="dialogVisible = false"
         ></Button>
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
-        <Button
-          v-if="props.modoEdicion"
-          type="button"
-          label="Eliminar"
-          icon="pi pi-trash"
-          severity="danger"
-          @click="handleDelete"
-        ></Button>
       </div>
     </Dialog>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Opcional: mejora la tabla en pantallas pequeñas */
+@media (max-width: 600px) {
+  table {
+    font-size: 0.85rem;
+  }
+  th,
+  td {
+    padding: 0.25rem;
+  }
+}
+</style>

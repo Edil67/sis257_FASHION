@@ -8,9 +8,7 @@ defineProps<{
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      You’ve successfully created a project with
-      <a href="https://vite.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. What's next?
+      Bienvenido a la tienda de ropa, aquí podrás gestionar los empleados, clientes,ventas, productos y usuarios.
     </h3>
   </div>
 </template>

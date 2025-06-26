@@ -50,7 +50,6 @@ function formatDate(dateString: string): string {
       <thead>
         <tr>
           <th>Nro.</th>
-          <th>Categoria</th>
           <th>Nombre</th>
           <th>Descripción</th>
           <th>Precio Unitario</th>
@@ -65,7 +64,6 @@ function formatDate(dateString: string): string {
       <tbody>
         <tr v-for="(producto, index) in productos" :key="producto.id">
           <td>{{ index + 1 }}</td>
-          <td>{{ producto.categoria?.nombre }}</td>
           <td>{{ producto.nombre }}</td>
           <td>{{ producto.descripcion }}</td>
           <td>{{ producto.precio }}</td>
@@ -73,9 +71,8 @@ function formatDate(dateString: string): string {
           <td>{{ producto.talla }}</td>
           <td>{{ producto.color }}</td>
           <td>
-  <img :src="producto.imagenes" alt="Imagen" style="max-width: 80px; max-height: 80px;" />
-</td>
-
+            <img :src="producto.imagenes" alt="Imagen" style="max-width: 80px; max-height: 80px" />
+          </td>
 
           <td>{{ formatDate(producto.fechaCreacion) }}</td>
 

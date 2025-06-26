@@ -1,39 +1,27 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import http from '@/plugins/axios'
 import type { Empleado } from '@/models/empleado'
 import type { Usuario } from '@/models/usuario'
 
 const props = defineProps<{
   ENDPOINT_API: string
+  empleado: Empleado
 }>()
 
+const emit = defineEmits(['saved', 'close'])
+
 const ENDPOINT = props.ENDPOINT_API ?? ''
-
-const empleado = ref<Empleado>({
-  id: 0,
-  nombres: '',
-  apellidos: '',
-  cargo: '',
-})
-
+const empleado = ref<Empleado>({ ...props.empleado })
 const usuarios = ref<Usuario[]>([])
 
-const emit = defineEmits(['saved'])
-
-async function crearEmpleado() {
-  try {
-    await http.post(ENDPOINT, {
-      idUsuario: empleado.value.usuario.id,
-      nombres: empleado.value.nombres,
-      apellidos: empleado.value.apellidos,
-      cargo: empleado.value.cargo,
-    })
-    emit('saved')
-  } catch (error) {
-    console.error('Error al crear el empleado:', error)
-  }
-}
+watch(
+  () => props.empleado,
+  (nuevo) => {
+    empleado.value = { ...nuevo }
+  },
+  { immediate: true },
+)
 
 async function getUsuarios() {
   try {
@@ -44,16 +32,30 @@ async function getUsuarios() {
   }
 }
 
+async function actualizarEmpleado() {
+  try {
+    await http.patch(`${ENDPOINT}/${empleado.value.id}`, {
+      idUsuario: empleado.value.usuario.id,
+      nombres: empleado.value.nombres,
+      apellidos: empleado.value.apellidos,
+      cargo: empleado.value.cargo,
+    })
+    emit('saved')
+  } catch (error) {
+    console.error('Error al actualizar el empleado:', error)
+  }
+}
+
 onMounted(getUsuarios)
 </script>
 
 <template>
   <div class="container" v-if="empleado">
     <div class="row">
-      <h2>Crear Nuevo Empleado</h2>
+      <h2>Editar Empleado</h2>
     </div>
     <div class="row">
-      <form @submit.prevent="crearEmpleado">
+      <form @submit.prevent="actualizarEmpleado">
         <div class="form-floating mb-3">
           <select class="form-select" v-model="empleado.usuario" required>
             <option value="" disabled>Seleccione un usuario</option>
@@ -73,7 +75,7 @@ onMounted(getUsuarios)
           />
           <label for="nombres">Nombres</label>
         </div>
-        <div class="form-floating mb-2">
+        <div class="form-floating mb-3">
           <input
             type="text"
             class="form-control"
@@ -83,7 +85,7 @@ onMounted(getUsuarios)
           />
           <label for="apellidos">Apellidos</label>
         </div>
-        <div class="form-floating mb-2">
+        <div class="form-floating mb-3">
           <input
             type="text"
             class="form-control"
@@ -93,10 +95,14 @@ onMounted(getUsuarios)
           />
           <label for="cargo">Cargo</label>
         </div>
+        <!-- Campo de fecha eliminado -->
         <div class="text-center mt-3">
           <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
         </div>
       </form>
+    </div>
+    <div class="text-left">
+      <button class="btn btn-link" @click="$emit('close')">Volver</button>
     </div>
   </div>
 </template>

@@ -1,53 +1,36 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsString, Matches, MaxLength, IsOptional } from 'class-validator';
 
 export class CreateClienteDto {
-  @ApiProperty()
-  @IsNotEmpty({ message: 'El campo nombres no debe ser vacío' })
-  @IsString({ message: 'El campo nombres debe ser de tipo cadena' })
-  @MaxLength(50, {
-    message: 'El campo nombres no debe ser nemor a 50 caracteres',
+  @ApiProperty({
+    example: 'Juan',
   })
-  @MinLength(3, { message: 'El campo nombres  debe ser mayor a 3 caracteres' })
-  readonly nombres: string;
+  @IsString({ message: 'El campo nombre debe ser de tipo cadena' })
+  @MaxLength(50, { message: 'El campo nombre no debe ser mayor a 50 caracteres' })
+  nombre: string;
 
-  @ApiProperty()
-  @IsNotEmpty({ message: 'El campo apellidos no debe ser vacío' })
-  @IsString({ message: 'El campo apellidos debe ser de tipo cadena' })
-  @MaxLength(50, {
-    message: 'El campo apellidos no debe ser nemor a 50 caracteres',
+  @ApiProperty({
+    example: 'Pérez',
   })
-  @MinLength(4, {
-    message: 'El campo apellidos  debe ser mayor a 4 caracteres',
-  })
-  readonly apellidos: string;
+  @IsOptional()
+  @IsString({ message: 'El campo apellido debe ser de tipo cadena' })
+  @MaxLength(50, { message: 'El campo apellido no debe ser mayor a 50 caracteres' })
+  apellido?: string;
 
-  @ApiProperty()
-  @IsNotEmpty({ message: 'El campo direccion no debe ser vacío' })
-  @IsString({ message: 'El campo direccion debe ser de tipo cadena' })
-  @MaxLength(50, {
-    message: 'El campo direccion no debe ser nemor a 30 caracteres',
+  @ApiProperty({
+    example: '+591 71234567',
   })
-  @MinLength(4, {
-    message: 'El campo direccion  debe ser mayor a 4 caracteres',
-  })
-  readonly direccion: string;
-
-  @ApiProperty()
-  @IsNotEmpty({ message: 'El campo telefono no debe ser vacío' })
+  @IsOptional()
   @IsString({ message: 'El campo telefono debe ser de tipo cadena' })
-  @MaxLength(50, {
-    message: 'El campo telefono no debe ser nemor a 8 caracteres',
-  })
-  @MinLength(4, { message: 'El campo telefono  debe ser mayor a 4 caracteres' })
-  readonly telefono: string;
+  @MaxLength(50, { message: 'El campo telefono no debe ser mayor a 50 caracteres' })
+  @Matches(/^[0-9+\-\s()]+$/, { message: 'El campo telefono tiene un formato inválido' })
+  telefono?: string;
 
-  @ApiProperty()
-  @IsNotEmpty({ message: 'El campo email no debe ser vacío' })
-  @IsString({ message: 'El campo email debe ser de tipo cadena' })
-  @MaxLength(50, {
-    message: 'El campo email no debe ser mayor a 50 caracteres',
+  @ApiProperty({
+    example: 'Av. Siempre Viva 123',
   })
-  @MinLength(4, { message: 'El campo email debe ser mayor a 4 caracteres' })
-  readonly email: string;
+  @IsOptional()
+  @IsString({ message: 'El campo direccion debe ser de tipo cadena' })
+  @MaxLength(50, { message: 'El campo direccion no debe ser mayor a 50 caracteres' })
+  direccion?: string;
 }
