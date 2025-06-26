@@ -2,9 +2,9 @@ import type { Usuario } from './usuario'
 
 export interface Empleado {
   id: number
-  nombres: string
-  apellidos: string
+  nombre: string
+  apellido: string
+  telefono: string
+  direccion: string
   cargo: string
-  fechaCreacion: Date
-  usuario: Usuario
 }

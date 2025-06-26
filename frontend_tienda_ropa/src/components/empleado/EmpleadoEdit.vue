@@ -35,9 +35,10 @@ async function getUsuarios() {
 async function actualizarEmpleado() {
   try {
     await http.patch(`${ENDPOINT}/${empleado.value.id}`, {
-      idUsuario: empleado.value.usuario.id,
-      nombres: empleado.value.nombres,
-      apellidos: empleado.value.apellidos,
+      nombre: empleado.value.nombre,
+      apellido: empleado.value.apellido,
+      telefono: empleado.value.telefono,
+      direccion: empleado.value.direccion,
       cargo: empleado.value.cargo,
     })
     emit('saved')
@@ -57,42 +58,23 @@ onMounted(getUsuarios)
     <div class="row">
       <form @submit.prevent="actualizarEmpleado">
         <div class="form-floating mb-3">
-          <select class="form-select" v-model="empleado.usuario" required>
-            <option value="" disabled>Seleccione un usuario</option>
-            <option v-for="usuario in usuarios" :key="usuario.id" :value="usuario">
-              {{ usuario.nombreUsuario }}
-            </option>
-          </select>
-          <label for="usuario">Usuario</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            v-model="empleado.nombres"
-            placeholder="Nombres"
-            required
-          />
+          <input type="text" class="form-control" v-model="empleado.nombre" placeholder="Nombres" required />
           <label for="nombres">Nombres</label>
         </div>
         <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            v-model="empleado.apellidos"
-            placeholder="Apellidos"
-            required
-          />
+          <input type="text" class="form-control" v-model="empleado.apellido" placeholder="Apellidos" required />
           <label for="apellidos">Apellidos</label>
         </div>
         <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            v-model="empleado.cargo"
-            placeholder="Cargo"
-            required
-          />
+          <input type="text" class="form-control" v-model="empleado.telefono" placeholder="Teléfono" required />
+          <label for="telefono">Teléfono</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" v-model="empleado.direccion" placeholder="Dirección" required />
+          <label for="direccion">Dirección</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" v-model="empleado.cargo" placeholder="Cargo" required />
           <label for="cargo">Cargo</label>
         </div>
         <!-- Campo de fecha eliminado -->
@@ -111,6 +93,7 @@ onMounted(getUsuarios)
 .container {
   padding: 20px;
 }
+
 button {
   margin-top: 10px;
 }

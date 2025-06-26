@@ -35,8 +35,8 @@ watch(
 async function handleSave() {
   try {
     const body = {
-      nombres: cliente.value.nombres,
-      apellidos: cliente.value.apellidos,
+      nombre: cliente.value.nombre,
+      apellido: cliente.value.apellido,
       direccion: cliente.value.direccion,
       telefono: cliente.value.telefono,
       email: cliente.value.email,
@@ -66,7 +66,7 @@ async function handleSave() {
         <label for="nombre" class="font-semibold w-4">Nombres</label>
         <InputText
           id="nombre"
-          v-model="cliente.nombres"
+          v-model="cliente.nombre"
           class="flex-auto"
           autocomplete="off"
           autofocus
@@ -77,7 +77,7 @@ async function handleSave() {
         <label for="apellido" class="font-semibold w-4">Apellidos</label>
         <InputText
           id="apellido"
-          v-model="cliente.apellidos"
+          v-model="cliente.apellido"
           class="flex-auto"
           autocomplete="off"
           autofocus

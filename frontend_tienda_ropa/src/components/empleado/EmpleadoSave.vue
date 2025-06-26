@@ -5,7 +5,6 @@ import http from '@/plugins/axios'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
-import Select from 'primevue/select'
 import { computed, ref, watch } from 'vue'
 
 const ENDPOINT = 'empleados'
@@ -25,6 +24,8 @@ const empleado = ref<Empleado>({
   ...props.empleado,
 })
 const usuarios = ref<Usuario[]>([])
+
+const cargos = ref<string[]>(['Gerente', 'Vendedor', 'Cajero', 'Supervisor', 'Almacenista']) // Roles specific to a clothing store
 
 watch(
   () => props.empleado,
@@ -55,9 +56,10 @@ async function obtenerUsuarios() {
 async function handleSave() {
   try {
     const body = {
-      idUsuario: empleado.value.usuario?.id,
-      nombres: empleado.value.nombres,
-      apellidos: empleado.value.apellidos,
+      nombre: empleado.value.nombre,
+      apellido: empleado.value.apellido,
+      telefono: empleado.value.telefono,
+      direccion: empleado.value.direccion,
       cargo: empleado.value.cargo,
     }
 
@@ -85,57 +87,34 @@ watch(
 
 <template>
   <div class="card flex justify-center">
-    <Dialog
-      v-model:visible="dialogVisible"
-      :header="props.modoEdicion ? 'Editar Empleado' : 'Crear Empleado'"
-      style="width: 25rem"
-    >
+    <Dialog v-model:visible="dialogVisible" :header="props.modoEdicion ? 'Editar Empleado' : 'Crear Empleado'"
+      style="width: 25rem">
       <div class="flex items-center gap-4 mb-4">
-        <label for="usuario" class="font-semibold w-4">Usuario</label>
-        <Select
-          id="usuario"
-          v-model="empleado.usuario"
-          :options="usuarios"
-          optionLabel="nombreUsuario"
-          class="flex-auto"
-          placeholder="Seleccione un Usuario"
-        />
+        <label for="nombre" class="font-semibold w-4">Nombre</label>
+        <InputText id="nombre" v-model="empleado.nombre" class="flex-auto" autocomplete="off" />
       </div>
       <div class="flex items-center gap-4 mb-4">
-        <label for="nombre" class="font-semibold w-4">Nombres</label>
-        <InputText id="nombre" v-model="empleado.nombres" class="flex-auto" autocomplete="off" />
-      </div>
-      <div class="flex items-center gap-4 mb-4">
-        <label for="apellidos" class="font-semibold w-4">Apellidos</label>
-        <InputText
-          id="apellidos"
-          v-model="empleado.apellidos"
-          class="flex-auto"
-          autocomplete="off"
-        />
+        <label for="apellido" class="font-semibold w-4">Apellido</label>
+        <InputText id="apellido" v-model="empleado.apellido" class="flex-auto" autocomplete="off" />
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="cargo" class="font-semibold w-4">Cargo</label>
-        <InputText id="cargo" v-model="empleado.cargo" class="flex-auto" autocomplete="off" />
+        <select id="cargo" v-model="empleado.cargo" class="flex-auto">
+          <option v-for="cargo in cargos" :key="cargo" :value="cargo">{{ cargo }}</option>
+        </select>
       </div>
-      <!-- Campo de fecha eliminado -->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="telefono" class="font-semibold w-4">Teléfono</label>
+        <InputText id="telefono" v-model="empleado.telefono" class="flex-auto" autocomplete="off" />
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="direccion" class="font-semibold w-4">Dirección</label>
+        <InputText id="direccion" v-model="empleado.direccion" class="flex-auto" autocomplete="off" />
+      </div>
       <div class="flex justify-end gap-2">
-        <Button
-          type="button"
-          label="Cancelar"
-          icon="pi pi-times"
-          severity="secondary"
-          @click="dialogVisible = false"
-        ></Button>
+        <Button type="button" label="Cancelar" icon="pi pi-times" severity="secondary"
+          @click="dialogVisible = false"></Button>
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
-        <Button
-          v-if="props.modoEdicion"
-          type="button"
-          label="Eliminar"
-          icon="pi pi-trash"
-          severity="danger"
-          @click="emit('eliminar')"
-        ></Button>
       </div>
     </Dialog>
   </div>
