@@ -63,7 +63,7 @@ async function handleSave() {
       idCategoria: producto.value.categoria?.id,
       nombre: producto.value.nombre,
       descripcion: producto.value.descripcion,
-      precio: producto.value.precio,
+      precio: Number(producto.value.precio),
       stock: producto.value.stock,
       talla: producto.value.talla,
       color: producto.value.color,
@@ -146,8 +146,8 @@ watch(
           v-model="producto.precio"
           class="flex-auto"
           mode="currency"
-          currency="USD"
-          locale="en-US"
+          currency="BOB"
+          locale="es-BO"
           :min="0"
         />
       </div>
@@ -177,18 +177,30 @@ watch(
       <!-- campo para talla-->
       <div class="flex items-center gap-4 mb-4">
         <label for="talla" class="font-semibold w-4">Talla</label>
-        <InputText id="talla" v-model="producto.talla" class="flex-auto" autocomplete="off" />
+        <Select
+          id="talla"
+          v-model="producto.talla"
+          :options="['XS', 'S', 'M', 'L', 'XL', 'XXL']"
+          class="flex-auto"
+          placeholder="Seleccione una talla"
+        />
       </div>
 
       <!-- campo para color-->
       <div class="flex items-center gap-4 mb-4">
         <label for="color" class="font-semibold w-4">Color</label>
-        <InputText id="color" v-model="producto.color" class="flex-auto" autocomplete="off" />
+        <Select
+          id="color"
+          v-model="producto.color"
+          :options="['Blanco', 'Negro', 'Azul', 'Rojo', 'Verde', 'Amarillo', 'Rosa', 'Gris', 'Marrón', 'Violeta']"
+          class="flex-auto"
+          placeholder="Seleccione un color"
+        />
       </div>
       <!-- campo para imagen-->
       <div class="flex items-center gap-4 mb-4">
-        <label for="imagen" class="font-semibold w-4">Imagen</label>
-        <InputText id="imagen" v-model="producto.imagenes" class="flex-auto" autocomplete="off" />
+        <label for="imagen" class="font-semibold w-4">URL Imagen</label>
+        <InputText id="imagen" v-model="producto.imagenes" class="flex-auto" autocomplete="off" type="url" />
       </div>
 
       <!-- Botones de acción -->
@@ -201,14 +213,6 @@ watch(
           @click="dialogVisible = false"
         ></Button>
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave"></Button>
-        <Button
-          v-if="props.modoEdicion"
-          type="button"
-          label="Eliminar"
-          icon="pi pi-trash"
-          severity="danger"
-          @click="handleDelete"
-        ></Button>
       </div>
     </Dialog>
   </div>

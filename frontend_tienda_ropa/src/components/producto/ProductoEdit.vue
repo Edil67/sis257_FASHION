@@ -20,14 +20,15 @@ const producto = ref<Producto>({
   descripcion: '',
   precio: 0,
   stock: 0,
-  categoria: {
-    id: 0,
-    nombre: '',
-    descripcion: '',
-  },
   talla: '',
   color: '',
   imagenes: '',
+  fechaCreacion: '',
+  fechaModificacion: '',
+  categoria: {
+    id: 0,
+    nombre: '',
+  },
 })
 
 const categorias = ref<Categoria[]>([])
@@ -47,7 +48,7 @@ async function actualizarProducto() {
       idCategoria: producto.value.categoria.id,
       nombre: producto.value.nombre,
       descripcion: producto.value.descripcion,
-      precio: producto.value.precio,
+      precio: Number(producto.value.precio),
       stock: producto.value.stock,
       talla: producto.value.talla,
       color: producto.value.color,
@@ -141,34 +142,42 @@ function goBack() {
         </div>
 
         <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            v-model="producto.talla"
-            placeholder="Talla"
-            required
-          />
+          <select class="form-select" v-model="producto.talla" required>
+            <option value="" disabled>Seleccione una talla</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
           <label for="talla">Talla</label>
         </div>
         <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            v-model="producto.color"
-            placeholder="Color"
-            required
-          />
+          <select class="form-select" v-model="producto.color" required>
+            <option value="" disabled>Seleccione un color</option>
+            <option value="Blanco">Blanco</option>
+            <option value="Negro">Negro</option>
+            <option value="Azul">Azul</option>
+            <option value="Rojo">Rojo</option>
+            <option value="Verde">Verde</option>
+            <option value="Amarillo">Amarillo</option>
+            <option value="Rosa">Rosa</option>
+            <option value="Gris">Gris</option>
+            <option value="Marrón">Marrón</option>
+            <option value="Violeta">Violeta</option>
+          </select>
           <label for="color">Color</label>
         </div>
         <div class="form-floating mb-3">
           <input
-            type="text"
+            type="url"
             class="form-control"
             v-model="producto.imagenes"
-            placeholder="Imagen"
+            placeholder="URL Imagen"
             required
           />
-          <label for="imagenes">Imagen</label>
+          <label for="imagenes">URL Imagen</label>
         </div>
         <div class="text-center mt-3">
           <button type="submit" class="btn btn-primary btn-lg">
