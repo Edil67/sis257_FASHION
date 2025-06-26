@@ -1,14 +1,14 @@
-import { Cliente } from 'src/clientes/entities/cliente.entity';
-import { Empleado } from 'src/empleados/entities/empleado.entity';
-import { VentaDetalle } from 'src/venta-detalles/entities/venta-detalle.entity';
+import { Cliente } from '../../clientes/entities/cliente.entity';
+import { DetalleVenta } from './detalle_venta.entity';
 import {
+  Entity,
+  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
+  JoinColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 @Entity('ventas')
@@ -16,22 +16,47 @@ export class Venta {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'total_venta' })
+  @Column({ name: 'total_venta', type: 'numeric', precision: 10, scale: 2 })
   totalVenta: number;
+
+  @Column({
+    name: 'metodo_pago',
+    type: 'varchar',
+    length: 50,
+    enum: ['efectivo', 'tarjeta', 'transferencia', 'qr', 'cotización', 'otro'],
+  })
+  metodoPago: string;
+
+  @Column({
+    type: 'varchar',
+    length: 20,
+    default: 'realizada',
+    comment: 'Estado de la venta: realizada o anulada',
+  })
+  estado: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 
-  // Muchas ventas puede realizar a un cliente
-  @ManyToOne(() => Cliente, (cliente) => cliente.ventas)
-  @JoinColumn({ name: 'idCliente', referencedColumnName: 'id' })
+  @DeleteDateColumn({ name: 'fecha_eliminacion' })
+  fechaEliminacion: Date;
+
+  @Column({ name: 'fecha_anulacion', type: 'timestamp', nullable: true })
+  fechaAnulacion: Date | null;
+
+  @Column({ name: 'monto_pagado', type: 'numeric', precision: 10, scale: 2, default: 0, nullable: true })
+  montoPagado: number | null;
+
+  @Column({ name: 'cambio', type: 'numeric', precision: 10, scale: 2, default: 0, nullable: true })
+  cambio: number | null;
+
+  //  muchas ventas puede realizar  un cliente
+  @ManyToOne(() => Cliente, (cliente) => cliente.venta)
+  @JoinColumn({ name: 'id_cliente', referencedColumnName: 'id' })
   cliente: Cliente;
 
-  @ManyToOne(() => Empleado, (empleado) => empleado.ventas)
-  @JoinColumn({ name: 'idEmpleado', referencedColumnName: 'id' })
-  empleado: Empleado;
-
-  // Una venta puede tener varios detalles de venta
-  @OneToMany(() => VentaDetalle, (ventadetalle) => ventadetalle.venta)
-  ventadetalles: VentaDetalle[];
+  @OneToMany(() => DetalleVenta, (detalleVenta) => detalleVenta.venta, {
+    cascade: true,
+  })
+  ventadetalles: DetalleVenta[];
 }

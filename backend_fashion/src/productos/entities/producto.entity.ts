@@ -7,9 +7,10 @@ import {
   CreateDateColumn,
   JoinColumn,
   OneToMany,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Categoria } from '../../categorias/entities/categoria.entity';
-import { VentaDetalle } from 'src/venta-detalles/entities/venta-detalle.entity';
+import { DetalleVenta } from 'src/ventas/entities/detalle_venta.entity';
 
 @Entity('productos')
 export class Producto {
@@ -43,14 +44,16 @@ export class Producto {
   @UpdateDateColumn({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
 
-  @Column()
+  @DeleteDateColumn({ name: 'fecha_eliminacion' })
+  fechaEliminacion: Date;
+
+  @Column({ name: 'id_categoria' })
   idCategoria: number;
 
   @ManyToOne(() => Categoria, (categoria) => categoria.productos)
-  @JoinColumn({ name: 'idCategoria', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'id_categoria', referencedColumnName: 'id' })
   categoria: Categoria;
 
-  @OneToMany(() => VentaDetalle, (ventadetalle) => ventadetalle.producto)
-  ventadetalles: VentaDetalle[];
-  // Elimina: ventas: any;
+  @OneToMany(() => DetalleVenta, (ventadetalle) => ventadetalle.producto)
+  ventadetalles: DetalleVenta[];
 }
