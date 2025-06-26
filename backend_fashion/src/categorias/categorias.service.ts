@@ -15,7 +15,7 @@ export class CategoriasService {
   constructor(
     @InjectRepository(Categoria)
     private categoriasRepository: Repository<Categoria>,
-  ) {}
+  ) { }
 
   async create(createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
     const existe = await this.categoriasRepository.findOneBy({
@@ -47,19 +47,8 @@ export class CategoriasService {
     return this.categoriasRepository.save(categoriaUpdate);
   }
 
-  async remove(id: number) {
-    const categoria = await this.categoriasRepository.findOne({
-      where: { id },
-      relations: ['productos'],
-    });
-    if (!categoria) {
-      throw new NotFoundException('La categoría no existe');
-    }
-    if (categoria.productos && categoria.productos.length > 0) {
-      throw new ConflictException(
-        'No se puede eliminar la categoría porque tiene productos asociados',
-      );
-    }
-    return this.categoriasRepository.remove(categoria);
+  async remove(id: number): Promise<void> {
+    const categoria = await this.findOne(id);
+    await this.categoriasRepository.softDelete(categoria.id);
   }
 }

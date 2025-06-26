@@ -8,7 +8,7 @@ defineProps<{
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      Bienvenido a la tienda de ropa, aquí podrás gestionar los empleados y sus datos.
+      Bienvenido a la tienda de ropa, aquí podrás gestionar los empleados, clientes,ventas, productos y usuarios.
     </h3>
   </div>
 </template>

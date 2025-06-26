@@ -1,32 +1,22 @@
-import { Venta } from 'src/ventas/entities/venta.entity'; // <-- Agrega esta línea
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Venta } from 'src/ventas/entities/venta.entity';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('clientes')
 export class Cliente {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('identity')
   id: number;
 
-  @Column('varchar', { length: 50, nullable: false })
-  nombres: string;
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  nombre?: string;
 
-  @Column('varchar', { length: 50, nullable: false })
-  apellidos: string;
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  apellido?: string;
 
-  @Column('varchar', { length: 150, nullable: false }) // Mejor longitud para dirección
-  direccion: string;
+  @Column({ type: 'varchar', length: 30, nullable: true })
+  telefono?: string;
 
-  @Column('varchar', { length: 20, nullable: false }) // Mejor longitud para teléfono
-  telefono: string;
-
-  @Column('varchar', { length: 50, nullable: false, unique: true }) // Tipo explícito
-  email: string;
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  direccion?: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
@@ -34,6 +24,10 @@ export class Cliente {
   @UpdateDateColumn({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
 
-  @OneToMany(() => Venta, (venta) => venta.cliente)
-  ventas: Venta[];
+  @DeleteDateColumn({ name: 'fecha_eliminacion' })
+  fechaEliminacion: Date;
+
+  @ManyToOne(() => Venta, venta => venta.cliente)
+  @JoinColumn({ name: 'id_venta', referencedColumnName: 'id' })
+  venta: Venta;
 }

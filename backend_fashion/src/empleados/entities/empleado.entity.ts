@@ -1,30 +1,38 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  OneToOne,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { Venta } from 'src/ventas/entities/venta.entity';
-import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Entity('empleados')
 export class Empleado {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('identity')
   id: number;
-  @Column('varchar', { length: 50, nullable: false })
-  nombres: string;
 
-  @Column('varchar', { length: 50, nullable: false })
-  apellidos: string;
+  @Column({ type: 'varchar', length: 50 })
+  nombre: string;
 
-  @Column('varchar', { length: 30, nullable: false })
+  @Column({ type: 'varchar', length: 50 })
+  apellido: string;
+
+  @Column({ type: 'varchar', length: 30 })
+  telefono: string;
+
+  @Column({ type: 'varchar', length: 100 })
+  direccion: string;
+
+  @Column({ type: 'varchar', length: 30 })
   cargo: string;
 
-  @OneToMany(() => Venta, (venta) => venta.empleado)
-  ventas: Venta[];
+  @CreateDateColumn({ name: 'fecha_creacion' })
+  fechaCreacion: Date;
 
-  @OneToOne(() => Usuario, (usuario) => usuario.empleado)
-  usuario: Usuario;
+  @UpdateDateColumn({ name: 'fecha_modificacion' })
+  fechaModificacion: Date;
+
+  @DeleteDateColumn({ name: 'fecha_eliminacion' })
+  fechaEliminacion: Date;
 }

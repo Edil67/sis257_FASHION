@@ -51,7 +51,7 @@ function formatDate(dateString: string): string {
         <tr>
           <th>Cliente</th>
           <th>Empleado</th>
-          <th>Total Venta (Bs.)</th>
+          <th>Total Venta</th>
           <th>Fecha de Venta</th>
           <th>Acciones</th>
         </tr>
