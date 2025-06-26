@@ -4,12 +4,14 @@ export interface Producto {
   id: number
   nombre: string
   descripcion: string
-  precio: number
+  precio: number 
   stock: number
   talla: string
   color: string
   imagenes: string
-  fechaModificacion: Date
-
+  fechaCreacion: string
+  fechaModificacion: string
+  fechaEliminacion: string | null
+  idCategoria: number
   categoria: Categoria
 }

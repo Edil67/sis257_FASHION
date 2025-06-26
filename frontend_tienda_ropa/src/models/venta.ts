@@ -1,14 +1,27 @@
 import type { Cliente } from './cliente'
-import type { Empleado } from './empleado'
-import type { ventaDetalle } from './ventaDetalle'
+import type { Usuario } from './usuario'
+
+// Definir el tipo para los detalles de venta
+export interface DetalleVenta {
+  producto: {
+    id: number
+    nombre: string
+    precio: number
+    [key: string]: any
+  }
+  cantidad: number
+  precioUnitario: number
+}
 
 export interface Venta {
   id: number
-
-  totalVenta: number
-
+  idCliente: number
   cliente: Cliente
-  empleado: Empleado
+  idUsuario: number
+  usuario: Usuario
+  metodoPago: string
+  totalVenta: number
+  estado: string
+  detalles: DetalleVenta[]
   fechaCreacion: Date
-  ventaDetalles: ventaDetalle[]
 }

@@ -7,7 +7,7 @@ const useAuthStore = defineStore('auth', {
   state: () => ({
     user: localStorage.getItem('user') || '',
     token: getTokenFromLocalStorage(),
-    returnUrl: null || '',
+    returnUrl: '',
   }),
   getters: {},
   actions: {
@@ -25,9 +25,10 @@ const useAuthStore = defineStore('auth', {
     logout() {
       localStorage.clear()
       this.$reset()
-      router.push('login')
+      router.push('/')
     },
   },
 })
 
 export { useAuthStore }
+export { useCarritoStore } from './carrito'
