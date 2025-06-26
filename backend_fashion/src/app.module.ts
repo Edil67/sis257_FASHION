@@ -5,7 +5,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { CategoriasModule } from './categorias/categorias.module';
-import { VentaDetallesModule } from './venta-detalles/venta-detalles.module';
 import { EmpleadosModule } from './empleados/empleados.module';
 import { VentasModule } from './ventas/ventas.module';
 import { ClientesModule } from './clientes/clientes.module';
@@ -32,7 +31,6 @@ import { AuthModule } from './auth/auth.module';
     ClientesModule,
     VentasModule,
     EmpleadosModule,
-    VentaDetallesModule,
     AuthModule,
   ],
   controllers: [AppController],

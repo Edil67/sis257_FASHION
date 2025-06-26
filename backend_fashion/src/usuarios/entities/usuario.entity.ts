@@ -1,16 +1,16 @@
-import { Empleado } from 'src/empleados/entities/empleado.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
-  JoinColumn,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Venta } from '../../ventas/entities/venta.entity';
+import { OneToMany } from 'typeorm';
 
 @Entity('usuarios')
 export class Usuario {
@@ -29,10 +29,8 @@ export class Usuario {
   @UpdateDateColumn({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
 
-  //un usuario puede pertenecer a un solo empleado
-  @OneToOne(() => Empleado, (empleado) => empleado.usuario)
-  @JoinColumn({ name: 'idEmpleado', referencedColumnName: 'id' })
-  empleado: Empleado;
+  @DeleteDateColumn({ name: 'fecha_eliminacion' })
+  fechaEliminacion: Date;
 
   @BeforeInsert()
   @BeforeUpdate()
